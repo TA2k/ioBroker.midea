@@ -136,6 +136,7 @@ class Midea extends utils.Adapter {
                                 if (body.result) {
                                     this.atoken = body.result.accessToken;
                                     this.sId = body.result.sessionId;
+                                    this.generateDataKey();
                                     resolve();
                                 }
                             }
@@ -264,6 +265,31 @@ class Midea extends utils.Adapter {
             .replace(/-/g, "")
             .replace(/:/g, "")
             .replace(/T/g, "");
+    }
+
+    generateDataKey() {
+        const md5AppKey = crypto.createHash("md5").update(this.appKey).digest("hex");
+        const decipher = crypto.createDecipheriv("aes-128-ecb", md5AppKey.slice(0,16),"");
+        const dec = decipher.update(this.atoken,"hex","utf8");
+        this.dataKey = dec;
+        return dec;
+    }
+    decryptAes(reply) {
+        if (!this.dataKey) {
+            this.generateDataKey();
+        }
+        const decipher = crypto.createDecipheriv("aes-128-ecb", this.dataKey, "");
+        const dec = decipher.update(reply,"hex","utf8");
+        return dec.split(",");
+    }
+    encryptAes(query) {
+        if (!this.dataKey) {
+            this.generateDataKey();
+        }
+        const cipher = crypto.createCipheriv("aes-128-ecb", this.dataKey,"");
+        let ciph = cipher.update(query.join(","),"utf8","hex");
+        ciph+=cipher.final("hex");
+        return ciph;
     }
     /**
      * Is called when adapter shuts down - callback has to be called under any circumstances!
