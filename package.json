@@ -19,7 +19,8 @@
   "dependencies": {
     "@iobroker/adapter-core": "^2.2.1",
     "request": "^2.88.0",
-    "traverse": "^0.6.6"
+    "traverse": "^0.6.6",
+    "@sentry/node": "^5.15.4"
   },
   "devDependencies": {
     "@iobroker/testing": "^2.0.1",

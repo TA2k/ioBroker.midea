@@ -10,6 +10,8 @@ const utils = require("@iobroker/adapter-core");
 const request = require("request");
 const traverse = require("traverse");
 const crypto = require("crypto");
+const Sentry = require("@sentry/node");
+Sentry.init({ dsn: "https://d7b0227418c2493a857bbb64730ebb04@o378982.ingest.sentry.io/5230865" });
 class Midea extends utils.Adapter {
     /**
      * @param {Partial<ioBroker.AdapterOptions>} [options={}]
@@ -42,11 +44,19 @@ class Midea extends utils.Adapter {
 
         // Reset the connection indicator during startup
         this.setState("info.connection", false, true);
-        this.login().then(() => {
-            this.log.debug("Login successful");
-            this.setState("info.connection", true, true);
-            this.getUserList().then(() => {});
-        });
+        this.login()
+            .then(() => {
+                this.log.debug("Login successful");
+                this.setState("info.connection", true, true);
+                this.getUserList()
+                    .then(() => {})
+                    .catch(() => {
+                        this.log.error("Get Devices failed");
+                    });
+            })
+            .catch(() => {
+                this.log.error("Login failed");
+            });
 
         // in this template all states changes inside the adapters namespace are subscribed
         this.subscribeStates("*");
@@ -228,6 +238,55 @@ class Midea extends utils.Adapter {
                                             role: "switch",
                                             type: property.type,
                                             write: true,
+                                            read: true,
+                                            unit: property.unit || "",
+                                        },
+                                        native: {},
+                                    });
+                                }
+                                this.status = [
+                                    { name: "powerState", type: "boolean", unit: "" },
+                                    { name: "ecoMode", type: "boolean", unit: "" },
+                                    { name: "swingMode", type: "boolean", unit: "" },
+                                    { name: "turboMode", type: "boolean", unit: "" },
+                                    { name: "imodeResume", type: "boolean", unit: "" },
+                                    { name: "timerMode", type: "boolean", unit: "" },
+                                    { name: "applianceError", type: "boolean", unit: "" },
+                                    { name: "targetTemperature", type: "number", unit: "°C" },
+                                    { name: "operationalMode", type: "number", unit: "" },
+                                    { name: "fanSpeed", type: "number", unit: "" },
+                                    { name: "onTimer", type: "number", unit: "" },
+                                    { name: "offTimer", type: "number", unit: "" },
+                                    { name: "swingMode", type: "number", unit: "" },
+                                    { name: "cozySleep", type: "number", unit: "" },
+                                    { name: "tempUnit", type: "number", unit: "" },
+                                    { name: "indoorTemperature", type: "number", unit: "°C" },
+                                    { name: "outdoorTemperature", type: "number", unit: "°C" },
+                                    { name: "humidity", type: "number", unit: "%" },
+                                    { name: "save", type: "boolean", unit: "" },
+                                    { name: "lowFrequencyFan", type: "boolean", unit: "" },
+                                    { name: "superFan", type: "boolean", unit: "" },
+                                    { name: "feelOwn", type: "boolean", unit: "" },
+                                    { name: "childSleepMode", type: "boolean", unit: "" },
+                                    { name: "exchangeAir", type: "boolean", unit: "" },
+                                    { name: "dryClean", type: "boolean", unit: "" },
+                                    { name: "auxHeat", type: "boolean", unit: "" },
+                                    { name: "cleanUp", type: "boolean", unit: "" },
+                                    { name: "sleepFunction", type: "boolean", unit: "" },
+                                    { name: "turboMode", type: "boolean", unit: "" },
+                                    { name: "catchCold", type: "boolean", unit: "" },
+                                    { name: "nightLight", type: "boolean", unit: "" },
+                                    { name: "peakElec", type: "boolean", unit: "" },
+                                    { name: "naturalFan", type: "boolean", unit: "" },
+                                ];
+                                for (const property of this.status) {
+                                    await this.setObjectNotExistsAsync(currentElement.id + ".status." + property.name, {
+                                        type: "state",
+                                        common: {
+                                            name: property.name,
+                                            role: "switch",
+                                            type: property.type,
+                                            write: false,
                                             read: true,
                                             unit: property.unit || "",
                                         },
@@ -437,11 +496,24 @@ class Midea extends utils.Adapter {
                 command.fanSpeed = state.val;
             }
 
-            const pktBuilder = new packetBuilder()
+            const pktBuilder = new packetBuilder();
             pktBuilder.command = command;
-            const data = pktBuilder.finalize()
+            const data = pktBuilder.finalize();
 
-            this.sendCommand(deviceId, data);
+            this.sendCommand(deviceId, data).catch((error) => {
+                this.log.error(error);
+                this.log.info("Try to relogin");
+                this.login()
+                    .then(() => {
+                        this.log.debug("Login successful");
+                        this.sendCommand(deviceId, data).catch((error) => {
+                            this.log.error("Command still failed after relogin");
+                        });
+                    })
+                    .catch(() => {
+                        this.log.error("Login failed");
+                    });
+            });
         } else {
             // The state was deleted
             this.log.info(`state ${id} deleted`);
@@ -914,7 +986,7 @@ class packetBuilder {
         // Append a basic checksum of the command to the packet (This is apart from the CRC8 that was added in the command)
         this.packet = this.packet.concat([this.checksum(this._command.slice(1))]);
         // Ehh... I dunno, but this seems to make things work. Pad with 0's
-        this.packet = this.packet.concat((new Array(46 - this._command.length)).fill(0));
+        this.packet = this.packet.concat(new Array(46 - this._command.length).fill(0));
         // Set the packet length in the packet!
         this.packet[0x04] = this.packet.length;
         return this.packet;
@@ -926,159 +998,167 @@ class packetBuilder {
 }
 
 class applianceResponse {
-
     constructor(data) {
         // The response data from the appliance includes a packet header which we don't want
-        this.data = data.slice(0x32)
+        this.data = data.slice(0x32);
         //if(__debug__):
         //    print("Appliance response data: {}".format(self.data.hex()))
     }
 
     // Byte 0x01
     get powerState() {
-        return (this.data[0x01] & 0x1) > 0
+        return (this.data[0x01] & 0x1) > 0;
     }
 
     get imodeResume() {
-        return (this.data[0x01] & 0x4) > 0
+        return (this.data[0x01] & 0x4) > 0;
     }
 
     get timerMode() {
-        return (this.data[0x01] & 0x10) > 0
+        return (this.data[0x01] & 0x10) > 0;
     }
 
     get applianceError() {
-        return (this.data[0x01] & 0x80) > 0
+        return (this.data[0x01] & 0x80) > 0;
     }
 
     // Byte 0x02
     get targetTemperature() {
-        return (this.data[0x02] & 0xf) + 16
+        return (this.data[0x02] & 0xf) + 16;
     }
 
     get operationalMode() {
-        return (this.data[0x02] & 0xe0) >> 5
+        return (this.data[0x02] & 0xe0) >> 5;
     }
 
     // Byte 0x03
     get fanSpeed() {
-        return this.data[0x03] & 0x7f
+        return this.data[0x03] & 0x7f;
     }
 
     // Byte 0x04 + 0x06
     get onTimer() {
-        let on_timer_value = this.data[0x04]
-        let on_timer_minutes = this.data[0x06]
+        let on_timer_value = this.data[0x04];
+        let on_timer_minutes = this.data[0x06];
         return {
-            'status': ((on_timer_value & 0x80) >> 7) > 0,
-            'hour': (on_timer_value & 0x7c) >> 2,
-            'minutes': (on_timer_value & 0x3) | ((on_timer_minutes & 0xf0) >> 4)
-        }
+            status: (on_timer_value & 0x80) >> 7 > 0,
+            hour: (on_timer_value & 0x7c) >> 2,
+            minutes: (on_timer_value & 0x3) | ((on_timer_minutes & 0xf0) >> 4),
+        };
     }
 
     // Byte 0x05 + 0x06
     get offTimer() {
-        let off_timer_value = this.data[0x05]
-        let off_timer_minutes = this.data[0x06]
+        let off_timer_value = this.data[0x05];
+        let off_timer_minutes = this.data[0x06];
         return {
-            'status': ((off_timer_value & 0x80) >> 7) > 0,
-            'hour': (off_timer_value & 0x7c) >> 2,
-            'minutes': (off_timer_value & 0x3) | (off_timer_minutes & 0xf)
-        }
+            status: (off_timer_value & 0x80) >> 7 > 0,
+            hour: (off_timer_value & 0x7c) >> 2,
+            minutes: (off_timer_value & 0x3) | (off_timer_minutes & 0xf),
+        };
     }
 
     // Byte 0x07
     get swingMode() {
-        return this.data[0x07] & 0x0f
+        return this.data[0x07] & 0x0f;
     }
 
     // Byte 0x08
     get cozySleep() {
-        return this.data[0x08] & 0x03
+        return this.data[0x08] & 0x03;
     }
 
-    get save() {  // This needs a better name, dunno what it actually means
-        return (this.data[0x08] & 0x08) > 0
+    get save() {
+        // This needs a better name, dunno what it actually means
+        return (this.data[0x08] & 0x08) > 0;
     }
 
     get lowFrequencyFan() {
-        return (this.data[0x08] & 0x10) > 0
+        return (this.data[0x08] & 0x10) > 0;
     }
 
     get superFan() {
-        return (this.data[0x08] & 0x20) > 0
+        return (this.data[0x08] & 0x20) > 0;
     }
 
-    get feelOwn() {  // This needs a better name, dunno what it actually means
-        return (this.data[0x08] & 0x80) > 0
+    get feelOwn() {
+        // This needs a better name, dunno what it actually means
+        return (this.data[0x08] & 0x80) > 0;
     }
 
     // Byte 0x09
     get childSleepMode() {
-        return (this.data[0x09] & 0x01) > 0
+        return (this.data[0x09] & 0x01) > 0;
     }
 
     get exchangeAir() {
-        return (this.data[0x09] & 0x02) > 0
+        return (this.data[0x09] & 0x02) > 0;
     }
 
-    get dryClean() {  // This needs a better name, dunno what it actually means
-        return (this.data[0x09] & 0x04) > 0
+    get dryClean() {
+        // This needs a better name, dunno what it actually means
+        return (this.data[0x09] & 0x04) > 0;
     }
 
     get auxHeat() {
-        return (this.data[0x09] & 0x08) > 0
+        return (this.data[0x09] & 0x08) > 0;
     }
 
     get ecoMode() {
-        return (this.data[0x09] & 0x10) > 0
+        return (this.data[0x09] & 0x10) > 0;
     }
 
-    get cleanUp() { // This needs a better name, dunno what it actually means
-        return (this.data[0x09] & 0x20) > 0
+    get cleanUp() {
+        // This needs a better name, dunno what it actually means
+        return (this.data[0x09] & 0x20) > 0;
     }
 
-    get tempUnit() {  // This needs a better name, dunno what it actually means
-        return (this.data[0x09] & 0x80) > 0
+    get tempUnit() {
+        // This needs a better name, dunno what it actually means
+        return (this.data[0x09] & 0x80) > 0;
     }
 
     // Byte 0x0a
     get sleepFunction() {
-        return (this.data[0x0a] & 0x01) > 0
+        return (this.data[0x0a] & 0x01) > 0;
     }
 
     get turboMode() {
-        return (this.data[0x0a] & 0x02) > 0
+        return (this.data[0x0a] & 0x02) > 0;
     }
 
-    get catchCold() {   // This needs a better name, dunno what it actually means
-        return (this.data[0x0a] & 0x08) > 0
+    get catchCold() {
+        // This needs a better name, dunno what it actually means
+        return (this.data[0x0a] & 0x08) > 0;
     }
 
-    get nightLight() {   // This needs a better name, dunno what it actually means
-        return (this.data[0x0a] & 0x10) > 0
+    get nightLight() {
+        // This needs a better name, dunno what it actually means
+        return (this.data[0x0a] & 0x10) > 0;
     }
 
-    get peakElec() {   // This needs a better name, dunno what it actually means
-        return (this.data[0x0a] & 0x20) > 0
+    get peakElec() {
+        // This needs a better name, dunno what it actually means
+        return (this.data[0x0a] & 0x20) > 0;
     }
 
-    get naturalFan() {   // This needs a better name, dunno what it actually means
-        return (this.data[0x0a] & 0x40) > 0
+    get naturalFan() {
+        // This needs a better name, dunno what it actually means
+        return (this.data[0x0a] & 0x40) > 0;
     }
 
     // Byte 0x0b
     get indoorTemperature() {
-        return (this.data[0x0b] - 50) / 2.0
+        return (this.data[0x0b] - 50) / 2.0;
     }
 
     // Byte 0x0c
     get outdoorTemperature() {
-        return (this.data[0x0c] - 50) / 2.0
+        return (this.data[0x0c] - 50) / 2.0;
     }
 
     // Byte 0x0d
     get humidity() {
-        return (this.data[0x0d] & 0x7f)
+        return this.data[0x0d] & 0x7f;
     }
 }
