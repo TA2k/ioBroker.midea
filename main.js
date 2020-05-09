@@ -433,7 +433,12 @@ class Midea extends utils.Adapter {
             if (id.indexOf("fanSpeed") !== -1) {
                 command.fanSpeed = state.val;
             }
-            this.sendCommand(deviceId, command.finalize());
+
+            const pktBuilder = new packetBuilder()
+            pktBuilder.command = command;
+            const data = pktBuilder.finalize()
+
+            this.sendCommand(deviceId, data);
         } else {
             // The state was deleted
             this.log.info(`state ${id} deleted`);
@@ -906,7 +911,7 @@ class packetBuilder {
         // Append a basic checksum of the command to the packet (This is apart from the CRC8 that was added in the command)
         this.packet = this.packet.concat([this.checksum(this.command.slice(1))]);
         // Ehh... I dunno, but this seems to make things work. Pad with 0's
-        this.packet = this.packet.concat(Array(46 - this.command.length).fill(0));
+        this.packet = this.packet.concat((new Array(46 - this.command.length)).fill(0));
         // Set the packet length in the packet!
         this.packet[0x04] = this.packet.length;
         return this.packet;
