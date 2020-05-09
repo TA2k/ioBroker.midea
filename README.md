@@ -11,6 +11,8 @@
 
 [![NPM](https://nodei.co/npm/iobroker.midea.png?downloads=true)](https://nodei.co/npm/iobroker.midea/)
 
+**Tests:**: [![Travis-CI](http://img.shields.io/travis/TA2k/ioBroker.midea/master.svg)](https://travis-ci.org/TA2k/ioBroker.midea)
+
 ## midea adapter for ioBroker
 
 Midea Adapter
