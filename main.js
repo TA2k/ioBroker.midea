@@ -212,11 +212,11 @@ class Midea extends utils.Adapter {
                                     this.setState(currentElement.id + ".general." + key, currentElement[key], true);
                                 });
                                 this.controls = [
-                                    { name: "power_state", type: "boolean", unit: "" },
+                                    { name: "powerState", type: "boolean", unit: "" },
                                     { name: "ecoMode", type: "boolean", unit: "" },
                                     { name: "swingMode", type: "boolean", unit: "" },
                                     { name: "turboMode", type: "boolean", unit: "" },
-                                    { name: "targetTemperature", type: "number", unit: "" },
+                                    { name: "targetTemperature", type: "number", unit: "C" },
                                     { name: "operationalMode", type: "number", unit: "" },
                                     { name: "fanSpeed", type: "number", unit: "" },
                                 ];
@@ -412,8 +412,8 @@ class Midea extends utils.Adapter {
         if (state && !state.ack) {
             const deviceId = id.split(".")[2];
             const command = new setCommand();
-            if (id.indexOf("power_state") !== -1) {
-                command.power_state(state.val);
+            if (id.indexOf("powerState") !== -1) {
+                command.powerState(state.val);
             }
             if (id.indexOf("ecoMode") !== -1) {
                 command.ecoMode(state.val);
@@ -790,7 +790,7 @@ class setCommand extends baseCommand {
         return this.data[0x0b] & 0x01;
     }
 
-    set power_state(state) {
+    set powerState(state) {
         this.data[0x0b] &= ~0x01; // Clear the power bit
         this.data[0x0b] |= state ? 0x01 : 0;
     }
