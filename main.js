@@ -54,6 +54,9 @@ class Midea extends utils.Adapter {
                         this.log.error("Get Devices failed");
                         this.setState("info.connection", false, true);
                     });
+                this.updateInterval = setInterval(() => {
+                    this.updateValues();
+                }, this.config.interval * 60 * 1000);
             })
             .catch(() => {
                 this.log.error("Login failed");
@@ -461,6 +464,33 @@ class Midea extends utils.Adapter {
         ciph += cipher.final("hex");
         return ciph;
     }
+
+    updateValues() {
+        const command = new setCommand();
+        const pktBuilder = new packetBuilder();
+        pktBuilder.command = command;
+        const data = pktBuilder.finalize();
+        this.hgIdArray.forEach((element) => {
+            this.sendCommand(element, data).catch((error) => {
+                this.log.error(error);
+                this.log.info("Try to relogin");
+                this.login()
+                    .then(() => {
+                        this.log.debug("Login successful");
+                        this.setState("info.connection", true, true);
+                        this.sendCommand(element, data).catch((error) => {
+                            this.log.error("update Command still failed after relogin");
+                            this.setState("info.connection", false, true);
+                        });
+                    })
+                    .catch(() => {
+                        this.log.error("Login failed");
+                        this.setState("info.connection", false, true);
+                    });
+            });
+        });
+    }
+
     /**
      * Is called when adapter shuts down - callback has to be called under any circumstances!
      * @param {() => void} callback
