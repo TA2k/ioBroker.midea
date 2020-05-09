@@ -854,7 +854,7 @@ class setCommand extends baseCommand {
 
 class packetBuilder {
     constructor() {
-        this.command = null;
+        this._command = null;
 
         // Init the packet with the header data. Weird magic numbers, I'm not sure what they all do, but they have to be there (packet length at 0x4)
         this.packet = [
@@ -902,16 +902,16 @@ class packetBuilder {
     }
 
     set command(command) {
-        this.command = command.finalize();
+        this._command = command.finalize();
     }
 
     finalize() {
         // Append the command data to the packet
-        this.packet = this.packet.concat(this.command);
+        this.packet = this.packet.concat(this._command);
         // Append a basic checksum of the command to the packet (This is apart from the CRC8 that was added in the command)
-        this.packet = this.packet.concat([this.checksum(this.command.slice(1))]);
+        this.packet = this.packet.concat([this.checksum(this._command.slice(1))]);
         // Ehh... I dunno, but this seems to make things work. Pad with 0's
-        this.packet = this.packet.concat((new Array(46 - this.command.length)).fill(0));
+        this.packet = this.packet.concat((new Array(46 - this._command.length)).fill(0));
         // Set the packet length in the packet!
         this.packet[0x04] = this.packet.length;
         return this.packet;
