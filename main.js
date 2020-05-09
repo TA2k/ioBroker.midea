@@ -343,6 +343,7 @@ class Midea extends utils.Adapter {
                         reject();
                         return;
                     }
+
                     this.log.debug(JSON.stringify(body));
                     if (body.errorCode && body.errorCode !== "0") {
                         this.log.error(body.msg);
@@ -352,18 +353,8 @@ class Midea extends utils.Adapter {
                     try {
                         this.log.info("send successful");
 
-                        //const response = new applianceResponse(this.decryptAes(body.result.reply));
-
-                        /*TODO check body.result.reply with all command getter and set curent status
-                        this.decode(this.decryptAes(body.result.reply))
-
-                        const command = new setCommand();
-                        for (const property of this.controls) {
-                            if (id.indexOf("powerState") !== -1) {
-                                this.setState(applianceId + ".control." + property.name, command.powerState(), true);
-                            }
-                        }
- */
+                        const response = new applianceResponse(this.decryptAes(body.result.reply));
+                        debugger;
                         resolve();
                     } catch (error) {
                         this.log.error(error);
