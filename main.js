@@ -297,7 +297,7 @@ class Midea extends utils.Adapter {
 
                         const command = new setCommand();
                         for (const property of this.controls) {
-                            if (id.indexOf("power_state") !== -1) {
+                            if (id.indexOf("powerState") !== -1) {
                                 this.setState(applianceId + ".control." + property.name, command.powerState(), true);
                             }
                         }
@@ -413,25 +413,25 @@ class Midea extends utils.Adapter {
             const deviceId = id.split(".")[2];
             const command = new setCommand();
             if (id.indexOf("powerState") !== -1) {
-                command.powerState(state.val);
+                command.powerState = state.val;
             }
             if (id.indexOf("ecoMode") !== -1) {
-                command.ecoMode(state.val);
+                command.ecoMode = state.val;
             }
             if (id.indexOf("swingMode") !== -1) {
-                command.swingMode(state.val);
+                command.swingMode = state.val;
             }
             if (id.indexOf("turboMode") !== -1) {
-                command.turboMode(state.val);
+                command.turboMode = state.val;
             }
             if (id.indexOf("targetTemperature") !== -1) {
-                command.targetTemperature(state.val);
+                command.targetTemperature = state.val;
             }
             if (id.indexOf("operationalMode") !== -1) {
-                command.operationalMode(state.val);
+                command.operationalMode = state.val;
             }
             if (id.indexOf("fanSpeed") !== -1) {
-                command.fanSpeed(state.val);
+                command.fanSpeed = state.val;
             }
             this.sendCommand(deviceId, command.finalize());
         } else {
