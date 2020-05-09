@@ -248,12 +248,16 @@ class Midea extends utils.Adapter {
     }
     sendCommand(applianceId, order) {
         return new Promise((resolve, reject) => {
+            const orderEncode = this.encode(order);
+            const orderEncrypt = this.encryptAes(orderEncode);
+            //TODO move orderEncrypt to hex need a length of 480
+
             const form = {
                 applianceId: applianceId,
                 src: "17",
                 format: "2",
-                funId: "FC02",
-                order: order,
+                funId: "FC02", //maybe it is also "0000"
+                order: orderEncrypt,
                 stamp: this.getStamp(),
                 language: "de_DE",
                 sessionId: this.sId,
@@ -289,7 +293,7 @@ class Midea extends utils.Adapter {
                     try {
                         this.log.info("send successful");
                         /*TODO check body.result.reply with all command getter and set curent status
-                        
+                        this.decode(this.decryptAes(body.result.reply))
 
                         const command = new setCommand();
                         for (const property of this.controls) {
@@ -353,6 +357,28 @@ class Midea extends utils.Adapter {
         const decipher = crypto.createDecipheriv("aes-128-ecb", this.dataKey, "");
         const dec = decipher.update(reply, "hex", "utf8");
         return dec.split(",");
+    }
+    encode(data) {
+        return data;
+
+        /* TOdO
+          normalized = []
+        for b in data:
+            if b >= 128:
+                b = b - 256
+            normalized.append(str(b))
+
+        string = ','.join(normalized)
+        return bytearray(string.encode('ascii'))
+        */
+    }
+    decode(data) {
+        return data;
+        // data = [int(a) for a in data.decode('ascii').split(',')]
+        // for i in range(len(data)):
+        //     if data[i] < 0:
+        //         data[i] = data[i] + 256
+        // return bytearray(data)
     }
     encryptAes(query) {
         if (!this.dataKey) {
