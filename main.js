@@ -46,10 +46,12 @@ class Midea extends utils.Adapter {
         this.setState("info.connection", false, true);
         this.login()
             .then(() => {
-                this.log.debug("Login successful");
+                this.log.info("Login successful");
                 this.setState("info.connection", true, true);
                 this.getUserList()
-                    .then(() => {})
+                    .then(() => {
+                        this.updateValues();
+                    })
                     .catch(() => {
                         this.log.error("Get Devices failed");
                         this.setState("info.connection", false, true);
@@ -103,6 +105,7 @@ class Midea extends utils.Adapter {
                     this.log.debug(JSON.stringify(body));
                     if (body.errorCode && body.errorCode !== "0") {
                         this.log.error(body.msg);
+                        this.log.error(body.errorCode);
                         reject();
                         return;
                     }
@@ -144,6 +147,7 @@ class Midea extends utils.Adapter {
                                 this.log.debug(JSON.stringify(body));
                                 if (body.errorCode && body.errorCode !== "0") {
                                     this.log.error(body.msg);
+                                    this.log.error(body.errorCode);
                                     reject();
                                     return;
                                 }
@@ -195,6 +199,7 @@ class Midea extends utils.Adapter {
                     this.log.debug(JSON.stringify(body));
                     if (body.errorCode && body.errorCode !== "0") {
                         this.log.error(body.msg);
+                        this.log.error(body.errorCode);
                         reject();
                         return;
                     }
@@ -208,8 +213,6 @@ class Midea extends utils.Adapter {
                                     common: {
                                         name: currentElement.name,
                                         role: "indicator",
-                                        write: false,
-                                        read: true,
                                     },
                                     native: {},
                                 });
@@ -315,7 +318,6 @@ class Midea extends utils.Adapter {
         return new Promise((resolve, reject) => {
             const orderEncode = this.encode(order);
             const orderEncrypt = this.encryptAes(orderEncode);
-            //TODO move orderEncrypt to hex need a length of 480
 
             const form = {
                 applianceId: applianceId,
@@ -342,22 +344,30 @@ class Midea extends utils.Adapter {
                 },
                 (err, resp, body) => {
                     if (err || (resp && resp.statusCode >= 400) || !body) {
-                        this.log.error("Failed to login");
+                        this.log.error("Failed to send command");
                         err && this.log.error(err);
                         body && this.log.error(JSON.stringify(body));
                         resp && this.log.error(resp.statusCode);
-                        reject();
+                        reject(err);
                         return;
                     }
 
                     this.log.debug(JSON.stringify(body));
                     if (body.errorCode && body.errorCode !== "0") {
+                        if (body.errorCode === "3123" || body.errorCode === "3176") {
+                            this.log.info("Cannot reach " + applianceId + " " + body.msg);
+
+                            resolve();
+                            return;
+                        }
+                        this.log.error("Sending failed device returns an error");
+                        this.log.error(body.errorCode);
                         this.log.error(body.msg);
-                        reject();
+                        reject(body.msg);
                         return;
                     }
                     try {
-                        this.log.info("send successful");
+                        this.log.debug("send successful");
 
                         const response = new applianceResponse(this.decryptAes(body.result.reply));
                         const properties = Object.getOwnPropertyNames(applianceResponse.prototype).slice(1);
@@ -434,26 +444,24 @@ class Midea extends utils.Adapter {
         return dec.split(",");
     }
     encode(data) {
-        return data;
-
-        /* TOdO
-          normalized = []
-        for b in data:
-            if b >= 128:
-                b = b - 256
-            normalized.append(str(b))
-
-        string = ','.join(normalized)
-        return bytearray(string.encode('ascii'))
-        */
+        const normalized = [];
+        for (let b of data) {
+            if (b >= 128) {
+                b = b - 256;
+            }
+            normalized.push(b);
+        }
+        return normalized;
     }
     decode(data) {
-        return data;
-        // data = [int(a) for a in data.decode('ascii').split(',')]
-        // for i in range(len(data)):
-        //     if data[i] < 0:
-        //         data[i] = data[i] + 256
-        // return bytearray(data)
+        const normalized = [];
+        for (let b of data) {
+            if (b < 0) {
+                b = b + 256;
+            }
+            normalized.push(b);
+        }
+        return normalized;
     }
     encryptAes(query) {
         if (!this.dataKey) {
@@ -471,23 +479,27 @@ class Midea extends utils.Adapter {
         pktBuilder.command = command;
         const data = pktBuilder.finalize();
         this.hgIdArray.forEach((element) => {
-            this.sendCommand(element, data).catch((error) => {
-                this.log.error(error);
-                this.log.info("Try to relogin");
-                this.login()
-                    .then(() => {
-                        this.log.debug("Login successful");
-                        this.setState("info.connection", true, true);
-                        this.sendCommand(element, data).catch((error) => {
-                            this.log.error("update Command still failed after relogin");
+            this.sendCommand(element, data)
+                .then(() => {
+                    this.log.debug("Update successful");
+                })
+                .catch((error) => {
+                    this.log.error(error);
+                    this.log.info("Try to relogin");
+                    this.login()
+                        .then(() => {
+                            this.log.debug("Login successful");
+                            this.setState("info.connection", true, true);
+                            this.sendCommand(element, data).catch((error) => {
+                                this.log.error("update Command still failed after relogin");
+                                this.setState("info.connection", false, true);
+                            });
+                        })
+                        .catch(() => {
+                            this.log.error("Login failed");
                             this.setState("info.connection", false, true);
                         });
-                    })
-                    .catch(() => {
-                        this.log.error("Login failed");
-                        this.setState("info.connection", false, true);
-                    });
-            });
+                });
         });
     }
 
@@ -837,7 +849,7 @@ class crc8 {
             0x35,
         ];
         let crc_value = 0;
-        for (let m of data) {
+        for (const m of data) {
             let k = crc_value ^ m;
             if (k > 256) k -= 256;
             if (k < 0) k += 256;
@@ -1080,8 +1092,8 @@ class applianceResponse {
 
     // Byte 0x04 + 0x06
     get onTimer() {
-        let on_timer_value = this.data[0x04];
-        let on_timer_minutes = this.data[0x06];
+        const on_timer_value = this.data[0x04];
+        const on_timer_minutes = this.data[0x06];
         return {
             status: (on_timer_value & 0x80) >> 7 > 0,
             hour: (on_timer_value & 0x7c) >> 2,
@@ -1091,8 +1103,8 @@ class applianceResponse {
 
     // Byte 0x05 + 0x06
     get offTimer() {
-        let off_timer_value = this.data[0x05];
-        let off_timer_minutes = this.data[0x06];
+        const off_timer_value = this.data[0x05];
+        const off_timer_minutes = this.data[0x06];
         return {
             status: (off_timer_value & 0x80) >> 7 > 0,
             hour: (off_timer_value & 0x7c) >> 2,
