@@ -456,6 +456,7 @@ class Midea extends utils.Adapter {
     decode(data) {
         const normalized = [];
         for (let b of data) {
+            b = parseInt(b);
             if (b < 0) {
                 b = b + 256;
             }
