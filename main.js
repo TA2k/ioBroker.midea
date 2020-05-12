@@ -369,7 +369,7 @@ class Midea extends utils.Adapter {
                     try {
                         this.log.debug("send successful");
 
-                        const response = new applianceResponse(this.decryptAes(body.result.reply));
+                        const response = new applianceResponse(this.decode(this.decryptAes(body.result.reply)));
                         const properties = Object.getOwnPropertyNames(applianceResponse.prototype).slice(1);
 
                         properties.forEach((element) => {
@@ -446,6 +446,7 @@ class Midea extends utils.Adapter {
     encode(data) {
         const normalized = [];
         for (let b of data) {
+            b = parseInt(b);
             if (b >= 128) {
                 b = b - 256;
             }
@@ -863,38 +864,9 @@ class crc8 {
 class baseCommand {
     constructor(device_type = 0xac) {
         // More magic numbers. I'm sure each of these have a purpose, but none of it is documented in english. I might make an effort to google translate the SDK
-        this.data = [
-            0xaa,
-            0x23,
-            0xac,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x03,
-            0x02,
-            0x40,
-            0x81,
-            0x00,
-            0xff,
-            0x03,
-            0xff,
-            0x00,
-            0x30,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x03,
-            0xcc,
-        ];
+        // full = [170, 35, 172, 0, 0, 0, 0, 0, 3, 2, 64, 67, 70, 102, 127, 127, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 6, 14, 187, 137, 169, 223, 88, 121, 170, 108, 162, 36, 170, 80, 242, 143, null];
+
+        this.data = [170, 35, 172, 0, 0, 0, 0, 0, 3, 2, 64, 67, 70, 102, 127, 127, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         this.data[0x02] = device_type;
     }
 
@@ -987,48 +959,7 @@ class packetBuilder {
         this._command = null;
 
         // Init the packet with the header data. Weird magic numbers, I'm not sure what they all do, but they have to be there (packet length at 0x4)
-        this.packet = [
-            0x5a,
-            0x5a,
-            0x01,
-            0x11,
-            0x5c,
-            0x00,
-            0x20,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x0e,
-            0x03,
-            0x12,
-            0x14,
-            0xc6,
-            0x79,
-            0x00,
-            0x00,
-            0x00,
-            0x05,
-            0x0a,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            0x02,
-            0x00,
-            0x00,
-            0x00,
-        ];
+        this.packet = [90, 90, 1, 16, 92, 0, 32, 0, 1, 0, 0, 0, 189, 179, 57, 14, 12, 5, 20, 20, 29, 129, 0, 0, 0, 16, 0, 0, 0, 4, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0];
     }
 
     set command(command) {
