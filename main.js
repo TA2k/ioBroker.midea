@@ -50,15 +50,15 @@ class Midea extends utils.Adapter {
                 this.setState("info.connection", true, true);
                 this.getUserList()
                     .then(() => {
-                        this.updateValues();
+                        // this.updateValues();
                     })
                     .catch(() => {
                         this.log.error("Get Devices failed");
                         this.setState("info.connection", false, true);
                     });
-                this.updateInterval = setInterval(() => {
-                    this.updateValues();
-                }, this.config.interval * 60 * 1000);
+                // this.updateInterval = setInterval(() => {
+                //     this.updateValues();
+                // }, this.config.interval * 60 * 1000);
             })
             .catch(() => {
                 this.log.error("Login failed");
