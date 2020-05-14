@@ -233,11 +233,11 @@ class Midea extends utils.Adapter {
                                 this.controls = [
                                     { name: "powerState", type: "boolean", unit: "" },
                                     { name: "ecoMode", type: "boolean", unit: "" },
-                                    { name: "swingMode", type: "boolean", unit: "" },
+                                    { name: "swingMode", type: "boolean", unit: "", states: { 0x0: "Off", 0xc: "Vertical", 0x3: "Horizontal", 0xf: "Both" } },
                                     { name: "turboMode", type: "boolean", unit: "" },
-                                    { name: "targetTemperature", type: "number", unit: "C" },
-                                    { name: "operationalMode", type: "number", unit: "" },
-                                    { name: "fanSpeed", type: "number", unit: "" },
+                                    { name: "targetTemperature", type: "number", unit: "°C" },
+                                    { name: "operationalMode", type: "number", unit: "", states: { 1: "Auto", 2: "Cool", 3: "Dry", 4: "Heat", 5: "Fan_only" } },
+                                    { name: "fanSpeed", type: "number", unit: "", states: { "102": "Auto", "20": "Silent", "40": "Low", "60": "Medium", "80": "High" } },
                                 ];
                                 for (const property of this.controls) {
                                     await this.setObjectNotExistsAsync(currentElement.id + ".control." + property.name, {
@@ -249,6 +249,7 @@ class Midea extends utils.Adapter {
                                             write: true,
                                             read: true,
                                             unit: property.unit || "",
+                                            states: property.states || null,
                                         },
                                         native: {},
                                     });
@@ -256,14 +257,14 @@ class Midea extends utils.Adapter {
                                 this.status = [
                                     { name: "powerState", type: "boolean", unit: "" },
                                     { name: "ecoMode", type: "boolean", unit: "" },
-                                    { name: "swingMode", type: "boolean", unit: "" },
+                                    { name: "swingMode", type: "boolean", unit: "", states: { 0x0: "Off", 0xc: "Vertical", 0x3: "Horizontal", 0xf: "Both" } },
                                     { name: "turboMode", type: "boolean", unit: "" },
                                     { name: "imodeResume", type: "boolean", unit: "" },
                                     { name: "timerMode", type: "boolean", unit: "" },
                                     { name: "applianceError", type: "boolean", unit: "" },
                                     { name: "targetTemperature", type: "number", unit: "°C" },
-                                    { name: "operationalMode", type: "number", unit: "" },
-                                    { name: "fanSpeed", type: "number", unit: "" },
+                                    { name: "operationalMode", type: "number", unit: "", states: { 1: "Auto", 2: "Cool", 3: "Dry", 4: "Heat", 5: "Fan_only" } },
+                                    { name: "fanSpeed", type: "number", unit: "", states: { "102": "Auto", "20": "Silent", "40": "Low", "60": "Medium", "80": "High" } },
                                     { name: "onTimer", type: "number", unit: "" },
                                     { name: "offTimer", type: "number", unit: "" },
                                     { name: "swingMode", type: "number", unit: "" },
@@ -298,6 +299,7 @@ class Midea extends utils.Adapter {
                                             write: false,
                                             read: true,
                                             unit: property.unit || "",
+                                            states: property.states || null,
                                         },
                                         native: {},
                                     });
@@ -354,8 +356,14 @@ class Midea extends utils.Adapter {
 
                     this.log.debug(JSON.stringify(body));
                     if (body.errorCode && body.errorCode !== "0") {
-                        if (body.errorCode === "3123" || body.errorCode === "3176") {
+                        if (body.errorCode === "3123") {
                             this.log.info("Cannot reach " + applianceId + " " + body.msg);
+
+                            resolve();
+                            return;
+                        }
+                        if (body.errorCode === "3176") {
+                            this.log.info("Command was not accepted by device. Command wrong or device not reachable " + applianceId + " " + body.msg);
 
                             resolve();
                             return;
