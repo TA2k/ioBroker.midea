@@ -50,15 +50,15 @@ class Midea extends utils.Adapter {
                 this.setState("info.connection", true, true);
                 this.getUserList()
                     .then(() => {
-                        // this.updateValues();
+                        this.updateValues();
                     })
                     .catch(() => {
                         this.log.error("Get Devices failed");
                         this.setState("info.connection", false, true);
                     });
-                // this.updateInterval = setInterval(() => {
-                //     this.updateValues();
-                // }, this.config.interval * 60 * 1000);
+                this.updateInterval = setInterval(() => {
+                    this.updateValues();
+                }, this.config.interval * 60 * 1000);
             })
             .catch(() => {
                 this.log.error("Login failed");
@@ -476,10 +476,61 @@ class Midea extends utils.Adapter {
     }
 
     updateValues() {
-        const command = new setCommand();
-        const pktBuilder = new packetBuilder();
-        pktBuilder.command = command;
-        const data = pktBuilder.finalize();
+        const header = [90, 90, 1, 16, 89, 0, 32, 0, 80, 0, 0, 0, 169, 65, 48, 9, 14, 5, 20, 20, 213, 50, 1, 0, 0, 17, 0, 0, 0, 4, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+        const updateCommand = [
+            170,
+            32,
+            172,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            65,
+            129,
+            0,
+            255,
+            3,
+            255,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            205,
+            156,
+            16,
+            184,
+            113,
+            186,
+            162,
+            129,
+            39,
+            12,
+            160,
+            157,
+            100,
+            102,
+            118,
+            15,
+            154,
+            166,
+        ];
+
+        const data = header.concat(updateCommand);
+
         this.hgIdArray.forEach((element) => {
             this.sendCommand(element, data)
                 .then(() => {
@@ -872,7 +923,7 @@ class baseCommand {
 
     finalize() {
         // Add the CRC8
-        this.data[0x1d] = crc8.calculate(this.data.slice(16));
+        this.data[this.data.length - 1] = crc8.calculate(this.data.slice(16));
         // Set the length of the command data
         this.data[0x01] = this.data.length;
         return this.data;
@@ -972,7 +1023,7 @@ class packetBuilder {
         // Append a basic checksum of the command to the packet (This is apart from the CRC8 that was added in the command)
         this.packet = this.packet.concat([this.checksum(this._command.slice(1))]);
         // Ehh... I dunno, but this seems to make things work. Pad with 0's
-        this.packet = this.packet.concat(new Array(46 - this._command.length).fill(0));
+        this.packet = this.packet.concat(new Array(49 - this._command.length).fill(0));
         // Set the packet length in the packet!
         this.packet[0x04] = this.packet.length;
         return this.packet;
