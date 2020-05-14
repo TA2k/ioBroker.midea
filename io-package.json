@@ -1,100 +1,100 @@
 {
-    "common": {
-        "name": "midea",
-        "version": "0.0.2",
-        "news": {
-            "0.0.2": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "首次出版"
-            }
-        },
-        "title": "Midea",
-        "titleLang": {
-            "en": "Midea",
-            "de": "Midea",
-            "ru": "Midea",
-            "pt": "Midea",
-            "nl": "Midea",
-            "fr": "Midea",
-            "it": "Midea",
-            "es": "Midea",
-            "pl": "Midea",
-            "zh-cn": "美的"
-        },
-        "desc": {
-            "en": "Midea Adapter",
-            "de": "Midea Adapter",
-            "ru": "Midea адаптер",
-            "pt": "Adaptador Midea",
-            "nl": "Midea-adapter",
-            "fr": "Adaptateur Midea",
-            "it": "Adattatore Midea",
-            "es": "Adaptador Midea",
-            "pl": "Adapter Midea",
-            "zh-cn": "美的适配器"
-        },
-        "authors": [
-            "TA2k <tombox2020@gmail.com>"
-        ],
-        "keywords": [
-            "midea",
-            "dimstal"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "main": "main.js",
-        "icon": "midea.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/TA2k/ioBroker.midea/master/admin/midea.png",
-        "readme": "https://github.com/TA2k/ioBroker.midea/blob/master/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "climate-control",
-        "compact": true,
-        "connectionType": "cloud",
-        "dataSource": "poll",
-        "materialize": true,
-        "dependencies": [
-            {
-                "js-controller": ">=1.4.2"
-            }
-        ]
+  "common": {
+    "name": "midea",
+    "version": "0.0.3",
+    "news": {
+      "0.0.3": {
+        "en": "initial release",
+        "de": "Erstveröffentlichung",
+        "ru": "Начальная версия",
+        "pt": "lançamento inicial",
+        "nl": "Eerste uitgave",
+        "fr": "Première version",
+        "it": "Versione iniziale",
+        "es": "Versión inicial",
+        "pl": "Pierwsze wydanie",
+        "zh-cn": "首次出版"
+      }
     },
-    "native": {
-        "user": "",
-        "password": "",
-        "interval": 5
+    "title": "Midea",
+    "titleLang": {
+      "en": "Midea",
+      "de": "Midea",
+      "ru": "Midea",
+      "pt": "Midea",
+      "nl": "Midea",
+      "fr": "Midea",
+      "it": "Midea",
+      "es": "Midea",
+      "pl": "Midea",
+      "zh-cn": "美的"
     },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": "Information"
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": "Device or service connected",
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        }
+    "desc": {
+      "en": "Midea Adapter",
+      "de": "Midea Adapter",
+      "ru": "Midea адаптер",
+      "pt": "Adaptador Midea",
+      "nl": "Midea-adapter",
+      "fr": "Adaptateur Midea",
+      "it": "Adattatore Midea",
+      "es": "Adaptador Midea",
+      "pl": "Adapter Midea",
+      "zh-cn": "美的适配器"
+    },
+    "authors": [
+      "TA2k <tombox2020@gmail.com>"
+    ],
+    "keywords": [
+      "midea",
+      "dimstal"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "main.js",
+    "icon": "midea.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/TA2k/ioBroker.midea/master/admin/midea.png",
+    "readme": "https://github.com/TA2k/ioBroker.midea/blob/master/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "climate-control",
+    "compact": true,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "materialize": true,
+    "dependencies": [
+      {
+        "js-controller": ">=1.4.2"
+      }
     ]
+  },
+  "native": {
+    "user": "",
+    "password": "",
+    "interval": 5
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Device or service connected",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }
