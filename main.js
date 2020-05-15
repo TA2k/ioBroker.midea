@@ -583,53 +583,54 @@ class Midea extends utils.Adapter {
      * @param {string} id
      * @param {ioBroker.State | null | undefined} state
      */
-    onStateChange(id, state) {
+    async onStateChange(id, state) {
         if (state && !state.ack) {
             const deviceId = id.split(".")[2];
             const command = new setCommand();
-            if (id.indexOf("powerState") !== -1) {
-                command.powerState = state.val;
-            }
-            if (id.indexOf("ecoMode") !== -1) {
-                command.ecoMode = state.val;
-            }
-            if (id.indexOf("swingMode") !== -1) {
-                command.swingMode = state.val;
-            }
-            if (id.indexOf("turboMode") !== -1) {
-                command.turboMode = state.val;
-            }
-            if (id.indexOf("targetTemperature") !== -1) {
-                command.targetTemperature = state.val;
-            }
-            if (id.indexOf("operationalMode") !== -1) {
-                command.operationalMode = state.val;
-            }
-            if (id.indexOf("fanSpeed") !== -1) {
-                command.fanSpeed = state.val;
-            }
+            if (id.indexOf(".control") !== -1) {
+                const powerState = await this.getStateAsync(deviceId + ".control.powerState");
+                command.powerState = powerState.val;
 
-            const pktBuilder = new packetBuilder();
-            pktBuilder.command = command;
-            const data = pktBuilder.finalize();
+                const ecoMode = await this.getStateAsync(deviceId + ".control.ecoMode");
+                command.ecoMode = ecoMode.val;
 
-            this.sendCommand(deviceId, data).catch((error) => {
-                this.log.error(error);
-                this.log.info("Try to relogin");
-                this.login()
-                    .then(() => {
-                        this.log.debug("Login successful");
-                        this.setState("info.connection", true, true);
-                        this.sendCommand(deviceId, data).catch((error) => {
-                            this.log.error("Command still failed after relogin");
+                const swingMode = await this.getStateAsync(deviceId + ".control.swingMode");
+                command.swingMode = swingMode.val;
+
+                const turboMode = await this.getStateAsync(deviceId + ".control.turboMode");
+                command.turboMode = turboMode.val;
+
+                const targetTemperature = await this.getStateAsync(deviceId + ".control.targetTemperature");
+                command.targetTemperature = targetTemperature.val;
+
+                const operationalMode = await this.getStateAsync(deviceId + ".control.operationalMode");
+                command.operationalMode = operationalMode.val;
+
+                const fanSpeed = await this.getStateAsync(deviceId + ".control.fanSpeed");
+                command.fanSpeed = fanSpeed.val;
+
+                const pktBuilder = new packetBuilder();
+                pktBuilder.command = command;
+                const data = pktBuilder.finalize();
+
+                this.sendCommand(deviceId, data).catch((error) => {
+                    this.log.error(error);
+                    this.log.info("Try to relogin");
+                    this.login()
+                        .then(() => {
+                            this.log.debug("Login successful");
+                            this.setState("info.connection", true, true);
+                            this.sendCommand(deviceId, data).catch((error) => {
+                                this.log.error("Command still failed after relogin");
+                                this.setState("info.connection", false, true);
+                            });
+                        })
+                        .catch(() => {
+                            this.log.error("Login failed");
                             this.setState("info.connection", false, true);
                         });
-                    })
-                    .catch(() => {
-                        this.log.error("Login failed");
-                        this.setState("info.connection", false, true);
-                    });
-            });
+                });
+            }
         } else {
             // The state was deleted
             // this.log.info(`state ${id} deleted`);
