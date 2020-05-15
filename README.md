@@ -17,7 +17,7 @@ Midea Adapter
 
 ## Changelog
 
-### 0.0.3
+### 0.0.4
 
 -   (TA2k) initial release
 
