@@ -612,7 +612,8 @@ class Midea extends utils.Adapter {
                 const pktBuilder = new packetBuilder();
                 pktBuilder.command = command;
                 const data = pktBuilder.finalize();
-
+                this.log.debug("Command: " + JSON.stringify(command));
+                this.log.debug("Command + Header: " + JSON.stringify(data));
                 this.sendCommand(deviceId, data).catch((error) => {
                     this.log.error(error);
                     this.log.info("Try to relogin");
