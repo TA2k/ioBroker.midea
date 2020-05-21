@@ -589,25 +589,25 @@ class Midea extends utils.Adapter {
             const command = new setCommand();
             if (id.indexOf(".control") !== -1) {
                 const powerState = await this.getStateAsync(deviceId + ".control.powerState");
-                command.powerState = powerState.val;
+                if (powerState) command.powerState = powerState.val;
 
                 const ecoMode = await this.getStateAsync(deviceId + ".control.ecoMode");
-                command.ecoMode = ecoMode.val;
+                if (ecoMode) command.ecoMode = ecoMode.val;
 
                 const swingMode = await this.getStateAsync(deviceId + ".control.swingMode");
-                command.swingMode = swingMode.val;
+                if (swingMode) command.swingMode = swingMode.val;
 
                 const turboMode = await this.getStateAsync(deviceId + ".control.turboMode");
-                command.turboMode = turboMode.val;
+                if (turboMode) command.turboMode = turboMode.val;
 
                 const targetTemperature = await this.getStateAsync(deviceId + ".control.targetTemperature");
-                command.targetTemperature = targetTemperature.val;
+                if (targetTemperature) command.targetTemperature = targetTemperature.val;
 
                 const operationalMode = await this.getStateAsync(deviceId + ".control.operationalMode");
-                command.operationalMode = operationalMode.val;
+                if (operationalMode) command.operationalMode = operationalMode.val;
 
                 const fanSpeed = await this.getStateAsync(deviceId + ".control.fanSpeed");
-                command.fanSpeed = fanSpeed.val;
+                if (fanSpeed) command.fanSpeed = fanSpeed.val;
 
                 const pktBuilder = new packetBuilder();
                 pktBuilder.command = command;
