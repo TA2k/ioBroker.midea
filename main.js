@@ -231,11 +231,11 @@ class Midea extends utils.Adapter {
                                     this.setState(currentElement.id + ".general." + key, currentElement[key], true);
                                 });
                                 this.controls = [
-                                    { name: "powerState", type: "boolean", unit: "" },
+                                    { name: "powerState", type: "boolean", unit: "", role: "switch.power" },
                                     { name: "ecoMode", type: "boolean", unit: "" },
                                     { name: "swingMode", type: "boolean", unit: "", states: { 0x0: "Off", 0xc: "Vertical", 0x3: "Horizontal", 0xf: "Both" } },
                                     { name: "turboMode", type: "boolean", unit: "" },
-                                    { name: "targetTemperature", type: "number", unit: "°C" },
+                                    { name: "targetTemperature", type: "number", unit: "°C", role: "level.temperature" },
                                     { name: "operationalMode", type: "number", unit: "", states: { 1: "Auto", 2: "Cool", 3: "Dry", 4: "Heat", 5: "Fan_only" } },
                                     { name: "fanSpeed", type: "number", unit: "", states: { "102": "Auto", "20": "Silent", "40": "Low", "60": "Medium", "80": "High" } },
                                 ];
@@ -244,7 +244,7 @@ class Midea extends utils.Adapter {
                                         type: "state",
                                         common: {
                                             name: property.name,
-                                            role: "switch",
+                                            role: property.role || "switch",
                                             type: property.type,
                                             write: true,
                                             read: true,
@@ -262,7 +262,7 @@ class Midea extends utils.Adapter {
                                     { name: "imodeResume", type: "boolean", unit: "" },
                                     { name: "timerMode", type: "boolean", unit: "" },
                                     { name: "applianceError", type: "boolean", unit: "" },
-                                    { name: "targetTemperature", type: "number", unit: "°C" },
+                                    { name: "targetTemperature", type: "number", unit: "°C", role: "value.temperature" },
                                     { name: "operationalMode", type: "number", unit: "", states: { 1: "Auto", 2: "Cool", 3: "Dry", 4: "Heat", 5: "Fan_only" } },
                                     { name: "fanSpeed", type: "number", unit: "", states: { "102": "Auto", "20": "Silent", "40": "Low", "60": "Medium", "80": "High" } },
                                     { name: "onTimer", type: "number", unit: "" },
@@ -270,8 +270,8 @@ class Midea extends utils.Adapter {
                                     { name: "swingMode", type: "number", unit: "" },
                                     { name: "cozySleep", type: "number", unit: "" },
                                     { name: "tempUnit", type: "number", unit: "" },
-                                    { name: "indoorTemperature", type: "number", unit: "°C" },
-                                    { name: "outdoorTemperature", type: "number", unit: "°C" },
+                                    { name: "indoorTemperature", type: "number", unit: "°C", role: "value.temperature" },
+                                    { name: "outdoorTemperature", type: "number", unit: "°C", role: "value.temperature" },
                                     { name: "humidity", type: "number", unit: "%" },
                                     { name: "save", type: "boolean", unit: "" },
                                     { name: "lowFrequencyFan", type: "boolean", unit: "" },
@@ -294,7 +294,7 @@ class Midea extends utils.Adapter {
                                         type: "state",
                                         common: {
                                             name: property.name,
-                                            role: "switch",
+                                            role: property.role || "indicator",
                                             type: property.type,
                                             write: false,
                                             read: true,
