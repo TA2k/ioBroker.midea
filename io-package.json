@@ -30,15 +30,15 @@
       "zh-cn": "美的"
     },
     "desc": {
-      "en": "Midea Adapter",
-      "de": "Midea Adapter",
-      "ru": "Midea адаптер",
-      "pt": "Adaptador Midea",
-      "nl": "Midea-adapter",
-      "fr": "Adaptateur Midea",
-      "it": "Adattatore Midea",
-      "es": "Adaptador Midea",
-      "pl": "Adapter Midea",
+      "en": "Midea Adapter for midea, dimstal or royal clima",
+      "de": "Midea Adapter für midea, dimstal or royal clima",
+      "ru": "Midea адаптер midea, dimstal or royal clima",
+      "pt": "Adaptador Midea midea, dimstal or royal clima",
+      "nl": "Midea-adapter midea, dimstal or royal clima",
+      "fr": "Adaptateur Midea midea, dimstal or royal clima",
+      "it": "Adattatore Midea midea, dimstal or royal clima",
+      "es": "Adaptador Midea midea, dimstal or royal clima",
+      "pl": "Adapter Midea midea, dimstal or royal clima",
       "zh-cn": "美的适配器"
     },
     "authors": [
@@ -46,7 +46,8 @@
     ],
     "keywords": [
       "midea",
-      "dimstal"
+      "dimstal",
+      "royal clima"
     ],
     "license": "MIT",
     "platform": "Javascript/Node.js",
