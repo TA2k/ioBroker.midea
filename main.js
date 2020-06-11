@@ -10,8 +10,6 @@ const utils = require("@iobroker/adapter-core");
 const request = require("request");
 const traverse = require("traverse");
 const crypto = require("crypto");
-const Sentry = require("@sentry/node");
-Sentry.init({ dsn: "https://d7b0227418c2493a857bbb64730ebb04@o378982.ingest.sentry.io/5230865" });
 class Midea extends utils.Adapter {
     /**
      * @param {Partial<ioBroker.AdapterOptions>} [options={}]
