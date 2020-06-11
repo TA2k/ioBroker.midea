@@ -1,9 +1,9 @@
 {
   "common": {
     "name": "midea",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "news": {
-      "0.0.5": {
+      "0.0.6": {
         "en": "initial release",
         "de": "Erstveröffentlichung",
         "ru": "Начальная версия",
@@ -63,6 +63,11 @@
     "connectionType": "cloud",
     "dataSource": "poll",
     "materialize": true,
+    "plugins": {
+      "sentry": {
+        "dsn": "https://dd8e8ba4255b4def8c9f9c220a403e94@sentry.iobroker.net/78"
+      }
+    },
     "dependencies": [
       {
         "js-controller": ">=1.4.2"
