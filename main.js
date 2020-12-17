@@ -235,7 +235,7 @@ class Midea extends utils.Adapter {
                                     { name: "turboMode", type: "boolean", unit: "" },
                                     { name: "targetTemperature", type: "number", unit: "°C", role: "level.temperature" },
                                     { name: "operationalMode", type: "number", unit: "", states: { 1: "Auto", 2: "Cool", 3: "Dry", 4: "Heat", 5: "Fan_only" } },
-                                    { name: "fanSpeed", type: "number", unit: "", states: { "102": "Auto", "20": "Silent", "40": "Low", "60": "Medium", "80": "High" } },
+                                    { name: "fanSpeed", type: "number", unit: "", states: { 102: "Auto", 20: "Silent", 40: "Low", 60: "Medium", 80: "High" } },
                                 ];
                                 for (const property of this.controls) {
                                     await this.setObjectNotExistsAsync(currentElement.id + ".control." + property.name, {
@@ -262,7 +262,7 @@ class Midea extends utils.Adapter {
                                     { name: "applianceError", type: "boolean", unit: "" },
                                     { name: "targetTemperature", type: "number", unit: "°C", role: "value.temperature" },
                                     { name: "operationalMode", type: "number", unit: "", states: { 1: "Auto", 2: "Cool", 3: "Dry", 4: "Heat", 5: "Fan_only" } },
-                                    { name: "fanSpeed", type: "number", unit: "", states: { "102": "Auto", "20": "Silent", "40": "Low", "60": "Medium", "80": "High" } },
+                                    { name: "fanSpeed", type: "number", unit: "", states: { 102: "Auto", 20: "Silent", 40: "Low", 60: "Medium", 80: "High" } },
                                     { name: "onTimer", type: "number", unit: "" },
                                     { name: "offTimer", type: "number", unit: "" },
                                     { name: "swingMode", type: "number", unit: "" },
@@ -584,7 +584,12 @@ class Midea extends utils.Adapter {
     async onStateChange(id, state) {
         if (state && !state.ack) {
             const deviceId = id.split(".")[2];
-            const command = new setCommand();
+            let deviceTypeState = await this.getStateAsync(deviceId + ".general.type");
+            let deviceType = 0xac;
+            if (deviceTypeState) {
+                deviceType = parseInt(deviceTypeState.val, 16);
+            }
+            const command = new setCommand(deviceType);
             if (id.indexOf(".control") !== -1) {
                 const powerState = await this.getStateAsync(deviceId + ".control.powerState");
                 if (powerState) command.powerState = powerState.val;
