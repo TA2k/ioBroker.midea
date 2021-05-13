@@ -231,7 +231,7 @@ class Midea extends utils.Adapter {
                                 this.controls = [
                                     { name: "powerState", type: "boolean", unit: "", role: "switch.power" },
                                     { name: "ecoMode", type: "boolean", unit: "" },
-                                    { name: "swingMode", type: "boolean", unit: "", states: { 0x0: "Off", 0xc: "Vertical", 0x3: "Horizontal", 0xf: "Both" } },
+                                    { name: "swingMode", type: "number", unit: "", states: { 0x0: "Off", 0xc: "Vertical", 0x3: "Horizontal", 0xf: "Both" } },
                                     { name: "turboMode", type: "boolean", unit: "" },
                                     { name: "targetTemperature", type: "number", unit: "°C", role: "level.temperature" },
                                     { name: "operationalMode", type: "number", unit: "", states: { 1: "Auto", 2: "Cool", 3: "Dry", 4: "Heat", 5: "Fan_only" } },
@@ -263,11 +263,11 @@ class Midea extends utils.Adapter {
                                     { name: "targetTemperature", type: "number", unit: "°C", role: "value.temperature" },
                                     { name: "operationalMode", type: "number", unit: "", states: { 1: "Auto", 2: "Cool", 3: "Dry", 4: "Heat", 5: "Fan_only" } },
                                     { name: "fanSpeed", type: "number", unit: "", states: { 102: "Auto", 20: "Silent", 40: "Low", 60: "Medium", 80: "High" } },
-                                    { name: "onTimer", type: "number", unit: "" },
-                                    { name: "offTimer", type: "number", unit: "" },
+                                    { name: "onTimer", type: "string", unit: "" },
+                                    { name: "offTimer", type: "string", unit: "" },
                                     { name: "swingMode", type: "number", unit: "" },
                                     { name: "cozySleep", type: "number", unit: "" },
-                                    { name: "tempUnit", type: "number", unit: "" },
+                                    { name: "tempUnit", type: "boolean", unit: "" },
                                     { name: "indoorTemperature", type: "number", unit: "°C", role: "value.temperature" },
                                     { name: "outdoorTemperature", type: "number", unit: "°C", role: "value.temperature" },
                                     { name: "humidity", type: "number", unit: "%" },
@@ -584,7 +584,7 @@ class Midea extends utils.Adapter {
     async onStateChange(id, state) {
         if (state && !state.ack) {
             const deviceId = id.split(".")[2];
-            let deviceTypeState = await this.getStateAsync(deviceId + ".general.type");
+            const deviceTypeState = await this.getStateAsync(deviceId + ".general.type");
             let deviceType = 0xac;
             if (deviceTypeState) {
                 deviceType = parseInt(deviceTypeState.val, 16);
