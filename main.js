@@ -255,7 +255,7 @@ class Midea extends utils.Adapter {
                                 this.status = [
                                     { name: "powerState", type: "boolean", unit: "" },
                                     { name: "ecoMode", type: "boolean", unit: "" },
-                                    { name: "swingMode", type: "boolean", unit: "", states: { 0x0: "Off", 0xc: "Vertical", 0x3: "Horizontal", 0xf: "Both" } },
+                                    { name: "swingMode", type: "number", unit: "", states: { 0x0: "Off", 0xc: "Vertical", 0x3: "Horizontal", 0xf: "Both" } },
                                     { name: "turboMode", type: "boolean", unit: "" },
                                     { name: "imodeResume", type: "boolean", unit: "" },
                                     { name: "timerMode", type: "boolean", unit: "" },
@@ -265,7 +265,6 @@ class Midea extends utils.Adapter {
                                     { name: "fanSpeed", type: "number", unit: "", states: { 102: "Auto", 20: "Silent", 40: "Low", 60: "Medium", 80: "High" } },
                                     { name: "onTimer", type: "string", unit: "" },
                                     { name: "offTimer", type: "string", unit: "" },
-                                    { name: "swingMode", type: "number", unit: "" },
                                     { name: "cozySleep", type: "number", unit: "" },
                                     { name: "tempUnit", type: "boolean", unit: "" },
                                     { name: "indoorTemperature", type: "number", unit: "°C", role: "value.temperature" },
