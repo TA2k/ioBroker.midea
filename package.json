@@ -18,7 +18,7 @@
     "url": "https://github.com/TA2k/ioBroker.midea"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.2.1",
+    "@iobroker/adapter-core": "^2.5.0",
     "request": "^2.88.0",
     "traverse": "^0.6.6",
     "@sentry/node": "^5.15.4"
