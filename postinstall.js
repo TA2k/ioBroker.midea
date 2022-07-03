@@ -27,7 +27,9 @@ try {
     try {
         result = execSync("wget https://bootstrap.pypa.io/get-pip.py");
         result = execSync("python3 get-pip.py --user");
+        console.log(result.toString("utf8"));
         result = execSync("pip3 -V");
+        console.log(result.toString("utf8"));
     } catch (error) {
         console.log("\nLocal pip installation failed. Please install via 'sudo apt install python3-pip'");
         process.exit(1);
