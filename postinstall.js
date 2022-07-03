@@ -46,10 +46,10 @@ if (!result.includes("pip ")) {
 }
 console.log("Installing  midea-beautiful-air");
 try {
-    if local {
+    if (local) {
         result = execSync("$HOME/.local/bin/pip3 install --upgrade midea-beautiful-air -t .");
     } else {
-    result = execSync("pip3 install --upgrade midea-beautiful-air -t .");
+        result = execSync("pip3 install --upgrade midea-beautiful-air -t .");
     }
 } catch (error) {
     console.log(error);
