@@ -20,6 +20,7 @@ if (!result.includes("Python 3")) {
         process.exit(1);
     }
 }
+let local = false;
 try {
     result = execSync("pip3 -V");
 } catch (error) {
@@ -28,9 +29,11 @@ try {
         result = execSync("wget https://bootstrap.pypa.io/get-pip.py");
         result = execSync("python3 get-pip.py --user");
         console.log(result.toString("utf8"));
-        result = execSync("pip3 -V");
+        result = execSync("$HOME/.local/bin/pip3 -V");
+        local = true;
         console.log(result.toString("utf8"));
     } catch (error) {
+        console.log(error);
         console.log("\nLocal pip installation failed. Please install via 'sudo apt install python3-pip'");
         process.exit(1);
     }
@@ -43,7 +46,11 @@ if (!result.includes("pip ")) {
 }
 console.log("Installing  midea-beautiful-air");
 try {
+    if local {
+        result = execSync("$HOME/.local/bin/pip3 install --upgrade midea-beautiful-air -t .");
+    } else {
     result = execSync("pip3 install --upgrade midea-beautiful-air -t .");
+    }
 } catch (error) {
     console.log(error);
     process.exit(1);
