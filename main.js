@@ -48,12 +48,12 @@ class Midea extends utils.Adapter {
                     password: this.config.password,
                 })
                 .catch((error) => {
-                    console.log(error);
+                    this.log.error(error);
                     return;
                 });
-            console.log(await cloud.__dict__);
+            this.log.info(await cloud.__dict__);
         } catch (error) {
-            console.log(error);
+            this.log.error(error);
         }
     }
 
