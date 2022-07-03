@@ -30,7 +30,7 @@ function checkPreconditions() {
     } else {
         console.log("Python 3 found");
         const version = result.split(".")[1];
-        if (version < 10) {
+        if (version < 8) {
             console.log("\nPlease install python 3.8");
             process.exit(1);
         }
