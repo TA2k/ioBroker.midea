@@ -11,76 +11,25 @@
         <script type="text/javascript" src="../../lib/js/materialize.js"></script>
         <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
-        <!-- Load our own files -->
-        <link rel="stylesheet" type="text/css" href="style.css" />
-        <script type="text/javascript" src="words.js"></script>
-
         <script type="text/javascript">
             // This will be called by the admin adapter when the settings page loads
-            function load(settings, onChange) {
-                // example: select elements with id=key and class=value and insert value
-                if (!settings) return;
-                $(".value").each(function () {
-                    var $key = $(this);
-                    var id = $key.attr("id");
-                    if ($key.attr("type") === "checkbox") {
-                        // do not call onChange direct, because onChange could expect some arguments
-                        $key.prop("checked", settings[id]).on("change", () => onChange());
-                    } else {
-                        // do not call onChange direct, because onChange could expect some arguments
-                        $key.val(settings[id])
-                            .on("change", () => onChange())
-                            .on("keyup", () => onChange());
-                    }
-                });
-                onChange(false);
-                // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-                if (M) M.updateTextFields();
-            }
-
+            function load(settings, onChange) {}
             // This will be called by the admin adapter when the user presses the save button
-            function save(callback) {
-                // example: select elements with class=value and build settings object
-                var obj = {};
-                $(".value").each(function () {
-                    var $this = $(this);
-                    if ($this.attr("type") === "checkbox") {
-                        obj[$this.attr("id")] = $this.prop("checked");
-                    } else {
-                        obj[$this.attr("id")] = $this.val();
-                    }
-                });
-                callback(obj);
-            }
+            function save(callback) {}
         </script>
     </head>
-
     <body>
         <div class="m adapter-container">
-            <div class="row">
-                <div class="col s12 m4 l2">
-                    <img src="midea.png" class="logo" />
+            <div class="col s12 page">
+                <div class="row">
+                    <div class="col s6">
+                        <img src="midea.png" class="logo" />
+                    </div>
                 </div>
-            </div>
-
-            <!-- Put your content here -->
-
-            <div class="row">
-                <div class="col s6 input-field">
-                    <input type="text" class="value" id="user" />
-                    <label for="user" class="translate">Midea/NetHome App User</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s6 input-field">
-                    <input type="password" class="value" id="password" />
-                    <label for="password" class="translate">Midea/NetHome App Password</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s6 input-field">
-                    <input type="number" class="value" id="interval" min="1" />
-                    <label for="interval" class="translate">Update interval in minutes</label>
+                <div class="row">
+                    <div class="col s12">
+                        <p style="font-weight: bold; font-size: 1.2em; color: red">This adapter version has no support for "Admin 4 UI" configuration. Please switch to "Admin 5" UI</p>
+                    </div>
                 </div>
             </div>
         </div>
