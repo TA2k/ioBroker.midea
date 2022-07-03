@@ -23,12 +23,13 @@ if (!result.includes("Python 3")) {
 try {
     result = execSync("pip3 -V");
 } catch (error) {
-    console.log("pip not found. Try to install local.'");
+    console.log("pip not found. Try to install local.");
     try {
         result = execSync("wget https://bootstrap.pypa.io/get-pip.py");
         result = execSync("python3 get-pip.py --user");
+        result = execSync("pip3 -V");
     } catch (error) {
-        console.log("Local pip installation failed. Please install via 'sudo apt install python3-pip'");
+        console.log("\nLocal pip installation failed. Please install via 'sudo apt install python3-pip'");
         process.exit(1);
     }
 }
