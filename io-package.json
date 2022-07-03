@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "midea",
-        "version": "0.0.7",
+        "version": "0.1.0",
         "news": {
             "0.0.7": {
                 "en": "initial release",
