@@ -1,8 +1,8 @@
 const { execSync } = require("child_process");
-console.log("Start Python package installation");
+console.log("\nStart Python package installation");
 const local = checkPreconditions();
 
-console.log("Installing  midea-beautiful-air");
+console.log("\nInstalling  midea-beautiful-air");
 try {
     if (local) {
         execSync("$HOME/.local/bin/pip3 install --upgrade midea-beautiful-air"); //-t . for local install is not working at the moment
@@ -19,19 +19,19 @@ function checkPreconditions() {
     try {
         result = execSync("python3 -V");
     } catch (error) {
-        console.log("Python 3 not found. Please install minimum python 3.8");
+        console.log("\nPython 3 not found. Please install minimum python 3.8");
         process.exit(1);
     }
     result = result.toString("utf8");
     console.log(result);
     if (!result.includes("Python 3")) {
-        console.log("Python 3 not found. Please install minimum python 3.8");
+        console.log("\nPython 3 not found. Please install minimum python 3.8");
         process.exit(1);
     } else {
         console.log("Python 3 found");
         const version = result.split(".")[1];
         if (version < 10) {
-            console.log("Please install python 3.8");
+            console.log("\nPlease install python 3.8");
             process.exit(1);
         }
     }
@@ -39,7 +39,7 @@ function checkPreconditions() {
     try {
         result = execSync("pip3 -V");
     } catch (error) {
-        console.log("pip not found. Try to install local.");
+        console.log("\npip not found. Try to install local.");
         try {
             result = execSync("wget https://bootstrap.pypa.io/get-pip.py");
             result = execSync("python3 get-pip.py --user");
