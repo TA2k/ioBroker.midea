@@ -103,6 +103,7 @@ class Midea extends utils.Adapter {
         try {
             for (const id in this.devices) {
                 const appliance_state = await this.midea_beautiful.appliance_state$({ cloud: this.cloud, appliance_id: id, use_cloud: true });
+                this.log.debug(await appliance_state);
                 const stateString = pythonToJson(await appliance_state.state.__dict__.__str__());
                 const stateJson = JSON.parse(stateString);
                 this.json2iob.parse(id, stateJson);
