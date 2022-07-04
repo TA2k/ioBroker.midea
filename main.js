@@ -7,7 +7,8 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
-const { python } = require("pythonia");
+const { py, python } = require("pythonia");
+const Json2iob = require("./lib/json2iob");
 class Midea extends utils.Adapter {
     /**
      * @param {Partial<ioBroker.AdapterOptions>} [options={}]
@@ -20,6 +21,12 @@ class Midea extends utils.Adapter {
         this.on("ready", this.onReady.bind(this));
         this.on("stateChange", this.onStateChange.bind(this));
         this.on("unload", this.onUnload.bind(this));
+        this.json2iob = new Json2iob(this);
+        this.devices = {};
+        //redirect log from python module to adapter log
+        console.log = (args) => {
+            this.log.info(args);
+        };
     }
 
     /**
@@ -31,10 +38,11 @@ class Midea extends utils.Adapter {
 
         // Reset the connection indicator during startup
         this.setState("info.connection", false, true);
-        this.login();
-
+        this.cloud = await this.login();
+        await this.getDeviceList();
+        await this.updateDevices();
         this.updateInterval = setInterval(() => {
-            this.updateValues();
+            this.updateDevices();
         }, this.config.interval * 60 * 1000);
 
         // in this template all states changes inside the adapters namespace are subscribed
@@ -51,14 +59,53 @@ class Midea extends utils.Adapter {
                     this.log.error(error);
                     return;
                 });
-            this.log.info(await cloud.__dict__);
+            this.log.debug(await cloud.__dict__);
+            return cloud;
         } catch (error) {
             this.log.error(error);
         }
     }
+    async getDeviceList() {
+        const appliances = await this.midea_beautiful.find_appliances$({ cloud: this.cloud });
+        for await (const [index, app] of await py.enumerate(appliances)) {
+            this.log.debug(app);
 
-    updateValues() {}
+            const appJson = this.pythonToJson(await app.state.__dict__.__str__());
+            const id = appJson.id;
+            this.devices[id] = appJson;
+            await this.setObjectNotExistsAsync(id, {
+                type: "device",
+                common: {
+                    name: appJson.name,
+                },
+                native: {},
+            });
+            this.json2iob.parse(id, appJson, { forceIndex: true });
+        }
+    }
+    async updateDevices() {
+        for (const id in this.devices) {
+            const appliance_state = await this.midea_beautiful.appliance_state$({ cloud: this.cloud, appliance_id: id, use_cloud: true });
+            const stateString = pythonToJson(await appliance_state.state.__dict__.__str__());
+            const stateJson = JSON.parse(stateString);
+            this.json2iob.parse(id, stateJson);
+        }
+    }
 
+    pythonToJson(objectString) {
+        objectString = objectString
+            .replaceAll(/b'[^']*'/g, "''")
+            .replaceAll(/: <[^<]*>,/g, ":'',")
+            .replaceAll(`{'_`, `{'`)
+            .replaceAll(`, '_`, `, '`)
+            .replaceAll(`'`, `"`)
+            .replaceAll(` None,`, `null,`)
+            .replaceAll(` True,`, `true,`)
+            .replaceAll(` False,`, `false,`);
+
+        this.log.debug(objectString);
+        return objectString;
+    }
     /**
      * Is called when adapter shuts down - callback has to be called under any circumstances!
      * @param {() => void} callback
@@ -81,11 +128,6 @@ class Midea extends utils.Adapter {
     async onStateChange(id, state) {
         if (state && !state.ack) {
             const deviceId = id.split(".")[2];
-            const deviceTypeState = await this.getStateAsync(deviceId + ".general.type");
-            let deviceType = 0xac;
-            if (deviceTypeState) {
-                deviceType = parseInt(deviceTypeState.val, 16);
-            }
         }
     }
 }
