@@ -93,7 +93,7 @@ class Midea extends utils.Adapter {
                     },
                     native: {},
                 });
-                this.json2iob.parse(id, appJson, { forceIndex: true });
+                this.json2iob.parse(id, appJson, { write: true, forceIndex: true });
             }
         } catch (error) {
             this.log.error(error);
@@ -106,7 +106,7 @@ class Midea extends utils.Adapter {
                 this.log.debug(await appliance_state);
                 const stateString = this.pythonToJson(await appliance_state.state.__dict__.__str__());
                 const stateJson = JSON.parse(stateString);
-                this.json2iob.parse(id, stateJson);
+                this.json2iob.parse(id, stateJson, { write: true, forceIndex: true });
             }
         } catch (error) {
             this.log.error(error);
@@ -151,12 +151,12 @@ class Midea extends utils.Adapter {
             const deviceId = id.split(".")[2];
             const command = id.split(".")[3];
             const index = Objects.keys(this.devices).indexOf(deviceId);
-            const appliance = this.appliances[index];
+            const appliance = await this.appliances[index];
             const setState = { cloud: this.cloud };
             setState[command] = state.val;
             this.log.debug(setState);
             try {
-                appliance.set_state$(setState);
+                await appliance.set_state$(setState);
             } catch (error) {
                 this.log.error(error);
             }
