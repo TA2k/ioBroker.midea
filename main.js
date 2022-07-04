@@ -79,7 +79,7 @@ class Midea extends utils.Adapter {
         try {
             this.log.info("Getting devices");
             const appliances = await this.midea_beautiful.find_appliances$({ cloud: this.cloud });
-            this.log.info(`Found ${await appliances.len} devices`);
+            this.log.info(`Found ${await appliances.length} devices`);
             for await (const [index, app] of await py.enumerate(appliances)) {
                 this.log.debug(await app);
                 const appJsonString = this.pythonToJson(await app.state.__dict__.__str__());
