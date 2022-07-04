@@ -66,30 +66,37 @@ class Midea extends utils.Adapter {
         }
     }
     async getDeviceList() {
-        const appliances = await this.midea_beautiful.find_appliances$({ cloud: this.cloud });
-        for await (const [index, app] of await py.enumerate(appliances)) {
-            this.log.debug(app);
-
-            const appJson = this.pythonToJson(await app.state.__dict__.__str__());
-            const id = appJson.id;
-            this.devices[id] = appJson;
-            await this.setObjectNotExistsAsync(id, {
-                type: "device",
-                common: {
-                    name: appJson.name,
-                },
-                native: {},
-            });
-            this.json2iob.parse(id, appJson, { forceIndex: true });
+        try {
+            this.log.info("Getting devices");
+            const appliances = await this.midea_beautiful.find_appliances$({ cloud: this.cloud });
+            for await (const [index, app] of await py.enumerate(appliances)) {
+                this.log.debug(app);
+                const appJsonString = this.pythonToJson(await app.state.__dict__.__str__());
+                const appJson = JSON.parse(appJsonString);
+                const id = appJson.id;
+                this.devices[id] = appJson;
+                await this.setObjectNotExistsAsync(id, {
+                    type: "device",
+                    common: {
+                        name: appJson.name,
+                    },
+                    native: {},
+                });
+                this.json2iob.parse(id, appJson, { forceIndex: true });
+            }
+        } catch (error) {
+            this.log.error(error);
         }
     }
     async updateDevices() {
-        for (const id in this.devices) {
-            const appliance_state = await this.midea_beautiful.appliance_state$({ cloud: this.cloud, appliance_id: id, use_cloud: true });
-            const stateString = pythonToJson(await appliance_state.state.__dict__.__str__());
-            const stateJson = JSON.parse(stateString);
-            this.json2iob.parse(id, stateJson);
-        }
+        try {
+            for (const id in this.devices) {
+                const appliance_state = await this.midea_beautiful.appliance_state$({ cloud: this.cloud, appliance_id: id, use_cloud: true });
+                const stateString = pythonToJson(await appliance_state.state.__dict__.__str__());
+                const stateJson = JSON.parse(stateString);
+                this.json2iob.parse(id, stateJson);
+            }
+        } catch (error) {}
     }
 
     pythonToJson(objectString) {
