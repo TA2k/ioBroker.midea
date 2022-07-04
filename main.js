@@ -150,11 +150,11 @@ class Midea extends utils.Adapter {
         if (state && !state.ack) {
             const deviceId = id.split(".")[2];
             const command = id.split(".")[3];
-            const index = Objects.keys(this.devices).indexOf(deviceId);
+            const index = Object.keys(this.devices).indexOf(deviceId);
             const appliance = await this.appliances[index];
             const setState = { cloud: this.cloud };
             setState[command] = state.val;
-            this.log.debug(setState);
+            this.log.debug(JSON.stringify(setState));
             try {
                 await appliance.set_state$(setState);
             } catch (error) {
