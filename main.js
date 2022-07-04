@@ -34,7 +34,16 @@ class Midea extends utils.Adapter {
      */
     async onReady() {
         this.midea_beautiful = await python("midea_beautiful");
-        // Initialize your adapter here
+
+        this.setState("info.connection", false, true);
+        if (this.config.interval < 0.5) {
+            this.log.info("Set interval to minimum 0.5");
+            this.config.interval = 0.5;
+        }
+        if (!this.config.username || !this.config.password) {
+            this.log.error("Please set username and password in the instance settings");
+            return;
+        }
 
         // Reset the connection indicator during startup
         this.setState("info.connection", false, true);
@@ -60,6 +69,7 @@ class Midea extends utils.Adapter {
                     return;
                 });
             this.log.debug(await cloud.__dict__);
+            this.setState("info.connection", true, true);
             return cloud;
         } catch (error) {
             this.log.error(error);
@@ -69,8 +79,9 @@ class Midea extends utils.Adapter {
         try {
             this.log.info("Getting devices");
             const appliances = await this.midea_beautiful.find_appliances$({ cloud: this.cloud });
+            this.log.info(`Found ${await appliances.len} devices`);
             for await (const [index, app] of await py.enumerate(appliances)) {
-                this.log.debug(app);
+                this.log.debug(await app);
                 const appJsonString = this.pythonToJson(await app.state.__dict__.__str__());
                 const appJson = JSON.parse(appJsonString);
                 const id = appJson.id;
