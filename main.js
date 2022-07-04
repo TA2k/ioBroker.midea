@@ -78,9 +78,9 @@ class Midea extends utils.Adapter {
     async getDeviceList() {
         try {
             this.log.info("Getting devices");
-            const appliances = await this.midea_beautiful.find_appliances$({ cloud: this.cloud });
-            this.log.info(`Found ${await appliances.length} devices`);
-            for await (const [index, app] of await py.enumerate(appliances)) {
+            this.appliances = await this.midea_beautiful.find_appliances$({ cloud: this.cloud });
+            this.log.info(`Found ${await this.appliances.length} devices`);
+            for await (const [index, app] of await py.enumerate(this.appliances)) {
                 this.log.debug(await app);
                 const appJsonString = this.pythonToJson(await app.state.__dict__.__str__());
                 const appJson = JSON.parse(appJsonString);
@@ -149,6 +149,17 @@ class Midea extends utils.Adapter {
     async onStateChange(id, state) {
         if (state && !state.ack) {
             const deviceId = id.split(".")[2];
+            const command = id.split(".")[3];
+            const index = Objects.keys(this.devices).indexOf(deviceId);
+            const appliance = this.appliances[index];
+            const setState = { cloud: this.cloud };
+            setState[command] = state.val;
+            this.log.debug(setState);
+            try {
+                appliance.set_state$(setState);
+            } catch (error) {
+                this.log.error(error);
+            }
         }
     }
 }
