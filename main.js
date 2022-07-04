@@ -160,6 +160,10 @@ class Midea extends utils.Adapter {
             } catch (error) {
                 this.log.error(error);
             }
+            clearTimeout(this.refreshTimeout);
+            this.refreshTimeout = setTimeout(async () => {
+                await this.updateDevices();
+            }, 10 * 1000);
         }
     }
 }
