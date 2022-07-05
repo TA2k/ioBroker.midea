@@ -4,11 +4,11 @@ const local = checkPreconditions();
 
 console.log("\nInstalling  midea-beautiful-air");
 try {
-    if (local) {
-        execSync("$HOME/.local/bin/pip3 install --upgrade midea-beautiful-air"); //-t . for local install is not working with pythonia at the moment
-    } else {
-        execSync("pip3 install --upgrade midea-beautiful-air"); //-t . for local install is not working with pythonia at the moment
-    }
+    // if (local) {
+    //     execSync("$HOME/.local/bin/pip3 install --upgrade midea-beautiful-air"); //-t . for local install is not working with pythonia at the moment
+    // } else {
+    execSync("python3 -m pip install --upgrade midea-beautiful-air"); //-t . for local install is not working with pythonia at the moment
+    // }
 } catch (error) {
     console.log(error);
     process.exit(1);
