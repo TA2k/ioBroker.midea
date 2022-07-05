@@ -52,7 +52,7 @@
         "test:integration": "mocha test/integration --exit",
         "test": "npm run test:js && npm run test:package",
         "lint": "eslint",
-        "postinstall": "node ./postinstall.js"
+        "postinstall": "node ./pythonPackages.js"
     },
     "bugs": {
         "url": "https://github.com/TA2k/ioBroker.midea/issues"
