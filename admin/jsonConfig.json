@@ -69,7 +69,8 @@
             }
         },
         "local": {
-            "type": {
+            "type": "checkbox",
+            "label": {
                 "en": "Update via local network.",
                 "de": "Über lokales Netzwerk aktualisieren.",
                 "ru": "Обновление через локальную сеть.",
