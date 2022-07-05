@@ -92,6 +92,7 @@
         "user": "",
         "password": "",
         "type": "nethome",
+        "local": false,
         "interval": 5
     },
     "objects": [],

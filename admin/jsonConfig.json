@@ -68,6 +68,22 @@
                 "zh-cn": "附录"
             }
         },
+        "local": {
+            "type": {
+                "en": "Update via local network.",
+                "de": "Über lokales Netzwerk aktualisieren.",
+                "ru": "Обновление через локальную сеть.",
+                "pt": "Atualização via rede local.",
+                "nl": "Update via het lokale netwerk.",
+                "fr": "Mise à jour via le réseau local.",
+                "it": "Aggiornamento tramite rete locale.",
+                "es": "Actualización a través de la red local.",
+                "pl": "Przeniesienie przez lokalną sieć.",
+                "zh-cn": "通过当地网络更新。."
+            },
+            "newLine": true,
+            "sm": 3
+        },
         "interval": {
             "type": "number",
             "newLine": true,
