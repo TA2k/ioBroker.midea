@@ -40,7 +40,7 @@ function checkPreconditions() {
             result = execSync("wget https://bootstrap.pypa.io/get-pip.py");
             result = execSync("python3 get-pip.py --user");
             console.log(result.toString("utf8"));
-            result = execSync("$HOME/.local/bin/pip3 -V");
+            result = execSync("python3 -m pip -V");
             local = true;
             console.log(result.toString("utf8"));
         } catch (error) {
