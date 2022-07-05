@@ -127,7 +127,22 @@ class Midea extends utils.Adapter {
     async updateDevices() {
         try {
             for (const id in this.devices) {
-                const appliance_state = await this.midea_beautiful.appliance_state$({ cloud: this.cloud, appliance_id: id, use_cloud: true });
+                let appliance_state;
+                if (this.config.local) {
+                    if (this.devices[id].address) {
+                        appliance_state = await this.midea_beautiful.appliance_state$({
+                            address: this.devices[id].address,
+                            token: this.devices[id].token,
+                            key: this.devices[id].key,
+                            appliance_id: id,
+                        });
+                    } else {
+                        this.log.info("Missing ip for " + id + " device update via cloud");
+                        appliance_state = await this.midea_beautiful.appliance_state$({ cloud: this.cloud, appliance_id: id, use_cloud: true });
+                    }
+                } else {
+                    appliance_state = await this.midea_beautiful.appliance_state$({ cloud: this.cloud, appliance_id: id, use_cloud: true });
+                }
                 this.log.debug(await appliance_state);
                 const stateString = this.pythonToJson(await appliance_state.state.__dict__.__str__());
                 const stateJson = JSON.parse(stateString);
