@@ -9,6 +9,7 @@
 const utils = require("@iobroker/adapter-core");
 const { py, python } = require("pythonia");
 const Json2iob = require("./lib/json2iob");
+
 class Midea extends utils.Adapter {
     /**
      * @param {Partial<ioBroker.AdapterOptions>} [options={}]
@@ -23,9 +24,34 @@ class Midea extends utils.Adapter {
         this.on("unload", this.onUnload.bind(this));
         this.json2iob = new Json2iob(this);
         this.devices = {};
-        //redirect log from python module to adapter log
+        //redirect log to adapter
         console.log = (args) => {
             this.log.info(args);
+        };
+        this.appCredentials = {
+            nethome: {
+                appkey: "3742e9e5842d4ad59c2db887e12449f9",
+                appid: 1017,
+                apiurl: "https://mapp.appsmb.com",
+                signkey: "xhdiwjnchekd4d512chdjx5d8e4c394D2D7S",
+                proxied: null,
+            },
+            midea: {
+                appkey: "ff0cf6f5f0c3471de36341cab3f7a9af",
+                appid: 1117,
+                apiurl: "https://mapp.appsmb.com",
+                signkey: "xhdiwjnchekd4d512chdjx5d8e4c394D2D7S",
+                proxied: null,
+            },
+            msmarthome: {
+                appkey: "ac21b9f9cbfe4ca5a88562ef25e2b768",
+                appid: 1010,
+                apiurl: "https://mp-prod.appsmb.com/mas/v5/app/proxy?alias=",
+                signkey: "xhdiwjnchekd4d512chdjx5d8e4c394D2D7S",
+                iotkey: "meicloud",
+                hmackey: "PROD_VnoClJI9aikS8dyy",
+                proxied: "v5",
+            },
         };
     }
 
@@ -63,6 +89,7 @@ class Midea extends utils.Adapter {
                 .connect_to_cloud$({
                     account: this.config.user,
                     password: this.config.password,
+                    ...this.appCredentials[this.config.type],
                 })
                 .catch((error) => {
                     this.log.error(error);
@@ -133,8 +160,9 @@ class Midea extends utils.Adapter {
      */
     onUnload(callback) {
         try {
-            this.log.info("cleaned everything up...");
-            clearInterval(this.updateInterval);
+            python.exit();
+            this.updateInterval && clearInterval(this.updateInterval);
+            this.refreshTimeout && clearTimeout(this.refreshTimeout);
             callback();
         } catch (e) {
             callback();
@@ -167,11 +195,10 @@ class Midea extends utils.Adapter {
         }
     }
 }
-// @ts-ignore parent is a valid property on module-
-if (module.parent) {
+if (require.main !== module) {
     // Export the constructor in compact mode
     /**
-     * @param {Partial<ioBroker.AdapterOptions>} [options={}]
+     * @param {Partial<utils.AdapterOptions>} [options={}]
      */
     module.exports = (options) => new Midea(options);
 } else {
