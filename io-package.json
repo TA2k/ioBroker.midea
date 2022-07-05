@@ -3,6 +3,18 @@
         "name": "midea",
         "version": "0.1.0",
         "news": {
+            "0.1.0": {
+                "en": "The update completely rewritten and is now based on a python module. Before you update you should delete the old objects under Objects.",
+                "de": "Der Adapter wurde komplett umgeschrieben und basiert jetzt auf einem Python Modul. Vor dem Updaten sollten die alten Objekten unter Objekte gelöscht werden.",
+                "ru": "Обновление полностью переписано и теперь основано на модуле python. Перед обновлением необходимо удалить старые объекты под объектами.",
+                "pt": "A atualização completamente reescrita e agora é baseada em um módulo python. Antes de atualizar, você deve excluir os objetos antigos em Objetos.",
+                "nl": "De update is volledig herschreven en is nu gebaseerd op een python module. Voor je update moet je de oude objecten onder Objects wissen.",
+                "fr": "La mise à jour complètement réécrite et est maintenant basée sur un module python. Avant de mettre à jour, vous devez supprimer les anciens objets sous Objets.",
+                "it": "L'aggiornamento completamente riscritto e ora si basa su un modulo pitone. Prima di aggiornare si dovrebbe eliminare i vecchi oggetti sotto Oggetti.",
+                "es": "La actualización completamente reescrita y ahora se basa en un módulo de pitón. Antes de actualizar debe eliminar los viejos objetos bajo objetos.",
+                "pl": "Zaktualizowana całkowicie przepisany i jest obecnie oparta na module python. Zanim uaktualnisz, powinni usunąć stare obiekty pod obiektami.",
+                "zh-cn": "更新的完全细分,现在以图思单元为基础。 主席先生,在你更新之前,应删除原有的物体。."
+            },
             "0.0.7": {
                 "en": "initial release",
                 "de": "Erstveröffentlichung",
@@ -95,6 +107,46 @@
         "local": false,
         "interval": 5
     },
+    "messages": [
+        {
+            "condition": {
+                "operand": "and",
+                "rules": [
+                    "oldVersion<0.1.0",
+                    "newVersion>=0.1.0"
+                ]
+            },
+            "title": {
+                "en": "Important notice!",
+                "de": "Wichtiger Hinweis!",
+                "ru": "Важное замечание!",
+                "pt": "Notícia importante!",
+                "nl": "Belangrijke mededeling!",
+                "fr": "Avis important!",
+                "it": "Avviso IMPORTANTE!",
+                "es": "Noticia importante!",
+                "pl": "Ważna uwaga!",
+                "zh-cn": "重要通知!"
+            },
+            "text": {
+                "en": "The update completely rewritten and is now based on a python module. Before you update you should delete the old objects under Objects.",
+                "de": "Der Adapter wurde komplett umgeschrieben und basiert jetzt auf einem Python Modul. Vor dem Updaten sollten die alten Objekten unter Objekte gelöscht werden.",
+                "ru": "Обновление полностью переписано и теперь основано на модуле python. Перед обновлением необходимо удалить старые объекты под объектами.",
+                "pt": "A atualização completamente reescrita e agora é baseada em um módulo python. Antes de atualizar, você deve excluir os objetos antigos em Objetos.",
+                "nl": "De update is volledig herschreven en is nu gebaseerd op een python module. Voor je update moet je de oude objecten onder Objects wissen.",
+                "fr": "La mise à jour complètement réécrite et est maintenant basée sur un module python. Avant de mettre à jour, vous devez supprimer les anciens objets sous Objets.",
+                "it": "L'aggiornamento completamente riscritto e ora si basa su un modulo pitone. Prima di aggiornare si dovrebbe eliminare i vecchi oggetti sotto Oggetti.",
+                "es": "La actualización completamente reescrita y ahora se basa en un módulo de pitón. Antes de actualizar debe eliminar los viejos objetos bajo objetos.",
+                "pl": "Zaktualizowana całkowicie przepisany i jest obecnie oparta na module python. Zanim uaktualnisz, powinni usunąć stare obiekty pod obiektami.",
+                "zh-cn": "更新的完全细分,现在以图思单元为基础。 主席先生,在你更新之前,应删除原有的物体。."
+            },
+            "level": "warn",
+            "buttons": [
+                "agree",
+                "cancel"
+            ]
+        }
+    ],
     "objects": [],
     "instanceObjects": [
         {
