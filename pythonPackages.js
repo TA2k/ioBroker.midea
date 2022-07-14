@@ -35,7 +35,8 @@ function checkPreconditions() {
   let local = false;
   try {
     result = execSync("pip3 -V");
-    result = execSync("python3 -m pip install --upgrade pip"); //update pip to latest verion
+    result = execSync("python3 -m pip install --upgrade pip"); //update pip to latest version
+    result = execSync("pip3 -V");
   } catch (error) {
     console.log("\npip not found. Try to install local.");
     try {
