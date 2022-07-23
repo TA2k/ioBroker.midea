@@ -31,7 +31,7 @@
         "title": "Midea",
         "titleLang": {
             "en": "Midea",
-            "de": "Midea",
+            "de": "Midea and Carrier",
             "ru": "Midea",
             "pt": "Midea",
             "nl": "Midea",
@@ -42,15 +42,15 @@
             "zh-cn": "美的"
         },
         "desc": {
-            "en": "Midea Adapter for midea, dimstal or royal clima",
-            "de": "Midea Adapter für midea, dimstal or royal clima",
-            "ru": "Midea адаптер midea, dimstal or royal clima",
-            "pt": "Adaptador Midea midea, dimstal or royal clima",
-            "nl": "Midea-adapter midea, dimstal or royal clima",
-            "fr": "Adaptateur Midea midea, dimstal or royal clima",
-            "it": "Adattatore Midea midea, dimstal or royal clima",
-            "es": "Adaptador Midea midea, dimstal or royal clima",
-            "pl": "Adapter Midea midea, dimstal or royal clima",
+            "en": "Midea Adapter for midea, dimstal or royal clima or Carrier",
+            "de": "Midea Adapter für midea, dimstal oder royal clima oder Carrier Klimaanlagen und Wärmepumpen",
+            "ru": "Midea адаптер midea, dimstal or royal clima or Carrier",
+            "pt": "Adaptador Midea midea, dimstal or royal clima, Carrier",
+            "nl": "Midea-adapter midea, Carrier,dimstal or royal clima",
+            "fr": "Adaptateur Midea midea, dimstal et royal clima et Carrier",
+            "it": "Adattatore Midea midea, dimstal or royal clima, Carrier",
+            "es": "Adaptador Midea midea, dimstal or royal clima,Carrier ",
+            "pl": "Adapter Midea midea, dimstal or royal clima, Carrier",
             "zh-cn": "美的适配器"
         },
         "authors": [
@@ -59,7 +59,8 @@
         "keywords": [
             "midea",
             "dimstal",
-            "royal clima"
+            "royal clima",
+            "Carrier"
         ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
