@@ -19,7 +19,7 @@
         "url": "https://github.com/TA2k/ioBroker.midea"
     },
     "dependencies": {
-        "@iobroker/adapter-core": "^2.6.0",
+        "@iobroker/adapter-core": "^2.6.6",
         "json-bigint": "^1.0.0",
         "pythonia": "^1.0.0"
     },
