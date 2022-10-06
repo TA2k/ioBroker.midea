@@ -67,9 +67,7 @@ class Midea extends utils.Adapter {
       this.config.interval = 0.5;
     }
     if (!this.config.user || !this.config.password) {
-      this.log.error(
-        "Please set username and password in the instance settings"
-      );
+      this.log.error("Please set username and password in the instance settings");
       return;
     }
 
@@ -112,9 +110,7 @@ class Midea extends utils.Adapter {
       console.log(this.appliances[0]);
       for await (const [index, app] of await py.enumerate(this.appliances)) {
         this.log.debug(await app);
-        const appJsonString = this.pythonToJson(
-          await app.state.__dict__.__str__()
-        );
+        const appJsonString = this.pythonToJson(await app.state.__dict__.__str__());
         const appJson = JSON.parse(appJsonString);
         const id = appJson.id;
         this.devices[id] = appJson;
@@ -160,9 +156,7 @@ class Midea extends utils.Adapter {
           });
         }
         this.log.debug(await appliance_state);
-        const stateString = this.pythonToJson(
-          await appliance_state.state.__dict__.__str__()
-        );
+        const stateString = this.pythonToJson(await appliance_state.state.__dict__.__str__());
         const stateJson = JSON.parse(stateString);
         this.json2iob.parse(id, stateJson, { write: true, forceIndex: true });
       }
@@ -173,15 +167,19 @@ class Midea extends utils.Adapter {
   }
 
   pythonToJson(objectString) {
+    if (!objectString.replace) {
+      this.log.warn("pythonToJson: objectString is not a string");
+      return objectString;
+    }
     objectString = objectString
-      .replaceAll(/b'[^']*'/g, "''")
-      .replaceAll(/: <[^<]*>,/g, ":'',")
-      .replaceAll(`{'_`, `{'`)
-      .replaceAll(`, '_`, `, '`)
-      .replaceAll(`'`, `"`)
-      .replaceAll(` None,`, `null,`)
-      .replaceAll(` True,`, `true,`)
-      .replaceAll(` False,`, `false,`);
+      .replace(/b'[^']*'/g, "''")
+      .replace(/: <[^<]*>,/g, ":'',")
+      .replace(/{'_/g, `{'`)
+      .replace(/, '_/g, `, '`)
+      .replace(/'/g, `"`)
+      .replace(/ None,/g, `null,`)
+      .replace(/ True,/g, `true,`)
+      .replace(/ False,/g, `false,`);
 
     this.log.debug(objectString);
     return objectString;
