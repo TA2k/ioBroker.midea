@@ -59,8 +59,6 @@ class Midea extends utils.Adapter {
    * Is called when databases are connected and adapter received configuration.
    */
   async onReady() {
-    this.midea_beautiful = await python("midea_beautiful");
-
     this.setState("info.connection", false, true);
     if (this.config.interval < 0.5) {
       this.log.info("Set interval to minimum 0.5");
@@ -71,6 +69,7 @@ class Midea extends utils.Adapter {
       return;
     }
 
+    this.midea_beautiful = await python("midea_beautiful");
     // Reset the connection indicator during startup
     this.setState("info.connection", false, true);
     this.cloud = await this.login();
