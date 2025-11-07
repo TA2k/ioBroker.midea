@@ -70,6 +70,7 @@
         "extIcon": "https://raw.githubusercontent.com/TA2k/ioBroker.midea/master/admin/midea.png",
         "readme": "https://github.com/TA2k/ioBroker.midea/blob/master/README.md",
         "loglevel": "info",
+        "tier": 2,
         "mode": "daemon",
         "type": "climate-control",
         "compact": true,
