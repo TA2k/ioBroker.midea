@@ -64,7 +64,6 @@
         ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
-        "main": "main.js",
         "icon": "midea.png",
         "enabled": true,
         "extIcon": "https://raw.githubusercontent.com/TA2k/ioBroker.midea/master/admin/midea.png",
