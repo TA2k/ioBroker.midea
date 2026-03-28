@@ -1,5 +1,5 @@
 //not using npip because of the python version check
-const { execSync } = require("child_process");
+const { execSync } = require("node:child_process");
 console.log("\nStart Python package installation");
 const local = checkPreconditions();
 
