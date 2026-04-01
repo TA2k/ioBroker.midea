@@ -23,7 +23,7 @@
     "pythonia": "^1.0.0"
   },
   "devDependencies": {
-    "@iobroker/testing": "^5.0.0",
+    "@iobroker/testing": "^5.2.2",
     "@types/node": "^22.7.5",
     "eslint": "^8.57.1",
     "typescript": "~5.6.3"
