@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@iobroker/testing": "^5.0.0",
-    "@types/node": "^22.7.5",
+    "@types/node": "^25.5.0",
     "eslint": "^8.57.1",
     "typescript": "~5.6.3"
   },
