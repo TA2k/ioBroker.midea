@@ -17,6 +17,9 @@ Midea and Carrier Adapter
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+- (iobroker-bot) Adapter requires node.js >= 20 now.
+
 ### 0.0.6
 
 -   (TA2k) initial release
