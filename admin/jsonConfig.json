@@ -1,0 +1,37 @@
+{
+  "type": "panel",
+  "i18n": true,
+  "items": {
+    "user": {
+      "type": "text",
+      "label": "user",
+      "help": "userHelp",
+      "newLine": true,
+      "sm": 12,
+      "md": 6,
+      "lg": 4
+    },
+    "password": {
+      "type": "password",
+      "label": "password",
+      "help": "passwordHelp",
+      "repeat": false,
+      "visible": true,
+      "newLine": true,
+      "sm": 12,
+      "md": 6,
+      "lg": 4
+    },
+    "interval": {
+      "type": "number",
+      "label": "interval",
+      "help": "intervalHelp",
+      "min": 1,
+      "max": 1440,
+      "newLine": true,
+      "sm": 12,
+      "md": 6,
+      "lg": 4
+    }
+  }
+}

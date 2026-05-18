@@ -12,3 +12,16 @@ Thumbs.db
 # i18n intermediate files
 admin/i18n/flat.txt
 admin/i18n/*/flat.txt
+
+# release-script / dev-server
+.dev-server/
+
+# editor
+.vscode/
+.DS_Store
+
+# logs
+*.log
+
+# local references / APK extracts
+.references/

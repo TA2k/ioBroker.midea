@@ -1,0 +1,8 @@
+{
+  "user": "Użytkownik aplikacji Midea / NetHome",
+  "userHelp": "Adres e-mail używany w aplikacji Midea / NetHome Plus",
+  "password": "Hasło aplikacji Midea / NetHome",
+  "passwordHelp": "Hasło używane w aplikacji Midea / NetHome Plus",
+  "interval": "Interwał odpytywania (minuty)",
+  "intervalHelp": "Jak często adapter odpytuje chmurę. Minimum 1 minuta."
+}

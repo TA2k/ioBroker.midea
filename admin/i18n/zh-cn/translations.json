@@ -1,0 +1,8 @@
+{
+  "user": "Midea / NetHome 应用用户",
+  "userHelp": "Midea 或 NetHome Plus 应用中使用的电子邮件地址",
+  "password": "Midea / NetHome 应用密码",
+  "passwordHelp": "Midea 或 NetHome Plus 应用中使用的密码",
+  "interval": "轮询间隔（分钟）",
+  "intervalHelp": "适配器轮询云端的频率，最少 1 分钟。"
+}

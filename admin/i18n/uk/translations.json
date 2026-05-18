@@ -1,0 +1,8 @@
+{
+  "user": "Користувач Midea / NetHome",
+  "userHelp": "Адреса електронної пошти, яка використовується в застосунку Midea / NetHome Plus",
+  "password": "Пароль Midea / NetHome",
+  "passwordHelp": "Пароль, який використовується в застосунку Midea / NetHome Plus",
+  "interval": "Інтервал опитування (хвилини)",
+  "intervalHelp": "Як часто адаптер опитує хмару. Мінімум 1 хвилина."
+}

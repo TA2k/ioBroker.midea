@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    "iobroker",
+    "license",
+    "manual-review"
+  ],
+  "exec": {
+    "after_bump": [
+      "npm install --package-lock-only --no-audit --no-fund"
+    ]
+  }
+}

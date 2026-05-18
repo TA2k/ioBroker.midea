@@ -1,0 +1,8 @@
+{
+  "user": "Utilisateur de l'application Midea / NetHome",
+  "userHelp": "Adresse e-mail utilisée dans l'application Midea / NetHome Plus",
+  "password": "Mot de passe de l'application Midea / NetHome",
+  "passwordHelp": "Mot de passe utilisé dans l'application Midea / NetHome Plus",
+  "interval": "Intervalle d'interrogation (minutes)",
+  "intervalHelp": "Fréquence à laquelle l'adaptateur interroge le cloud. Minimum 1 minute."
+}

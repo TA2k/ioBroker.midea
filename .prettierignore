@@ -1,0 +1,4 @@
+.dev-server/
+node_modules/
+admin/words.js
+package-lock.json

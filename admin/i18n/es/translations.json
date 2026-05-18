@@ -1,0 +1,8 @@
+{
+  "user": "Usuario de la app Midea / NetHome",
+  "userHelp": "Correo electrónico utilizado en la app Midea / NetHome Plus",
+  "password": "Contraseña de la app Midea / NetHome",
+  "passwordHelp": "Contraseña utilizada en la app Midea / NetHome Plus",
+  "interval": "Intervalo de sondeo (minutos)",
+  "intervalHelp": "Frecuencia con la que el adaptador consulta la nube. Mínimo 1 minuto."
+}

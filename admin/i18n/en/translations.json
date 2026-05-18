@@ -1,0 +1,8 @@
+{
+  "user": "Midea / NetHome App user",
+  "userHelp": "E-mail address used in the Midea / NetHome Plus app",
+  "password": "Midea / NetHome App password",
+  "passwordHelp": "Password used in the Midea / NetHome Plus app",
+  "interval": "Polling interval (minutes)",
+  "intervalHelp": "How often the adapter polls the cloud for device state. Minimum 1 minute."
+}

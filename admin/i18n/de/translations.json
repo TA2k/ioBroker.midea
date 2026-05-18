@@ -1,0 +1,8 @@
+{
+  "user": "Midea-/NetHome-App-Benutzer",
+  "userHelp": "E-Mail-Adresse aus der Midea- bzw. NetHome-Plus-App",
+  "password": "Midea-/NetHome-App-Passwort",
+  "passwordHelp": "Passwort aus der Midea- bzw. NetHome-Plus-App",
+  "interval": "Abfrageintervall (Minuten)",
+  "intervalHelp": "Wie oft der Adapter den Cloud-Status der Geräte abfragt. Minimum 1 Minute."
+}

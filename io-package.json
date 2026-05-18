@@ -4,16 +4,17 @@
     "version": "0.0.7",
     "news": {
       "0.0.7": {
-        "en": "initial release",
-        "de": "Erstveröffentlichung",
-        "ru": "Начальная версия",
-        "pt": "lançamento inicial",
-        "nl": "Eerste uitgave",
-        "fr": "Première version",
-        "it": "Versione iniziale",
-        "es": "Versión inicial",
-        "pl": "Pierwsze wydanie",
-        "zh-cn": "首次出版"
+        "en": "Modernized adapter scaffolding (create-adapter@latest layout, JsonConfig, axios)",
+        "de": "Adapter-Gerüst modernisiert (create-adapter@latest Layout, JsonConfig, axios)",
+        "ru": "Модернизация каркаса адаптера (create-adapter@latest, JsonConfig, axios)",
+        "pt": "Estrutura do adaptador modernizada (create-adapter@latest, JsonConfig, axios)",
+        "nl": "Adaptersteiger gemoderniseerd (create-adapter@latest, JsonConfig, axios)",
+        "fr": "Échafaudage de l'adaptateur modernisé (create-adapter@latest, JsonConfig, axios)",
+        "it": "Scaffolding dell'adattatore modernizzato (create-adapter@latest, JsonConfig, axios)",
+        "es": "Andamiaje del adaptador modernizado (create-adapter@latest, JsonConfig, axios)",
+        "pl": "Zmodernizowano szkielet adaptera (create-adapter@latest, JsonConfig, axios)",
+        "uk": "Модернізовано каркас адаптера (create-adapter@latest, JsonConfig, axios)",
+        "zh-cn": "现代化适配器脚手架（create-adapter@latest、JsonConfig、axios）"
       }
     },
     "title": "Midea",
@@ -27,19 +28,21 @@
       "it": "Midea",
       "es": "Midea",
       "pl": "Midea",
+      "uk": "Midea",
       "zh-cn": "美的"
     },
     "desc": {
-      "en": "Midea Adapter for midea, dimstal or royal clima",
-      "de": "Midea Adapter für midea, dimstal or royal clima",
-      "ru": "Midea адаптер midea, dimstal or royal clima",
-      "pt": "Adaptador Midea midea, dimstal or royal clima",
-      "nl": "Midea-adapter midea, dimstal or royal clima",
-      "fr": "Adaptateur Midea midea, dimstal or royal clima",
-      "it": "Adattatore Midea midea, dimstal or royal clima",
-      "es": "Adaptador Midea midea, dimstal or royal clima",
-      "pl": "Adapter Midea midea, dimstal or royal clima",
-      "zh-cn": "美的适配器"
+      "en": "Adapter for Midea, Dimstal and Royal Clima air conditioners",
+      "de": "Adapter für Klimageräte von Midea, Dimstal und Royal Clima",
+      "ru": "Адаптер для кондиционеров Midea, Dimstal и Royal Clima",
+      "pt": "Adaptador para condicionadores de ar Midea, Dimstal e Royal Clima",
+      "nl": "Adapter voor airconditioners van Midea, Dimstal en Royal Clima",
+      "fr": "Adaptateur pour climatiseurs Midea, Dimstal et Royal Clima",
+      "it": "Adattatore per condizionatori d'aria Midea, Dimstal e Royal Clima",
+      "es": "Adaptador para aires acondicionados Midea, Dimstal y Royal Clima",
+      "pl": "Adapter do klimatyzatorów Midea, Dimstal i Royal Clima",
+      "uk": "Адаптер для кондиціонерів Midea, Dimstal та Royal Clima",
+      "zh-cn": "适用于 Midea、Dimstal 和 Royal Clima 空调的适配器"
     },
     "authors": [
       "TA2k <tombox2020@gmail.com>"
@@ -47,7 +50,8 @@
     "keywords": [
       "midea",
       "dimstal",
-      "royal clima"
+      "royal clima",
+      "air conditioner"
     ],
     "license": "MIT",
     "platform": "Javascript/Node.js",
@@ -57,20 +61,28 @@
     "extIcon": "https://raw.githubusercontent.com/TA2k/ioBroker.midea/master/admin/midea.png",
     "readme": "https://github.com/TA2k/ioBroker.midea/blob/master/README.md",
     "loglevel": "info",
+    "tier": 3,
     "mode": "daemon",
     "type": "climate-control",
     "compact": true,
     "connectionType": "cloud",
     "dataSource": "poll",
-    "materialize": true,
-    "plugins": {
-      "sentry": {
-        "dsn": "https://dd8e8ba4255b4def8c9f9c220a403e94@sentry.iobroker.net/78"
-      }
+    "adminUI": {
+      "config": "json"
+    },
+    "messagebox": false,
+    "supportedMessages": {
+      "custom": false,
+      "deviceManager": false
     },
     "dependencies": [
       {
-        "js-controller": ">=1.4.2"
+        "js-controller": ">=5.0.19"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=6.13.16"
       }
     ]
   },

@@ -3,26 +3,25 @@
 node_modules/
 nbproject/
 .vs*/
+.vscode/
 *.code-workspace
+.dev-server/
 Thumbs.db
-gulpfile.js
+.DS_Store
 
-test/
-travis/
-.travis.yml
-appveyor.yml
-.travis.yaml
-appveyor.yaml
-
+.github/
+.releaseconfig.json
+.editorconfig
+.gitattributes
 .eslintrc.json
 .eslintrc.js
+.eslintignore
+.prettierrc.js
+.prettierignore
 
 # npm package files
 iobroker.*.tgz
 package-lock.json
-
-# i18n intermediate files
-admin/i18n
 
 # maintenance scripts
 maintenance/**
