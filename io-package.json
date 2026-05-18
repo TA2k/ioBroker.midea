@@ -17,7 +17,6 @@
         "zh-cn": "现代化适配器脚手架（create-adapter@latest、JsonConfig、axios）"
       }
     },
-    "title": "Midea",
     "titleLang": {
       "en": "Midea",
       "de": "Midea",
@@ -53,9 +52,11 @@
       "royal clima",
       "air conditioner"
     ],
-    "license": "MIT",
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
     "platform": "Javascript/Node.js",
-    "main": "main.js",
     "icon": "midea.png",
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/TA2k/ioBroker.midea/master/admin/midea.png",
@@ -75,6 +76,12 @@
       "custom": false,
       "deviceManager": false
     },
+    "encryptedNative": [
+      "password"
+    ],
+    "protectedNative": [
+      "password"
+    ],
     "dependencies": [
       {
         "js-controller": ">=5.0.19"
