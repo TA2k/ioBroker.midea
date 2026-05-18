@@ -1,5 +1,5 @@
 {
-    "extends": "@tsconfig/node18/tsconfig.json",
+    "extends": "@tsconfig/node22/tsconfig.json",
     "compileOnSave": true,
     "compilerOptions": {
         "noEmit": true,
@@ -7,6 +7,7 @@
         "checkJs": true,
         "resolveJsonModule": true,
         "noImplicitAny": false,
+        "useUnknownInCatchVariables": false,
         "outDir": "./build/"
     },
     "include": [
