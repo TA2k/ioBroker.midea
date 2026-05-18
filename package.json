@@ -38,7 +38,7 @@
     "@iobroker/testing": "^5.2.2",
     "@tsconfig/node18": "^18.2.6",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^20.19.0",
+    "@types/node": "^25.9.0",
     "eslint": "^8.57.1",
     "mocha": "^11.7.5",
     "prettier": "^3.8.3",
