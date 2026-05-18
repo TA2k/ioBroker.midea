@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "midea",
-    "version": "0.0.7",
+    "version": "1.0.0",
     "news": {
+      "1.0.0": {
+        "en": "Breaking change: rewritten on top of the LAN-first Midea V3 protocol; cloud is only used to fetch the per-device token/key. Adds discovery, status polling, full AC controls (mode, fan, swing, temperature, eco/turbo/sleep, beep, frost protection) and metadata for non-AC appliances.",
+        "de": "Breaking Change: Neuimplementierung mit LAN-first Midea-V3-Protokoll; die Cloud dient nur noch zum Abruf von Token/Key je Gerät. Ergänzt Discovery, Status-Polling, volle AC-Steuerung (Modus, Lüfter, Swing, Temperatur, Eco/Turbo/Sleep, Beep, Frostschutz) sowie Metadaten für Nicht-AC-Geräte.",
+        "ru": "Критическое изменение: переписан на LAN-протокол Midea V3, облако используется только для получения token/key устройства. Добавлены автообнаружение, опрос статуса, полное управление кондиционером и метаданные для прочих приборов.",
+        "pt": "Alteração incompatível: reescrito sobre o protocolo Midea V3 LAN; a nuvem só obtém o token/chave por dispositivo. Inclui descoberta, polling, controlos completos de AC e metadados para outros aparelhos.",
+        "nl": "Breaking change: herschreven op het LAN-first Midea V3-protocol; de cloud wordt alleen gebruikt om token/key per apparaat op te halen. Inclusief discovery, statuspolling, volledige AC-bediening en metadata voor overige apparaten.",
+        "fr": "Changement majeur : réécrit sur le protocole LAN Midea V3 ; le cloud sert uniquement à récupérer le token/clé par appareil. Ajoute la découverte, le polling, les commandes complètes de la climatisation et les métadonnées pour les autres appareils.",
+        "it": "Modifica incompatibile: riscritto sul protocollo LAN Midea V3; il cloud serve solo a recuperare token/chiave per dispositivo. Include discovery, polling di stato, controlli AC completi e metadati per gli altri apparecchi.",
+        "es": "Cambio incompatible: reescrito sobre el protocolo LAN Midea V3; la nube solo se usa para obtener token/clave por dispositivo. Añade descubrimiento, sondeo de estado, controles completos de AC y metadatos para otros equipos.",
+        "pl": "Zmiana niekompatybilna: napisany ponownie na protokole LAN Midea V3; chmura służy wyłącznie do pobrania tokenu/klucza dla urządzenia. Dodaje wykrywanie, odpytywanie statusu, pełne sterowanie AC i metadane pozostałych urządzeń.",
+        "uk": "Несумісна зміна: переписано на LAN-протокол Midea V3; хмара використовується лише для отримання token/key пристрою. Додано виявлення, опитування статусу, повне керування кондиціонером і метадані інших пристроїв.",
+        "zh-cn": "重大更改：基于局域网优先的 Midea V3 协议重写；云端仅用于获取每台设备的 token/key。新增发现、状态轮询、完整空调控制以及其他家电的元数据。"
+      },
       "0.0.7": {
         "en": "Modernized adapter scaffolding (create-adapter@latest layout, JsonConfig, axios)",
         "de": "Adapter-Gerüst modernisiert (create-adapter@latest Layout, JsonConfig, axios)",

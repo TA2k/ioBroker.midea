@@ -4,5 +4,5 @@
   "password": "Midea-/NetHome-App-Passwort",
   "passwordHelp": "Passwort aus der Midea- bzw. NetHome-Plus-App",
   "interval": "Abfrageintervall (Minuten)",
-  "intervalHelp": "Wie oft der Adapter den Cloud-Status der Geräte abfragt. Minimum 1 Minute."
+  "intervalHelp": "Wie oft der Adapter jedes Gerät lokal über das LAN abfragt. Minimum 1 Minute."
 }
