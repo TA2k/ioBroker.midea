@@ -49,7 +49,27 @@ const STATUS_DESCRIPTIONS = {
     nightLight: "Night light",
     ventilation: "Ventilation",
     ptcHeater: "PTC auxiliary heater",
+    auxHeating: "Auxiliary heater (PTC)",
     naturalFan: "Natural wind",
+    naturalWind: "Natural wind",
+    comfortMode: "Comfort mode",
+    indirectWind: "Indirect wind (no wind on me)",
+    breezeless: "Breezeless",
+    indoorHumidity: "Indoor humidity",
+    screenDisplay: "Screen display level",
+    screenDisplayAlternate: "Screen display (alternate)",
+    freshAirPower: "Fresh-air power",
+    freshAirFanSpeed: "Fresh-air fan speed",
+    freshAirMode: "Fresh-air mode",
+    freshAirTemperature: "Fresh-air temperature setpoint",
+    windLrAngle: "Left/right wind angle",
+    windUdAngle: "Up/down wind angle",
+    currentEnergyConsumption: "Current energy consumption",
+    realtimePower: "Realtime power draw",
+    totalOperatingConsumption: "Total operating consumption",
+    electrifyTime: "Electrified runtime",
+    totalOperatingTime: "Total operating time",
+    currentOperatingTime: "Current operating time",
     childSleep: "Child sleep",
     coolFan: "Cool fan",
     catchCold: "Catch cold",
@@ -108,6 +128,12 @@ const STATUS_UNITS = {
     tankLevel: "%",
     tankWarningLevel: "%",
     powerUsage: "kWh",
+    currentEnergyConsumption: "kWh",
+    totalOperatingConsumption: "kWh",
+    realtimePower: "W",
+    electrifyTime: "min",
+    totalOperatingTime: "min",
+    currentOperatingTime: "min",
     onTimerHours: "h",
     offTimerHours: "h",
     onTimerMinutes: "min",
@@ -191,6 +217,17 @@ const AC_CONTROLS = [
     { id: "purify", common: { name: "Purify / ionizer", type: "boolean", role: "switch", read: true, write: true, def: false } },
     { id: "dryClean", common: { name: "Dry clean", type: "boolean", role: "switch", read: true, write: true, def: false } },
     { id: "frostProtection", common: { name: "Frost protection (8 °C heat)", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "smartEye", common: { name: "Smart eye / motion sensor", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "auxHeating", common: { name: "Auxiliary heater (PTC)", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "naturalWind", common: { name: "Natural wind", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "comfortMode", common: { name: "Comfort mode", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "indirectWind", common: { name: "Indirect wind (no wind on me)", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "breezeless", common: { name: "Breezeless", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "screenDisplayAlternate", common: { name: "Screen display (alternate)", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "freshAirPower", common: { name: "Fresh-air power", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "freshAirFanSpeed", common: { name: "Fresh-air fan speed (0–100)", type: "number", role: "level.fan", read: true, write: true, min: 0, max: 100, def: 0 } },
+    { id: "windLrAngle", common: { name: "Left/right wind angle (0–100)", type: "number", role: "level", read: true, write: true, min: 0, max: 100, def: 0 } },
+    { id: "windUdAngle", common: { name: "Up/down wind angle (0–100)", type: "number", role: "level", read: true, write: true, min: 0, max: 100, def: 0 } },
     { id: "toggleDisplay", common: { name: "Toggle indoor unit display", type: "boolean", role: "button", read: false, write: true, def: false } },
 ];
 
@@ -709,6 +746,21 @@ class MideaAdapter extends utils.Adapter {
             } catch (err) {
                 this.log.debug(`refreshPowerUsage for ${descriptor.id} failed (not all units support it): ${errMessage(err)}`);
             }
+            try {
+                await device.refreshOperatingTime();
+            } catch (err) {
+                this.log.debug(`refreshOperatingTime for ${descriptor.id} failed: ${errMessage(err)}`);
+            }
+            try {
+                await device.refreshHumidity();
+            } catch (err) {
+                this.log.debug(`refreshHumidity for ${descriptor.id} failed: ${errMessage(err)}`);
+            }
+            try {
+                await device.refreshNewProtocol();
+            } catch (err) {
+                this.log.debug(`refreshNewProtocol for ${descriptor.id} failed: ${errMessage(err)}`);
+            }
         }
         await this.setStateAsync(`${descriptor.id}.info.online`, device.online, true);
     }
@@ -839,6 +891,21 @@ class MideaAdapter extends utils.Adapter {
                     await device.refreshPowerUsage();
                 } catch (err) {
                     this.log.silly(`refreshPowerUsage(${id}) failed: ${errMessage(err)}`);
+                }
+                try {
+                    await device.refreshOperatingTime();
+                } catch (err) {
+                    this.log.silly(`refreshOperatingTime(${id}) failed: ${errMessage(err)}`);
+                }
+                try {
+                    await device.refreshHumidity();
+                } catch (err) {
+                    this.log.silly(`refreshHumidity(${id}) failed: ${errMessage(err)}`);
+                }
+                try {
+                    await device.refreshNewProtocol();
+                } catch (err) {
+                    this.log.silly(`refreshNewProtocol(${id}) failed: ${errMessage(err)}`);
                 }
             }
             await this.setStateAsync(`${id}.info.online`, device.online, true);

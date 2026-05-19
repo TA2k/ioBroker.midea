@@ -1,6 +1,6 @@
 {
   "name": "iobroker.midea",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Adapter for Midea, Dimstal and Royal Clima air conditioners",
   "author": {
     "name": "TA2k",
@@ -56,7 +56,8 @@
   "scripts": {
     "test:package": "mocha test/package --exit",
     "test:integration": "mocha test/integration --exit",
-    "test": "npm run test:package",
+    "test:unit": "mocha test/unit --exit",
+    "test": "npm run test:package && npm run test:unit",
     "check": "tsc --noEmit",
     "lint": "eslint .",
     "translate": "translate-adapter",

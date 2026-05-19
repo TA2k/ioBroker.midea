@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "midea",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "news": {
+      "1.6.0": {
+        "en": "AC fixes: setting one option no longer accidentally toggles comfort mode or other flags. Adjusting only fresh-air power or only fan speed no longer resets the other. Energy readings on some V3 devices no longer flip to negative.",
+        "de": "AC-Fehlerbehebungen: Eine Einstellung zu ändern schaltet nicht mehr versehentlich den Komfort-Modus oder andere Flags um. Wenn nur die Frischluft-Power oder nur die Lüftergeschwindigkeit geändert wird, wird die andere nicht mehr zurückgesetzt. Energiezählerwerte werden auf manchen V3-Geräten nicht mehr negativ angezeigt.",
+        "ru": "Исправления для AC: изменение одной настройки больше не переключает случайно режим комфорта или другие флаги. Изменение только мощности приточной вентиляции или только скорости вентилятора больше не сбрасывает другой параметр. Показания энергопотребления на некоторых устройствах V3 больше не уходят в минус.",
+        "pt": "Correções para AC: alterar uma opção já não alterna acidentalmente o modo conforto ou outros sinalizadores. Ajustar apenas a potência do ar fresco ou apenas a velocidade do ventilador já não repõe o outro. Leituras de energia em alguns dispositivos V3 já não passam para valores negativos.",
+        "nl": "AC-fixes: één instelling wijzigen schakelt niet meer per ongeluk de comfortmodus of andere vlaggen. Alleen de frisse-luchtpower of alleen de ventilatorsnelheid aanpassen reset de ander niet meer. Energiemetingen op sommige V3-apparaten worden niet meer negatief.",
+        "fr": "Corrections AC : modifier une option ne bascule plus par erreur le mode confort ou d'autres indicateurs. Ajuster uniquement la puissance d'air frais ou uniquement la vitesse du ventilateur ne réinitialise plus l'autre. Les relevés d'énergie sur certains appareils V3 ne passent plus en négatif.",
+        "it": "Correzioni AC: modificare un'impostazione non attiva più per sbaglio la modalità comfort o altri flag. Regolare solo la potenza dell'aria fresca o solo la velocità della ventola non azzera più l'altra. Le letture di energia su alcuni dispositivi V3 non passano più in negativo.",
+        "es": "Correcciones de AC: cambiar una opción ya no alterna por accidente el modo confort u otros indicadores. Ajustar solo la potencia de aire fresco o solo la velocidad del ventilador ya no restablece el otro. Las lecturas de energía en algunos dispositivos V3 ya no aparecen en negativo.",
+        "pl": "Poprawki AC: zmiana jednej opcji nie przełącza już przypadkowo trybu komfort ani innych flag. Zmiana samej mocy świeżego powietrza lub samej prędkości wentylatora nie resetuje już drugiego pola. Odczyty energii na niektórych urządzeniach V3 nie pokazują już wartości ujemnych.",
+        "uk": "Виправлення AC: зміна однієї опції більше не перемикає випадково комфорт-режим чи інші прапори. Зміна лише потужності припливного повітря або лише швидкості вентилятора більше не скидає інше значення. Показання енергії на деяких пристроях V3 більше не стають від'ємними.",
+        "zh-cn": "空调修复：更改一个选项不再误切舒适模式或其他标志。只调整新风功率或只调整风扇风速，不再重置另一项。某些 V3 设备的能耗读数不再变为负值。"
+      },
       "1.5.0": {
         "en": "Adds LAN support for V1- and V2-firmware appliances: they are now discovered alongside V3 devices and controlled directly over TCP/6444, no cloud token required. Tested only against V3 hardware; the V1/V2 paths are ported from the midea-local reference implementation.",
         "de": "LAN-Unterstützung für Geräte mit V1- und V2-Firmware: Sie werden jetzt zusammen mit V3-Geräten erkannt und direkt über TCP/6444 gesteuert, ohne Cloud-Token. Nur gegen V3-Hardware getestet; die V1/V2-Pfade sind von der midea-local-Referenzimplementierung portiert.",
