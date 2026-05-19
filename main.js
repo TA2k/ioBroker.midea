@@ -821,7 +821,7 @@ class MideaAdapter extends utils.Adapter {
             } else {
                 try {
                     if (!this.cloud) throw new Error("cloud client not initialised");
-                    ({ token, key } = await this.cloud.getToken(descriptor.udpId));
+                    ({ token, key } = await this.cloud.getToken(descriptor.id));
                 } catch (err) {
                     this.log.warn(
                         `Could not fetch token/key for ${descriptor.id}: ${errMessage(err)} — the device is offline in the cloud account, or the credentials in the adapter config are wrong.`,
