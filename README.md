@@ -197,65 +197,36 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+### 1.3.1 (2026-05-19)
 
-### **WORK IN PROGRESS**
-
--   Generic status-to-control mirror: every control defined for an appliance
-    type is automatically kept in sync with the device-reported status (no
-    more hand-picked field list per type).
--   Generic control writer: `onStateChange` derives the value cast and the
-    target key from the control definition instead of per-device switch
-    statements.
--   Build/release fixes: removed broken `after_bump` exec stage from
-    `.releaseconfig.json`, dropped unused `tough-cookie` dependency.
+-   Controls now stay automatically in sync with the device status across all
+    appliance types.
+-   Internal refactor — no behavior changes for end users.
 
 ### 1.3.0
 
--   Coverage for all 36 Midea V3 appliance types described in
-    [midea-local](https://github.com/midea-lan/midea-local).
--   Full control added for heat pumps (`0xCF`/`0xCD`/`0xC3`), washers and dryer
-    (`0xDA`/`0xDB`/`0xDC`), water heaters (`0xE2`/`0xE3`), gas boiler (`0xE6`),
-    electric heater (`0xFB`), dishwashers (`0xE1`/`0x34`), microwave (`0xB0`),
-    integrated oven (`0xBF`), range hood (`0xB6`), vacuum (`0xB8`), smart toilet
-    (`0xC2`), water purifier (`0xED`), bathroom light/heater/fan (`0x13`/`0x26`/
-    `0x40`) and fresh-air (`0xCE`).
--   Read-only telemetry for refrigerator (`0xCA`), pressure/rice cookers
-    (`0xE8`/`0xEA`/`0xEC`), oven/steamer (`0xB1`/`0xB3`/`0xB4`) and air-box
-    (`0xAD`) — these types do not expose a `MessageSet` upstream.
--   Feature-parity pass against `midea-local`: standalone parser/setter for
-    commercial AC (`0xCC`, replacing the residential AC reuse), new-protocol
-    single-property setters (`body_type 0x14`) for `0xE2`/`0xE3` water heaters,
-    full `0xC3` heat-pump telemetry (basic, energy, silence, eco, disinfect,
-    unit parameters across body types `0x01`/`0x04`/`0x05`/`0x07`/`0x09`/
-    `0x10`), `0xB6` range-hood `0x0A`/`0xA2` push notify (oilcup/cleaning),
-    `0xA1` dehumidifier `childLock`, and additional `0xAC` C0 telemetry fields
-    (kickQuilt, preventCold, comfortSleepSwitch, smartDry, swingLR, fresh-air
-    filter timers).
+-   Coverage for all 36 Midea appliance types.
+-   Full control for heat pumps, washers and dryer, water heaters, gas boiler,
+    electric heater, dishwashers, microwave, oven, range hood, vacuum, smart
+    toilet, water purifier, bathroom light/heater/fan and fresh-air.
+-   Read-only data for refrigerator, pressure/rice cookers, oven/steamer and
+    air-box.
 
 ### 1.2.0
 
--   Full control for fan (`0xFA`), air purifier (`0xFC`) and humidifier (`0xFD`).
--   Protocol byte layouts reverse-engineered from the
-    [midea-local](https://github.com/midea-lan/midea-local) Home Assistant
-    integration, no third-party runtime dependency added.
+-   Full control for fan, air purifier, and humidifier.
 
 ### 1.1.0
 
--   Full control for dehumidifier (`0xA1`) and commercial AC (`0xCC`).
--   Poll interval is now expressed in seconds (default 30 s) since the LAN
-    transport keeps polling cheap.
+-   Full control for dehumidifier and commercial AC.
+-   Poll interval is now in seconds (default 30 s).
 
 ### 1.0.0
 
--   Complete rewrite. Breaking change: states moved into a typed
-    `devices.<id>.{info,status,capabilities,controls}` tree and the cloud
-    transport is no longer used for runtime control.
--   LAN-first integration based on the Midea V3 protocol (UDP discovery,
-    AES-128-ECB inner, AES-256-CBC outer, CRC8 + MD5 framing).
--   Self-contained protocol implementation — no third-party Midea library
-    dependencies.
--   Capability detection (B5), live status (C0), power usage (C1), display
-    toggle, full control surface for 0xAC residential ACs.
+-   Breaking change: rewritten on the LAN-first Midea V3 protocol. The cloud is
+    only used to fetch each device's token/key.
+-   Adds device discovery, local status polling, full AC controls and metadata
+    for other appliances.
 
 ### 0.0.7
 
