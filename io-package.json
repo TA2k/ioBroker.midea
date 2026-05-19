@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "midea",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "news": {
+      "1.5.0": {
+        "en": "Adds LAN support for V1- and V2-firmware appliances: they are now discovered alongside V3 devices and controlled directly over TCP/6444, no cloud token required. Tested only against V3 hardware; the V1/V2 paths are ported from the midea-local reference implementation.",
+        "de": "LAN-Unterstützung für Geräte mit V1- und V2-Firmware: Sie werden jetzt zusammen mit V3-Geräten erkannt und direkt über TCP/6444 gesteuert, ohne Cloud-Token. Nur gegen V3-Hardware getestet; die V1/V2-Pfade sind von der midea-local-Referenzimplementierung portiert.",
+        "ru": "Добавлена поддержка LAN для устройств с прошивкой V1 и V2: они обнаруживаются вместе с V3-устройствами и управляются напрямую через TCP/6444, без облачного токена. Протестировано только на V3-оборудовании; пути V1/V2 перенесены из эталонной реализации midea-local.",
+        "pt": "Suporte LAN para aparelhos com firmware V1 e V2: passam a ser descobertos juntamente com os V3 e controlados diretamente por TCP/6444, sem token de nuvem. Testado apenas contra hardware V3; os caminhos V1/V2 foram portados da implementação de referência midea-local.",
+        "nl": "LAN-ondersteuning voor apparaten met V1- en V2-firmware: ze worden nu samen met V3-apparaten ontdekt en rechtstreeks via TCP/6444 bediend, zonder cloud-token. Alleen getest tegen V3-hardware; de V1/V2-paden zijn geport van de midea-local-referentie-implementatie.",
+        "fr": "Prise en charge LAN des appareils en firmware V1 et V2 : ils sont désormais découverts en même temps que les V3 et pilotés directement via TCP/6444, sans jeton cloud. Testé uniquement sur du matériel V3 ; les chemins V1/V2 sont portés depuis l'implémentation de référence midea-local.",
+        "it": "Supporto LAN per gli apparecchi con firmware V1 e V2: ora vengono rilevati insieme ai V3 e comandati direttamente via TCP/6444, senza token cloud. Testato solo contro hardware V3; i percorsi V1/V2 sono portati dall'implementazione di riferimento midea-local.",
+        "es": "Soporte LAN para aparatos con firmware V1 y V2: ahora se descubren junto a los V3 y se controlan directamente por TCP/6444, sin token de nube. Probado solo contra hardware V3; las rutas V1/V2 están portadas de la implementación de referencia midea-local.",
+        "pl": "Obsługa LAN dla urządzeń z firmware V1 i V2: są wykrywane obok urządzeń V3 i sterowane bezpośrednio przez TCP/6444, bez tokenu chmurowego. Przetestowane tylko na sprzęcie V3; ścieżki V1/V2 zostały przeniesione z referencyjnej implementacji midea-local.",
+        "uk": "Підтримка LAN для пристроїв із прошивкою V1 та V2: вони виявляються разом із V3-пристроями і керуються безпосередньо через TCP/6444, без хмарного токена. Перевірено лише на V3-обладнанні; шляхи V1/V2 портовані з еталонної реалізації midea-local.",
+        "zh-cn": "新增对 V1 和 V2 固件设备的局域网支持：它们与 V3 设备一同被发现，并直接通过 TCP/6444 控制，无需云端令牌。仅在 V3 硬件上测试过；V1/V2 路径是从 midea-local 参考实现移植而来。"
+      },
       "1.4.0": {
         "en": "Adds NetHome Plus, Midea Air and Ariston Clima cloud accounts (V3 firmware appliances) — pick the cloud variant in the new Cloud app setting. Object tree simplified: devices now appear directly under the instance, the control channel is renamed control. The old tree is cleared automatically on first start. V1-firmware appliances on the LAN are not supported.",
         "de": "Unterstützt jetzt auch NetHome Plus, Midea Air und Ariston Clima (V3-Firmware) — die Cloud-Variante wird in der neuen Einstellung Cloud-App gewählt. Objektbaum vereinfacht: Geräte liegen direkt unter der Instanz, der Steuerkanal heißt jetzt control. Der alte Baum wird beim ersten Start automatisch gelöscht. Geräte mit V1-Firmware werden im LAN nicht unterstützt.",
@@ -80,19 +93,6 @@
         "pl": "Zmiana niekompatybilna: napisany ponownie na protokole LAN Midea V3. Chmura służy wyłącznie do pobrania tokenu/klucza dla urządzenia. Dodaje wykrywanie, lokalne odpytywanie statusu, pełne sterowanie AC i metadane pozostałych urządzeń.",
         "uk": "Несумісна зміна: переписано на LAN-протокол Midea V3. Хмара використовується лише для отримання token/key пристрою. Додано виявлення, локальне опитування статусу, повне керування кондиціонером та метадані інших пристроїв.",
         "zh-cn": "重大更改：基于局域网优先的 Midea V3 协议重写。云端仅用于获取每台设备的 token/key。新增发现、本地状态轮询、完整空调控制以及其他家电的元数据。"
-      },
-      "0.0.7": {
-        "en": "Modernized adapter scaffolding (create-adapter@latest layout, JsonConfig, axios)",
-        "de": "Adapter-Gerüst modernisiert (create-adapter@latest Layout, JsonConfig, axios)",
-        "ru": "Модернизация каркаса адаптера (create-adapter@latest, JsonConfig, axios)",
-        "pt": "Estrutura do adaptador modernizada (create-adapter@latest, JsonConfig, axios)",
-        "nl": "Adaptersteiger gemoderniseerd (create-adapter@latest, JsonConfig, axios)",
-        "fr": "Échafaudage de l'adaptateur modernisé (create-adapter@latest, JsonConfig, axios)",
-        "it": "Scaffolding dell'adattatore modernizzato (create-adapter@latest, JsonConfig, axios)",
-        "es": "Andamiaje del adaptador modernizado (create-adapter@latest, JsonConfig, axios)",
-        "pl": "Zmodernizowano szkielet adaptera (create-adapter@latest, JsonConfig, axios)",
-        "uk": "Модернізовано каркас адаптера (create-adapter@latest, JsonConfig, axios)",
-        "zh-cn": "现代化适配器脚手架（create-adapter@latest、JsonConfig、axios）"
       }
     },
     "titleLang": {

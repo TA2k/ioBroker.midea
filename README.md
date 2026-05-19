@@ -202,7 +202,7 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
-### **WORK IN PROGRESS**
+### 1.5.0 (2026-05-19)
 
 -   Adds LAN support for V1- and V2-firmware appliances. They are now
     discovered alongside V3 devices and controlled directly over TCP/6444 —
