@@ -3,6 +3,6 @@
   "userHelp": "E-Mail-Adresse aus der Midea- bzw. NetHome-Plus-App",
   "password": "Midea-/NetHome-App-Passwort",
   "passwordHelp": "Passwort aus der Midea- bzw. NetHome-Plus-App",
-  "interval": "Abfrageintervall (Minuten)",
-  "intervalHelp": "Wie oft der Adapter jedes Gerät lokal über das LAN abfragt. Minimum 1 Minute."
+  "interval": "Abfrageintervall (Sekunden)",
+  "intervalHelp": "Wie oft der Adapter jedes Gerät lokal über das LAN abfragt. Bereich 5–3600 Sekunden (Standard 30)."
 }

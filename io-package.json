@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "midea",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "news": {
+      "1.1.0": {
+        "en": "Full control for dehumidifier (0xA1) and commercial AC (0xCC). Poll interval is now expressed in seconds (default 30 s) since polling runs locally.",
+        "de": "Volle Steuerung für Luftentfeuchter (0xA1) und Kommerzklimagerät (0xCC). Poll-Intervall jetzt in Sekunden (Standard 30 s), da das Polling lokal läuft.",
+        "ru": "Полное управление осушителем (0xA1) и коммерческим кондиционером (0xCC). Интервал опроса теперь в секундах (по умолчанию 30 с), так как опрос идёт локально.",
+        "pt": "Controlo completo para desumidificador (0xA1) e ar condicionado comercial (0xCC). Intervalo de polling em segundos (padrão 30 s) por ser local.",
+        "nl": "Volledige bediening voor ontvochtiger (0xA1) en commerciële AC (0xCC). Poll-interval nu in seconden (standaard 30 s) omdat polling lokaal draait.",
+        "fr": "Contrôle complet du déshumidificateur (0xA1) et de la climatisation commerciale (0xCC). Intervalle de polling en secondes (30 s par défaut), le polling étant local.",
+        "it": "Controllo completo per deumidificatore (0xA1) e climatizzatore commerciale (0xCC). Intervallo di polling in secondi (default 30 s) perché il polling è locale.",
+        "es": "Control completo para deshumidificador (0xA1) y AC comercial (0xCC). Intervalo de sondeo en segundos (30 s por defecto) ya que es local.",
+        "pl": "Pełne sterowanie osuszaczem (0xA1) i komercyjnym klimatyzatorem (0xCC). Interwał odpytywania w sekundach (domyślnie 30 s), bo jest lokalny.",
+        "uk": "Повне керування осушувачем (0xA1) і комерційним кондиціонером (0xCC). Інтервал опитування у секундах (30 с за замовч.), бо опитування локальне.",
+        "zh-cn": "为除湿机 (0xA1) 与商用空调 (0xCC) 提供完整控制。轮询本地化，默认间隔 30 秒。"
+      },
       "1.0.0": {
         "en": "Breaking change: rewritten on top of the LAN-first Midea V3 protocol; cloud is only used to fetch the per-device token/key. Adds discovery, status polling, full AC controls (mode, fan, swing, temperature, eco/turbo/sleep, beep, frost protection) and metadata for non-AC appliances.",
         "de": "Breaking Change: Neuimplementierung mit LAN-first Midea-V3-Protokoll; die Cloud dient nur noch zum Abruf von Token/Key je Gerät. Ergänzt Discovery, Status-Polling, volle AC-Steuerung (Modus, Lüfter, Swing, Temperatur, Eco/Turbo/Sleep, Beep, Frostschutz) sowie Metadaten für Nicht-AC-Geräte.",
@@ -109,7 +122,7 @@
   "native": {
     "user": "",
     "password": "",
-    "interval": 5
+    "interval": 30
   },
   "objects": [],
   "instanceObjects": [

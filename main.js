@@ -5,6 +5,7 @@ const Json2iob = require("json2iob");
 
 const midea = require("./lib/midea");
 const { ACDevice } = require("./lib/midea/devices/ac");
+const { DehumidifierDevice } = require("./lib/midea/devices/dehumidifier");
 
 /**
  * @param {unknown} err
@@ -74,6 +75,28 @@ const STATUS_DESCRIPTIONS = {
     braceletSleep: "Bracelet sleep",
     keepWarm: "Keep warm",
     online: "Device reachable on LAN",
+    targetHumidity: "Target humidity",
+    currentHumidity: "Current humidity",
+    tankLevel: "Water tank level (%)",
+    tankFull: "Water tank full",
+    tankWarningLevel: "Tank warning threshold",
+    defrosting: "Defrosting active",
+    ionMode: "Ion / anion mode",
+    pumpSwitch: "Drain pump on",
+    pumpSwitchFlag: "Drain pump disabled",
+    filterIndicator: "Filter needs cleaning",
+    verticalSwing: "Vertical swing active",
+    horizontalSwing: "Horizontal swing active",
+    errorCode: "Error code",
+    pm25: "PM2.5 air quality",
+    dust: "Dust level",
+    iMode: "iMode active",
+    modeFc: "Mode FC sub-state",
+    rareShow: "Rare-show indicator",
+    dustTime: "Dust filter runtime",
+    displayClass: "Display class",
+    lightClass: "Light class",
+    lightValue: "Light value",
 };
 
 const STATUS_UNITS = {
@@ -81,6 +104,10 @@ const STATUS_UNITS = {
     indoorTemperature: "°C",
     outdoorTemperature: "°C",
     humiditySetpoint: "%",
+    targetHumidity: "%",
+    currentHumidity: "%",
+    tankLevel: "%",
+    tankWarningLevel: "%",
     powerUsage: "kWh",
     onTimerHours: "h",
     offTimerHours: "h",
@@ -89,7 +116,7 @@ const STATUS_UNITS = {
 };
 
 const STATUS_STATE_ENUMS = {
-    mode: { auto: "auto", cool: "cool", dry: "dry", heat: "heat", fanonly: "fanonly", customdry: "customdry", off: "off" },
+    mode: { auto: "auto", cool: "cool", dry: "dry", heat: "heat", fanonly: "fanonly", customdry: "customdry", off: "off", setpoint: "setpoint", continuous: "continuous", smart: "smart", dryer: "dryer" },
     fanSpeedName: { silent: "silent", low: "low", medium: "medium", high: "high", full: "full", auto: "auto", custom: "custom" },
     swing: { off: "off", vertical: "vertical", horizontal: "horizontal", both: "both" },
     temperatureUnit: { 0: "celsius", 1: "fahrenheit" },
@@ -151,7 +178,7 @@ const CAPABILITY_DESCRIPTIONS = {
 };
 
 /** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
-const CONTROLS = [
+const AC_CONTROLS = [
     { id: "powerOn", common: { name: "Power on/off", type: "boolean", role: "switch.power", read: true, write: true, def: false } },
     { id: "mode", common: { name: "Operating mode", type: "string", role: "state", read: true, write: true, def: "auto", states: { auto: "auto", cool: "cool", dry: "dry", heat: "heat", fanonly: "fanonly", customdry: "customdry" } } },
     { id: "temperatureSetpoint", common: { name: "Target temperature", type: "number", role: "level.temperature", unit: "°C", read: true, write: true, min: 16, max: 31, def: 21 } },
@@ -168,10 +195,34 @@ const CONTROLS = [
     { id: "toggleDisplay", common: { name: "Toggle indoor unit display", type: "boolean", role: "button", read: false, write: true, def: false } },
 ];
 
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const DEHUMIDIFIER_CONTROLS = [
+    { id: "powerOn", common: { name: "Power on/off", type: "boolean", role: "switch.power", read: true, write: true, def: false } },
+    { id: "mode", common: { name: "Operating mode", type: "string", role: "state", read: true, write: true, def: "setpoint", states: { setpoint: "setpoint", continuous: "continuous", smart: "smart", dryer: "dryer" } } },
+    { id: "targetHumidity", common: { name: "Target humidity", type: "number", role: "level.humidity", unit: "%", read: true, write: true, min: 0, max: 100, def: 50 } },
+    { id: "fanSpeed", common: { name: "Fan speed (numeric)", type: "number", role: "level.fan", read: true, write: true, min: 0, max: 127, def: 40 } },
+    { id: "fanSpeedName", common: { name: "Fan speed (named)", type: "string", role: "state", read: true, write: true, def: "low", states: { silent: "silent", low: "low", medium: "medium", high: "high", auto: "auto" } } },
+    { id: "ionMode", common: { name: "Ion / anion mode", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "sleepMode", common: { name: "Sleep mode", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "pumpSwitch", common: { name: "Drain pump", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "verticalSwing", common: { name: "Vertical swing", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "tankWarningLevel", common: { name: "Tank warning level", type: "number", role: "level", unit: "%", read: true, write: true, min: 0, max: 100, def: 100 } },
+];
+
+/**
+ * @param {number} applianceType
+ * @returns {Array<{id: string, common: ioBroker.StateCommon}>|null}
+ */
+function controlsFor(applianceType) {
+    if (applianceType === midea.APPLIANCE_TYPE.AC || applianceType === midea.APPLIANCE_TYPE.COMMERCIAL_AC) return AC_CONTROLS;
+    if (applianceType === midea.APPLIANCE_TYPE.DEHUMIDIFIER) return DEHUMIDIFIER_CONTROLS;
+    return null;
+}
+
 class MideaAdapter extends utils.Adapter {
     constructor(options) {
         super({ ...options, name: "midea" });
-        /** @type {Map<string, ACDevice>} */
+        /** @type {Map<string, ACDevice|DehumidifierDevice>} */
         this.devices = new Map();
         /** @type {Map<string, any>} */
         this.descriptors = new Map();
@@ -180,7 +231,7 @@ class MideaAdapter extends utils.Adapter {
         this.pollTimer = null;
         this.shuttingDown = false;
         this.json2iob = new Json2iob(this);
-        this.pollIntervalMs = 5 * 60 * 1000;
+        this.pollIntervalMs = 30 * 1000;
 
         this.on("ready", this.onReady.bind(this));
         this.on("stateChange", this.onStateChange.bind(this));
@@ -195,9 +246,9 @@ class MideaAdapter extends utils.Adapter {
             return;
         }
 
-        const intervalMin = Math.max(1, Number(this.config.interval) || 5);
-        this.pollIntervalMs = intervalMin * 60 * 1000;
-        this.log.debug(`Midea adapter starting up, poll interval=${intervalMin} min`);
+        const intervalSec = Math.max(5, Math.min(3600, Number(this.config.interval) || 30));
+        this.pollIntervalMs = intervalSec * 1000;
+        this.log.debug(`Midea adapter starting up, poll interval=${intervalSec} s`);
 
         this.cloud = new midea.CloudClient({
             user: this.config.user,
@@ -262,8 +313,9 @@ class MideaAdapter extends utils.Adapter {
         await this.createDeviceShell(descriptor);
         await this.publishDescriptor(descriptor);
 
-        if (descriptor.applianceType !== midea.APPLIANCE_TYPE.AC) {
-            this.log.info(`Device ${descriptor.id} (${descriptor.applianceTypeName}) registered as metadata only — control surface only implemented for 0xAC AC.`);
+        const controls = controlsFor(descriptor.applianceType);
+        if (!controls) {
+            this.log.info(`Device ${descriptor.id} (${descriptor.applianceTypeName}) registered as metadata only — no control surface implemented for type 0x${descriptor.applianceType.toString(16)}.`);
             return;
         }
 
@@ -283,8 +335,8 @@ class MideaAdapter extends utils.Adapter {
             key,
             logger: this.log,
         });
-        if (!(device instanceof ACDevice)) {
-            this.log.warn(`Device ${descriptor.id} did not produce an ACDevice — skipping control wiring.`);
+        if (!(device instanceof ACDevice) && !(device instanceof DehumidifierDevice)) {
+            this.log.warn(`Device ${descriptor.id} did not produce a controllable device — skipping control wiring.`);
             return;
         }
 
@@ -311,10 +363,12 @@ class MideaAdapter extends utils.Adapter {
         } catch (err) {
             this.log.warn(`refreshStatus for ${descriptor.id} failed: ${errMessage(err)}`);
         }
-        try {
-            await device.refreshPowerUsage();
-        } catch (err) {
-            this.log.debug(`refreshPowerUsage for ${descriptor.id} failed (not all units support it): ${errMessage(err)}`);
+        if (device instanceof ACDevice) {
+            try {
+                await device.refreshPowerUsage();
+            } catch (err) {
+                this.log.debug(`refreshPowerUsage for ${descriptor.id} failed (not all units support it): ${errMessage(err)}`);
+            }
         }
         await this.setStateAsync(`devices.${descriptor.id}.info.online`, device.online, true);
     }
@@ -335,9 +389,9 @@ class MideaAdapter extends utils.Adapter {
             });
         }
 
-        if (descriptor.applianceType !== midea.APPLIANCE_TYPE.AC) return;
-
-        for (const def of CONTROLS) {
+        const controls = controlsFor(descriptor.applianceType);
+        if (!controls) return;
+        for (const def of controls) {
             await this.setObjectNotExistsAsync(`${root}.controls.${def.id}`, {
                 type: "state",
                 common: def.common,
@@ -424,13 +478,19 @@ class MideaAdapter extends utils.Adapter {
         if (changes.swing !== undefined) {
             await this.setStateAsync(`devices.${deviceId}.controls.swing`, changes.swing, true);
         }
-        for (const flag of ["ecoMode", "turboMode", "sleepMode", "purify", "dryClean", "frostProtection"]) {
+        for (const flag of ["ecoMode", "turboMode", "sleepMode", "purify", "dryClean", "frostProtection", "ionMode", "pumpSwitch", "verticalSwing"]) {
             if (changes[flag] !== undefined) {
                 await this.setStateAsync(`devices.${deviceId}.controls.${flag}`, !!changes[flag], true);
             }
         }
         if (changes.temperatureUnit !== undefined) {
             await this.setStateAsync(`devices.${deviceId}.controls.temperatureUnit`, changes.temperatureUnit === 1 ? "fahrenheit" : "celsius", true);
+        }
+        if (changes.targetHumidity !== undefined) {
+            await this.setStateAsync(`devices.${deviceId}.controls.targetHumidity`, Number(changes.targetHumidity), true);
+        }
+        if (changes.tankWarningLevel !== undefined) {
+            await this.setStateAsync(`devices.${deviceId}.controls.tankWarningLevel`, Number(changes.tankWarningLevel), true);
         }
     }
 
@@ -454,10 +514,12 @@ class MideaAdapter extends utils.Adapter {
             } catch (err) {
                 this.log.debug(`refreshStatus(${id}) failed: ${errMessage(err)}`);
             }
-            try {
-                await device.refreshPowerUsage();
-            } catch (err) {
-                this.log.silly(`refreshPowerUsage(${id}) failed: ${errMessage(err)}`);
+            if (device instanceof ACDevice) {
+                try {
+                    await device.refreshPowerUsage();
+                } catch (err) {
+                    this.log.silly(`refreshPowerUsage(${id}) failed: ${errMessage(err)}`);
+                }
             }
             await this.setStateAsync(`devices.${id}.info.online`, device.online, true);
             await this.setStateAsync(`devices.${id}.status.online`, device.online, true);
@@ -481,6 +543,10 @@ class MideaAdapter extends utils.Adapter {
         this.log.debug(`Device ${deviceId}: control change ${control}=${state.val}`);
 
         if (control === "toggleDisplay") {
+            if (!(device instanceof ACDevice)) {
+                this.log.warn(`toggleDisplay is only supported on AC devices (${deviceId})`);
+                return;
+            }
             try {
                 await device.toggleDisplay();
             } catch (err) {
@@ -490,33 +556,66 @@ class MideaAdapter extends utils.Adapter {
         }
 
         const update = {};
-        switch (control) {
-            case "powerOn":
-            case "ecoMode":
-            case "turboMode":
-            case "sleepMode":
-            case "purify":
-            case "dryClean":
-            case "frostProtection":
-                update[control] = !!state.val;
-                break;
-            case "mode":
-            case "temperatureUnit":
-            case "swing":
-                update[control] = String(state.val);
-                break;
-            case "temperatureSetpoint":
-                update.temperatureSetpoint = Number(state.val);
-                break;
-            case "fanSpeed":
-                update.fanSpeed = Number(state.val);
-                break;
-            case "fanSpeedName":
-                update.fanSpeed = String(state.val);
-                break;
-            default:
-                this.log.warn(`Unhandled control ${control}`);
-                return;
+        if (device instanceof ACDevice) {
+            switch (control) {
+                case "powerOn":
+                case "ecoMode":
+                case "turboMode":
+                case "sleepMode":
+                case "purify":
+                case "dryClean":
+                case "frostProtection":
+                    update[control] = !!state.val;
+                    break;
+                case "mode":
+                case "temperatureUnit":
+                case "swing":
+                    update[control] = String(state.val);
+                    break;
+                case "temperatureSetpoint":
+                    update.temperatureSetpoint = Number(state.val);
+                    break;
+                case "fanSpeed":
+                    update.fanSpeed = Number(state.val);
+                    break;
+                case "fanSpeedName":
+                    update.fanSpeed = String(state.val);
+                    break;
+                default:
+                    this.log.warn(`Unhandled AC control ${control}`);
+                    return;
+            }
+        } else if (device instanceof DehumidifierDevice) {
+            switch (control) {
+                case "powerOn":
+                case "ionMode":
+                case "sleepMode":
+                case "pumpSwitch":
+                case "verticalSwing":
+                    update[control] = !!state.val;
+                    break;
+                case "mode":
+                    update.mode = String(state.val);
+                    break;
+                case "targetHumidity":
+                    update.targetHumidity = Number(state.val);
+                    break;
+                case "tankWarningLevel":
+                    update.tankWarningLevel = Number(state.val);
+                    break;
+                case "fanSpeed":
+                    update.fanSpeed = Number(state.val);
+                    break;
+                case "fanSpeedName":
+                    update.fanSpeed = String(state.val);
+                    break;
+                default:
+                    this.log.warn(`Unhandled dehumidifier control ${control}`);
+                    return;
+            }
+        } else {
+            this.log.warn(`Unhandled device class for control ${control}`);
+            return;
         }
 
         try {
