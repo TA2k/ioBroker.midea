@@ -524,6 +524,16 @@ class MideaAdapter extends utils.Adapter {
          * @type {Map<string, string>}
          */
         this.lastLanHosts = new Map();
+        /**
+         * Serialises midea.discover() calls. The discovery cycle and the
+         * admin "Refresh devices" handler both probe the LAN; running them
+         * concurrently leaves device replies arriving on whichever UDP
+         * socket happens to win the race, so each side ends up with an
+         * incomplete list. We chain new calls onto this promise so they
+         * run back to back instead of in parallel.
+         * @type {Promise<any>}
+         */
+        this.discoverChain = Promise.resolve();
         /** @type {midea.CloudClient|null} */
         this.cloud = null;
         this.pollTimer = null;
@@ -642,6 +652,24 @@ class MideaAdapter extends utils.Adapter {
         this.log.info(`Cleanup complete (${topLevel.size} top-level item(s) cleared)`);
     }
 
+    /**
+     * Run a midea.discover() call serialised against any other discover
+     * already in flight on this adapter instance. Avoids the UDP-socket
+     * race between runDiscoveryCycle and the refreshDeviceList handler.
+     *
+     * @param {object} opts
+     */
+    async serialDiscover(opts) {
+        const next = this.discoverChain.then(
+            () => midea.discover(opts),
+            () => midea.discover(opts), // ignore prior failure, still run ours
+        );
+        // Hold the chain on `next` (swallowing rejections) so the chain
+        // never short-circuits on a failure.
+        this.discoverChain = next.catch(() => undefined);
+        return next;
+    }
+
     schedulePoll() {
         if (this.shuttingDown) return;
         this.pollTimer = setTimeout(() => {
@@ -696,8 +724,9 @@ class MideaAdapter extends utils.Adapter {
         }
 
         const discoveryTargets = [...new Set([...broadcastTargets, ...staticIps])];
-        const lanDevices = await midea.discover({ targets: discoveryTargets, logger: this.log });
-        this.lastLanHosts.clear();
+        const lanDevices = await this.serialDiscover({ targets: discoveryTargets, logger: this.log });
+        // Upsert only — a 0-result blip should not wipe IPs we learned
+        // earlier and that the admin refresh handler relies on.
         for (const desc of lanDevices) {
             if (desc.id && desc.host) this.lastLanHosts.set(String(desc.id), String(desc.host));
         }
@@ -1168,7 +1197,7 @@ class MideaAdapter extends utils.Adapter {
                 if (h) staticIps.push(h);
             }
             const targets = [...new Set([...broadcastTargets, ...staticIps])];
-            lanDevices = await midea.discover({ targets, logger: this.log });
+            lanDevices = await this.serialDiscover({ targets, logger: this.log });
         } catch (err) {
             this.log.warn(`refreshDeviceList: LAN discovery failed: ${errMessage(err)}`);
         }
@@ -1260,8 +1289,9 @@ class MideaAdapter extends utils.Adapter {
             return (dict[lang] || dict.en)[key];
         };
 
-        if (total === 0 && cloudErr) {
-            return { error: t("nothing") + ` (${t("cloudFailed")})` };
+        if (total === 0) {
+            const reason = cloudErr ? ` (${t("cloudFailed")})` : "";
+            return { error: t("nothing") + reason };
         }
         let msg = t("found");
         if (cloudErr) msg += ` — ${t("cloudFailed")}`;
