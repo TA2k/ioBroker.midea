@@ -197,7 +197,7 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
-### **WORK IN PROGRESS**
+### 1.4.0 (2026-05-19)
 
 -   Adds NetHome Plus, Midea Air and Ariston Clima cloud accounts (V3 firmware
     appliances). Pick the cloud variant in the new "Cloud app" setting; the
