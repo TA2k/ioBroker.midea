@@ -6,5 +6,11 @@
   "password": "云账号密码",
   "passwordHelp": "所选云应用使用的密码",
   "interval": "轮询间隔（秒）",
-  "intervalHelp": "适配器通过局域网轮询每个设备的频率。范围 5–3600 秒（默认 30）。"
+  "intervalHelp": "适配器通过局域网轮询每个设备的频率。范围 5–3600 秒（默认 30）。",
+  "refreshDevices": "从云 + LAN 刷新设备",
+  "deviceList": "设备",
+  "deviceListHelp": "点击\"刷新设备\"会从云账号拉取设备列表，并合并 LAN 发现到的 IP。对于位于其他子网或被 Wi-Fi 接入点隔离的设备，IP 列将保持为空 — 请手动填写 IP。每次发现循环中，适配器都会在自有子网广播之外，对此处列出的每个 IP 直接进行 UDP 单播探测。保存表单以应用更改。",
+  "deviceListId": "设备 ID",
+  "deviceListName": "名称",
+  "deviceListHost": "IP 或主机名"
 }

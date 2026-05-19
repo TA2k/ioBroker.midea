@@ -6,5 +6,11 @@
   "password": "Cloud-account-wachtwoord",
   "passwordHelp": "Wachtwoord uit de gekozen cloud-app",
   "interval": "Pollinginterval (seconden)",
-  "intervalHelp": "Hoe vaak de adapter elk apparaat lokaal via het LAN opvraagt. Bereik 5–3600 seconden (standaard 30)."
+  "intervalHelp": "Hoe vaak de adapter elk apparaat lokaal via het LAN opvraagt. Bereik 5–3600 seconden (standaard 30).",
+  "refreshDevices": "Apparaten verversen uit cloud + LAN",
+  "deviceList": "Apparaten",
+  "deviceListHelp": "Klik op \"Apparaten verversen\" om de apparaatlijst uit het cloud-account op te halen en de IP's die LAN-discovery heeft gezien te koppelen. Voor apparaten in een ander subnet of achter een wifi-AP met clientisolatie blijft de IP-kolom leeg — typ het IP met de hand in. Bij elke discovery-cyclus probeert de adapter elk hier vermeld IP via UDP-unicast, naast het broadcast op de eigen subnetten. Bewaar het formulier om de wijzigingen toe te passen.",
+  "deviceListId": "Apparaat-ID",
+  "deviceListName": "Naam",
+  "deviceListHost": "IP of hostnaam"
 }

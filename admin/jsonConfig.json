@@ -55,6 +55,52 @@
       "md": 6,
       "lg": 4,
       "xl": 4
+    },
+    "_refreshDevices": {
+      "type": "sendTo",
+      "label": "refreshDevices",
+      "command": "refreshDeviceList",
+      "useNative": true,
+      "newLine": true,
+      "variant": "contained",
+      "xs": 12,
+      "sm": 12,
+      "md": 6,
+      "lg": 4,
+      "xl": 4
+    },
+    "deviceList": {
+      "type": "table",
+      "label": "deviceList",
+      "help": "deviceListHelp",
+      "newLine": true,
+      "items": [
+        {
+          "type": "text",
+          "attr": "id",
+          "title": "deviceListId",
+          "width": "30%",
+          "readOnly": true
+        },
+        {
+          "type": "text",
+          "attr": "name",
+          "title": "deviceListName",
+          "width": "35%",
+          "readOnly": true
+        },
+        {
+          "type": "text",
+          "attr": "host",
+          "title": "deviceListHost",
+          "width": "35%"
+        }
+      ],
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 12,
+      "xl": 12
     }
   }
 }

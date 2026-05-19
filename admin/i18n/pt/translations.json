@@ -6,5 +6,11 @@
   "password": "Palavra-passe da conta cloud",
   "passwordHelp": "Palavra-passe usada na aplicação cloud escolhida",
   "interval": "Intervalo de polling (segundos)",
-  "intervalHelp": "Com que frequência o adaptador consulta cada aparelho localmente pela LAN. Intervalo 5–3600 segundos (padrão 30)."
+  "intervalHelp": "Com que frequência o adaptador consulta cada aparelho localmente pela LAN. Intervalo 5–3600 segundos (padrão 30).",
+  "refreshDevices": "Atualizar dispositivos da cloud + LAN",
+  "deviceList": "Dispositivos",
+  "deviceListHelp": "Clique em \"Atualizar dispositivos\" para ir buscar a lista de aparelhos à conta cloud e juntar os IPs detetados pela descoberta LAN. Para aparelhos noutra sub-rede ou atrás de um ponto de acesso Wi-Fi que isola clientes, a coluna do IP fica vazia — escreva o IP à mão. Em cada ciclo de descoberta o adaptador envia um UDP unicast para cada IP listado aqui, além do broadcast nas suas próprias sub-redes. Guarde o formulário para aplicar.",
+  "deviceListId": "ID do dispositivo",
+  "deviceListName": "Nome",
+  "deviceListHost": "IP ou nome de host"
 }

@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "midea",
-    "version": "1.6.1",
+    "version": "1.6.2",
     "news": {
+      "1.6.2": {
+        "en": "Adds a device list table in the adapter settings. Click \"Refresh devices\" to pull the cloud account's appliances and merge in any IPs LAN discovery has seen — type the missing IPs by hand for appliances on a different subnet or behind a Wi-Fi access point that isolates clients. Each discovery cycle now also unicast-probes those IPs in addition to the broadcast on the host's own subnets.",
+        "de": "Fügt eine Geräte-Tabelle in den Adapter-Einstellungen hinzu. \"Geräte aktualisieren\" zieht die Geräte aus dem Cloud-Konto und mischt die per LAN-Discovery gesehenen IPs ein — fehlende IPs trägst du für Geräte in anderen Subnetzen oder hinter Client-isolierenden WLAN-APs von Hand nach. Jeder Discovery-Zyklus probt diese IPs zusätzlich zum Broadcast in den eigenen Subnetzen per Unicast.",
+        "ru": "Добавлена таблица устройств в настройках адаптера. Кнопка \"Обновить устройства\" подтягивает приборы из облачного аккаунта и подмешивает IP, найденные через LAN-обнаружение — недостающие IP вписываете вручную для приборов в других подсетях или за Wi-Fi-точками с изоляцией клиентов. На каждом цикле обнаружения адаптер дополнительно отправляет unicast-пробы на эти IP помимо broadcast в собственных подсетях.",
+        "pt": "Adiciona uma tabela de dispositivos nas definições do adaptador. \"Atualizar dispositivos\" obtém os aparelhos da conta na nuvem e junta os IPs detetados pela descoberta LAN — preencha à mão os IPs em falta para aparelhos noutra sub-rede ou atrás de um ponto de acesso Wi-Fi que isola clientes. Cada ciclo de descoberta envia agora também um sondeo unicast a esses IPs além do broadcast nas sub-redes do próprio host.",
+        "nl": "Voegt een apparaattabel toe aan de adapterinstellingen. \"Apparaten verversen\" haalt de apparaten van het cloudaccount op en voegt de IP's in die LAN-discovery heeft gezien — typ ontbrekende IP's met de hand in voor apparaten in een ander subnet of achter een Wi-Fi-AP met clientisolatie. Elke discovery-cyclus probet die IP's nu ook via unicast naast de broadcast op de eigen subnetten.",
+        "fr": "Ajoute une table d'appareils dans les paramètres de l'adaptateur. \"Rafraîchir les appareils\" récupère les appareils du compte cloud et fusionne les IP vues par la découverte LAN — saisissez à la main les IP manquantes pour les appareils sur un autre sous-réseau ou derrière un point d'accès Wi-Fi isolant les clients. Chaque cycle de découverte envoie désormais aussi un sondage unicast à ces IP en plus du broadcast sur les sous-réseaux de l'hôte.",
+        "it": "Aggiunge una tabella dispositivi nelle impostazioni dell'adattatore. \"Aggiorna dispositivi\" preleva gli apparecchi dell'account cloud e unisce gli IP visti dalla discovery LAN — inserisci a mano gli IP mancanti per gli apparecchi su un'altra sottorete o dietro un access point Wi-Fi che isola i client. Ogni ciclo di discovery ora invia anche una sonda unicast a quegli IP oltre al broadcast sulle sottoreti dell'host.",
+        "es": "Añade una tabla de dispositivos en los ajustes del adaptador. \"Actualizar dispositivos\" obtiene los aparatos de la cuenta en la nube y combina las IP vistas por el descubrimiento LAN — escribe a mano las IP que falten para aparatos en otra subred o detrás de un AP Wi-Fi que aísla clientes. Cada ciclo de descubrimiento ahora también sondea esas IP por unicast además del broadcast en las subredes propias.",
+        "pl": "Dodaje tabelę urządzeń w ustawieniach adaptera. \"Odśwież urządzenia\" pobiera urządzenia z konta chmurowego i łączy je z IP wykrytymi przez LAN — brakujące IP wpisz ręcznie dla urządzeń w innej podsieci lub za AP Wi-Fi izolującym klientów. Każdy cykl wykrywania od teraz dodatkowo wysyła unicastowe próby do tych IP obok broadcastu we własnych podsieciach.",
+        "uk": "Додає таблицю пристроїв у налаштуваннях адаптера. \"Оновити пристрої\" витягує пристрої з хмарного облікового запису та зливає з ними IP, виявлені LAN-пошуком — для пристроїв у іншій підмережі чи за Wi-Fi точкою доступу з ізоляцією клієнтів пропущені IP вписуйте вручну. На кожному циклі виявлення адаптер тепер також надсилає unicast-зонди до цих IP на додачу до broadcast у власних підмережах.",
+        "zh-cn": "在适配器设置中新增设备列表。点击\"刷新设备\"会从云账号拉取设备并合并 LAN 发现到的 IP — 对位于其他子网或被 Wi-Fi 接入点隔离的设备，手动补充缺失的 IP 即可。每个发现周期会在自有子网广播之外，对这些 IP 进行 UDP 单播探测。"
+      },
       "1.6.1": {
         "en": "Fixes an adapter crash caused by a TCP connection timeout when the appliance is briefly unreachable. The LAN client now also recovers cleanly from stale connections instead of rejecting the next request. \"socket closed mid-request\" errors now name the device, host:port and the command they interrupted. The warning shown when writing to a control whose device is missing now explains why (offline, unsupported type, or stale state object), lists the broadcast addresses ioBroker is sending discovery to, and tells you how to fix it.",
         "de": "Behebt einen Adapter-Absturz, der durch ein TCP-Verbindungs-Timeout ausgelöst wurde, wenn das Gerät kurzzeitig nicht erreichbar war. Der LAN-Client erholt sich jetzt zudem sauber von alten Verbindungen, statt die nächste Anfrage abzulehnen. \"socket closed mid-request\"-Fehler nennen jetzt Gerät, Host:Port und den unterbrochenen Befehl. Die Warnung beim Schreiben auf ein Control, dessen Gerät fehlt, erklärt jetzt die Ursache (offline, nicht unterstützter Typ oder veraltetes State-Objekt), listet die Broadcast-Adressen, an die ioBroker Discovery sendet, und nennt den Lösungsweg.",
@@ -175,7 +188,7 @@
     "adminUI": {
       "config": "json"
     },
-    "messagebox": false,
+    "messagebox": true,
     "supportedMessages": {
       "custom": false,
       "deviceManager": false
@@ -201,7 +214,8 @@
     "user": "",
     "password": "",
     "interval": 30,
-    "cloudApp": "msmarthome"
+    "cloudApp": "msmarthome",
+    "deviceList": []
   },
   "objects": [],
   "instanceObjects": [

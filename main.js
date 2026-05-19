@@ -517,6 +517,13 @@ class MideaAdapter extends utils.Adapter {
          * @type {Map<string, {name?: string, type?: number, online?: boolean}>}
          */
         this.cloudAppliances = new Map();
+        /**
+         * Last LAN-discovered host per device id. Populated on every
+         * runDiscoveryCycle() and consulted by onMessage("refreshDeviceList")
+         * so the admin form can merge live LAN data into the device table.
+         * @type {Map<string, string>}
+         */
+        this.lastLanHosts = new Map();
         /** @type {midea.CloudClient|null} */
         this.cloud = null;
         this.pollTimer = null;
@@ -526,6 +533,7 @@ class MideaAdapter extends utils.Adapter {
 
         this.on("ready", this.onReady.bind(this));
         this.on("stateChange", this.onStateChange.bind(this));
+        this.on("message", this.onMessage.bind(this));
         this.on("unload", this.onUnload.bind(this));
     }
 
@@ -675,7 +683,24 @@ class MideaAdapter extends utils.Adapter {
         try { broadcastTargets = midea.enumerateBroadcastTargets(); } catch (_e) { /* swallow */ }
         this.log.debug(`LAN discovery: broadcasting to [${broadcastTargets.join(", ")}] on UDP/6445+20086`);
 
-        const lanDevices = await midea.discover({ logger: this.log });
+        const deviceListCfg = /** @type {Array<{id?: string, name?: string, host?: string}>} */ (
+            Array.isArray(this.config.deviceList) ? this.config.deviceList : []
+        );
+        const staticIps = [];
+        for (const entry of deviceListCfg) {
+            const host = String((entry && entry.host) || "").trim();
+            if (host) staticIps.push(host);
+        }
+        if (staticIps.length) {
+            this.log.info(`LAN discovery: also unicast-probing configured device IPs [${staticIps.join(", ")}]`);
+        }
+
+        const discoveryTargets = [...new Set([...broadcastTargets, ...staticIps])];
+        const lanDevices = await midea.discover({ targets: discoveryTargets, logger: this.log });
+        this.lastLanHosts.clear();
+        for (const desc of lanDevices) {
+            if (desc.id && desc.host) this.lastLanHosts.set(String(desc.id), String(desc.host));
+        }
         if (lanDevices.length === 0) {
             this.log.warn(
                 "LAN discovery found 0 appliance(s) — your ioBroker host is not on the same broadcast domain as the appliance, or UDP 6445 is firewalled. Across VLANs you need a UDP broadcast relay (e.g. udpbroadcastrelay).",
@@ -1058,6 +1083,132 @@ class MideaAdapter extends utils.Adapter {
             await device.setStatus(update);
         } catch (err) {
             this.log.error(`setStatus(${deviceId}, ${control}=${state.val}) failed: ${errMessage(err)}`);
+        }
+    }
+
+    /**
+     * Admin UI message handler.
+     *
+     * Currently the only command is `refreshDeviceList`, fired by the
+     * "Refresh devices" button in jsonConfig. The handler logs in to the
+     * cloud (using either the form values from `obj.message` or the saved
+     * config), runs an ad-hoc LAN discovery, and merges the two lists into
+     * a `deviceList` array of `{id, name, host}` rows. With `useNative` on
+     * the button, admin merges the returned `native.deviceList` into the
+     * form so the user sees IPs filled in for everything LAN discovery
+     * reached, and blank rows for cloud-only appliances they need to type
+     * IPs for.
+     *
+     * @param {ioBroker.Message} obj
+     */
+    async onMessage(obj) {
+        if (!obj || obj.command !== "refreshDeviceList") return;
+
+        const formCfg = /** @type {{cloudApp?: string, user?: string, password?: string, deviceList?: Array<{id?: string, name?: string, host?: string}>}} */ (
+            obj.message && typeof obj.message === "object" ? obj.message : {}
+        );
+        const cloudApp = String(formCfg.cloudApp || this.config.cloudApp || "msmarthome");
+        const user = String(formCfg.user || this.config.user || "");
+        const password = String(formCfg.password || this.config.password || "");
+        const existing = Array.isArray(formCfg.deviceList)
+            ? formCfg.deviceList
+            : (Array.isArray(this.config.deviceList) ? this.config.deviceList : []);
+        const existingByIdHost = new Map();
+        for (const row of existing) {
+            const id = String((row && row.id) || "").trim();
+            if (!id) continue;
+            existingByIdHost.set(id, String((row && row.host) || "").trim());
+        }
+
+        /** @type {Array<{id: string, name: string, host: string}>} */
+        const merged = [];
+        const seen = new Set();
+        let cloudErr = null;
+
+        // Cloud side. Failure is logged but does not abort the LAN side.
+        if (user && password) {
+            try {
+                const tmpCloud = midea.createCloudClient({
+                    app: cloudApp,
+                    user,
+                    password,
+                    logger: this.log,
+                });
+                const list = await tmpCloud.listAppliances();
+                for (const item of list) {
+                    const id = String(item.id);
+                    if (!id || seen.has(id)) continue;
+                    seen.add(id);
+                    merged.push({
+                        id,
+                        name: String(item.name || ""),
+                        host: this.lastLanHosts.get(id) || existingByIdHost.get(id) || "",
+                    });
+                }
+            } catch (err) {
+                cloudErr = errMessage(err);
+                this.log.warn(`refreshDeviceList: cloud listAppliances failed: ${cloudErr}`);
+            }
+        } else {
+            this.log.info("refreshDeviceList: no cloud credentials provided, skipping cloud lookup");
+        }
+
+        // LAN side — fresh one-shot discovery so the table reflects what
+        // is reachable right now, even if the adapter has not yet run a
+        // discovery cycle since startup.
+        let lanDevices = [];
+        try {
+            let broadcastTargets = [];
+            try { broadcastTargets = midea.enumerateBroadcastTargets(); } catch (_e) { /* swallow */ }
+            const staticIps = [];
+            for (const row of existing) {
+                const h = String((row && row.host) || "").trim();
+                if (h) staticIps.push(h);
+            }
+            const targets = [...new Set([...broadcastTargets, ...staticIps])];
+            lanDevices = await midea.discover({ targets, logger: this.log });
+        } catch (err) {
+            this.log.warn(`refreshDeviceList: LAN discovery failed: ${errMessage(err)}`);
+        }
+        for (const desc of lanDevices) {
+            const id = String(desc.id);
+            if (!id) continue;
+            if (desc.host) this.lastLanHosts.set(id, String(desc.host));
+            if (seen.has(id)) {
+                // Backfill host on cloud row if discovery returned one.
+                if (desc.host) {
+                    const row = merged.find((r) => r.id === id);
+                    if (row && !row.host) row.host = String(desc.host);
+                }
+                continue;
+            }
+            seen.add(id);
+            merged.push({
+                id,
+                name: "(LAN-only)",
+                host: String(desc.host || ""),
+            });
+        }
+
+        // Carry over user-typed IPs for ids that neither cloud nor LAN
+        // returned this round, so manual edits aren't silently dropped.
+        for (const row of existing) {
+            const id = String((row && row.id) || "").trim();
+            if (!id || seen.has(id)) continue;
+            seen.add(id);
+            merged.push({
+                id,
+                name: String((row && row.name) || ""),
+                host: String((row && row.host) || ""),
+            });
+        }
+
+        merged.sort((a, b) => a.id.localeCompare(b.id));
+
+        this.log.info(`refreshDeviceList: returning ${merged.length} device(s) (cloud${cloudErr ? " failed" : ""}, lan=${lanDevices.length})`);
+
+        if (obj.callback) {
+            this.sendTo(obj.from, obj.command, { native: { deviceList: merged } }, obj.callback);
         }
     }
 
