@@ -104,9 +104,51 @@ your scripts on what the appliance actually supports.
 ## Supported appliance types
 
 Full control: residential air conditioner (`0xAC`), commercial air conditioner
-(`0xCC`, same UART layout as `0xAC`), dehumidifier (`0xA1`).
-Metadata only (discovered, but no controls): `0xFA` fan, `0xFC` purifier,
-`0xFD` humidifier. PRs welcome.
+(`0xCC`, same UART layout as `0xAC`), dehumidifier (`0xA1`), fan (`0xFA`),
+air purifier (`0xFC`), humidifier (`0xFD`).
+
+### Controls (fan, 0xFA)
+
+| Control            | Type    | Description                                             |
+| ------------------ | ------- | ------------------------------------------------------- |
+| `powerOn`          | boolean | Turn the unit on/off                                    |
+| `childLock`        | boolean | Child lock                                              |
+| `mode`             | enum    | normal / natural / sleep / comfort / silent / baby / …  |
+| `fanSpeed`         | number  | 1–26                                                    |
+| `oscillate`        | boolean | Oscillation on/off                                      |
+| `oscillationMode`  | enum    | off / oscillation / tilting / curve-w / curve-8 / both  |
+| `oscillationAngle` | enum    | off / 30 / 60 / 90 / 120 / 180 / 360                    |
+| `tiltingAngle`     | enum    | off / 30 / 60 / 90 / 120 / 180 / 360 / +60 / -60 / 40   |
+
+### Controls (air purifier, 0xFC)
+
+| Control             | Type    | Description                                       |
+| ------------------- | ------- | ------------------------------------------------- |
+| `powerOn`           | boolean | Turn the unit on/off                              |
+| `mode`              | enum    | standby / auto / manual / sleep / fast / smoke    |
+| `fanSpeedName`      | enum    | auto / standby / low / medium / high              |
+| `anion`             | boolean | Anion / ionizer                                   |
+| `childLock`         | boolean | Child lock                                        |
+| `screenDisplayName` | enum    | bright / dim / off                                |
+| `detectMode`        | enum    | off / pm25 / methanal                             |
+| `standby`           | boolean | Auto-standby on clean air                         |
+
+The status tree exposes pm25, tvoc, hcho, filter1Life and filter2Life as
+read-only sensor values.
+
+### Controls (humidifier, 0xFD)
+
+| Control             | Type    | Description                                                          |
+| ------------------- | ------- | -------------------------------------------------------------------- |
+| `powerOn`           | boolean | Turn the unit on/off                                                 |
+| `mode`              | enum    | manual / auto / continuous / living-room / bed-room / kitchen / sleep |
+| `targetHumidity`    | number  | 0–100 % target humidity                                              |
+| `fanSpeedName`      | enum    | lowest / low / medium / high / auto / off                            |
+| `screenDisplayName` | enum    | bright / dim / off                                                   |
+| `disinfect`         | boolean | Disinfect cycle                                                      |
+
+The status tree exposes currentHumidity, currentTemperature and tank as
+read-only sensor values.
 
 ## Troubleshooting
 
@@ -127,6 +169,13 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+
+### 1.2.0
+
+-   Full control for fan (`0xFA`), air purifier (`0xFC`) and humidifier (`0xFD`).
+-   Protocol byte layouts reverse-engineered from the
+    [midea-local](https://github.com/midea-lan/midea-local) Home Assistant
+    integration, no third-party runtime dependency added.
 
 ### 1.1.0
 

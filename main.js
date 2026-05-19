@@ -6,6 +6,9 @@ const Json2iob = require("json2iob");
 const midea = require("./lib/midea");
 const { ACDevice } = require("./lib/midea/devices/ac");
 const { DehumidifierDevice } = require("./lib/midea/devices/dehumidifier");
+const { FanDevice } = require("./lib/midea/devices/fan");
+const { PurifierDevice } = require("./lib/midea/devices/purifier");
+const { HumidifierDevice } = require("./lib/midea/devices/humidifier");
 
 /**
  * @param {unknown} err
@@ -209,6 +212,40 @@ const DEHUMIDIFIER_CONTROLS = [
     { id: "tankWarningLevel", common: { name: "Tank warning level", type: "number", role: "level", unit: "%", read: true, write: true, min: 0, max: 100, def: 100 } },
 ];
 
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const FAN_CONTROLS = [
+    { id: "powerOn", common: { name: "Power on/off", type: "boolean", role: "switch.power", read: true, write: true, def: false } },
+    { id: "childLock", common: { name: "Child lock", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "mode", common: { name: "Operating mode", type: "string", role: "state", read: true, write: true, def: "normal", states: { normal: "normal", natural: "natural", sleep: "sleep", comfort: "comfort", silent: "silent", baby: "baby", induction: "induction", circulation: "circulation", strong: "strong", soft: "soft", customize: "customize", warm: "warm", smart: "smart" } } },
+    { id: "fanSpeed", common: { name: "Fan speed", type: "number", role: "level.fan", read: true, write: true, min: 1, max: 26, def: 1 } },
+    { id: "oscillate", common: { name: "Oscillation", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "oscillationMode", common: { name: "Oscillation mode", type: "string", role: "state", read: true, write: true, def: "off", states: { off: "off", oscillation: "oscillation", tilting: "tilting", "curve-w": "curve-w", "curve-8": "curve-8", reserved: "reserved", both: "both" } } },
+    { id: "oscillationAngle", common: { name: "Oscillation angle (deg)", type: "string", role: "state", read: true, write: true, def: "off", states: { off: "off", 30: "30", 60: "60", 90: "90", 120: "120", 180: "180", 360: "360" } } },
+    { id: "tiltingAngle", common: { name: "Tilting angle (deg)", type: "string", role: "state", read: true, write: true, def: "off", states: { off: "off", 30: "30", 60: "60", 90: "90", 120: "120", 180: "180", 360: "360", "+60": "+60", "-60": "-60", 40: "40" } } },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const PURIFIER_CONTROLS = [
+    { id: "powerOn", common: { name: "Power on/off", type: "boolean", role: "switch.power", read: true, write: true, def: false } },
+    { id: "mode", common: { name: "Operating mode", type: "string", role: "state", read: true, write: true, def: "auto", states: { standby: "standby", auto: "auto", manual: "manual", sleep: "sleep", fast: "fast", smoke: "smoke" } } },
+    { id: "fanSpeedName", common: { name: "Fan speed", type: "string", role: "state", read: true, write: true, def: "auto", states: { auto: "auto", standby: "standby", low: "low", medium: "medium", high: "high" } } },
+    { id: "anion", common: { name: "Anion / ionizer", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "childLock", common: { name: "Child lock", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "screenDisplayName", common: { name: "Screen display", type: "string", role: "state", read: true, write: true, def: "bright", states: { bright: "bright", dim: "dim", off: "off" } } },
+    { id: "detectMode", common: { name: "Detect mode", type: "string", role: "state", read: true, write: true, def: "off", states: { off: "off", pm25: "pm25", methanal: "methanal" } } },
+    { id: "standby", common: { name: "Standby (auto-stop on clean air)", type: "boolean", role: "switch", read: true, write: true, def: false } },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const HUMIDIFIER_CONTROLS = [
+    { id: "powerOn", common: { name: "Power on/off", type: "boolean", role: "switch.power", read: true, write: true, def: false } },
+    { id: "mode", common: { name: "Operating mode", type: "string", role: "state", read: true, write: true, def: "manual", states: { manual: "manual", auto: "auto", continuous: "continuous", "living-room": "living-room", "bed-room": "bed-room", kitchen: "kitchen", sleep: "sleep" } } },
+    { id: "targetHumidity", common: { name: "Target humidity", type: "number", role: "level.humidity", unit: "%", read: true, write: true, min: 0, max: 100, def: 50 } },
+    { id: "fanSpeedName", common: { name: "Fan speed", type: "string", role: "state", read: true, write: true, def: "low", states: { lowest: "lowest", low: "low", medium: "medium", high: "high", auto: "auto", off: "off" } } },
+    { id: "screenDisplayName", common: { name: "Screen display", type: "string", role: "state", read: true, write: true, def: "bright", states: { bright: "bright", dim: "dim", off: "off" } } },
+    { id: "disinfect", common: { name: "Disinfect", type: "boolean", role: "switch", read: true, write: true, def: false } },
+];
+
 /**
  * @param {number} applianceType
  * @returns {Array<{id: string, common: ioBroker.StateCommon}>|null}
@@ -216,13 +253,16 @@ const DEHUMIDIFIER_CONTROLS = [
 function controlsFor(applianceType) {
     if (applianceType === midea.APPLIANCE_TYPE.AC || applianceType === midea.APPLIANCE_TYPE.COMMERCIAL_AC) return AC_CONTROLS;
     if (applianceType === midea.APPLIANCE_TYPE.DEHUMIDIFIER) return DEHUMIDIFIER_CONTROLS;
+    if (applianceType === midea.APPLIANCE_TYPE.FAN) return FAN_CONTROLS;
+    if (applianceType === midea.APPLIANCE_TYPE.PURIFIER) return PURIFIER_CONTROLS;
+    if (applianceType === midea.APPLIANCE_TYPE.HUMIDIFIER) return HUMIDIFIER_CONTROLS;
     return null;
 }
 
 class MideaAdapter extends utils.Adapter {
     constructor(options) {
         super({ ...options, name: "midea" });
-        /** @type {Map<string, ACDevice|DehumidifierDevice>} */
+        /** @type {Map<string, InstanceType<typeof ACDevice>|InstanceType<typeof DehumidifierDevice>|InstanceType<typeof FanDevice>|InstanceType<typeof PurifierDevice>|InstanceType<typeof HumidifierDevice>>} */
         this.devices = new Map();
         /** @type {Map<string, any>} */
         this.descriptors = new Map();
@@ -335,7 +375,11 @@ class MideaAdapter extends utils.Adapter {
             key,
             logger: this.log,
         });
-        if (!(device instanceof ACDevice) && !(device instanceof DehumidifierDevice)) {
+        if (!(device instanceof ACDevice)
+            && !(device instanceof DehumidifierDevice)
+            && !(device instanceof FanDevice)
+            && !(device instanceof PurifierDevice)
+            && !(device instanceof HumidifierDevice)) {
             this.log.warn(`Device ${descriptor.id} did not produce a controllable device — skipping control wiring.`);
             return;
         }
@@ -478,9 +522,14 @@ class MideaAdapter extends utils.Adapter {
         if (changes.swing !== undefined) {
             await this.setStateAsync(`devices.${deviceId}.controls.swing`, changes.swing, true);
         }
-        for (const flag of ["ecoMode", "turboMode", "sleepMode", "purify", "dryClean", "frostProtection", "ionMode", "pumpSwitch", "verticalSwing"]) {
+        for (const flag of ["ecoMode", "turboMode", "sleepMode", "purify", "dryClean", "frostProtection", "ionMode", "pumpSwitch", "verticalSwing", "childLock", "oscillate", "anion", "standby", "disinfect"]) {
             if (changes[flag] !== undefined) {
                 await this.setStateAsync(`devices.${deviceId}.controls.${flag}`, !!changes[flag], true);
+            }
+        }
+        for (const named of ["oscillationMode", "oscillationAngle", "tiltingAngle", "detectMode", "screenDisplayName"]) {
+            if (changes[named] !== undefined && changes[named] !== null) {
+                await this.setStateAsync(`devices.${deviceId}.controls.${named}`, String(changes[named]), true);
             }
         }
         if (changes.temperatureUnit !== undefined) {
@@ -611,6 +660,70 @@ class MideaAdapter extends utils.Adapter {
                     break;
                 default:
                     this.log.warn(`Unhandled dehumidifier control ${control}`);
+                    return;
+            }
+        } else if (device instanceof FanDevice) {
+            switch (control) {
+                case "powerOn":
+                case "childLock":
+                case "oscillate":
+                    update[control] = !!state.val;
+                    break;
+                case "mode":
+                case "oscillationMode":
+                case "oscillationAngle":
+                case "tiltingAngle":
+                    update[control] = String(state.val);
+                    break;
+                case "fanSpeed":
+                    update.fanSpeed = Number(state.val);
+                    break;
+                default:
+                    this.log.warn(`Unhandled fan control ${control}`);
+                    return;
+            }
+        } else if (device instanceof PurifierDevice) {
+            switch (control) {
+                case "powerOn":
+                case "anion":
+                case "childLock":
+                case "standby":
+                    update[control] = !!state.val;
+                    break;
+                case "mode":
+                case "detectMode":
+                    update[control] = String(state.val);
+                    break;
+                case "fanSpeedName":
+                    update.fanSpeed = String(state.val);
+                    break;
+                case "screenDisplayName":
+                    update.screenDisplay = String(state.val);
+                    break;
+                default:
+                    this.log.warn(`Unhandled purifier control ${control}`);
+                    return;
+            }
+        } else if (device instanceof HumidifierDevice) {
+            switch (control) {
+                case "powerOn":
+                case "disinfect":
+                    update[control] = !!state.val;
+                    break;
+                case "mode":
+                    update.mode = String(state.val);
+                    break;
+                case "targetHumidity":
+                    update.targetHumidity = Number(state.val);
+                    break;
+                case "fanSpeedName":
+                    update.fanSpeed = String(state.val);
+                    break;
+                case "screenDisplayName":
+                    update.screenDisplay = String(state.val);
+                    break;
+                default:
+                    this.log.warn(`Unhandled humidifier control ${control}`);
                     return;
             }
         } else {

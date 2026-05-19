@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "midea",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "news": {
+      "1.2.0": {
+        "en": "Full control for fan (0xFA), purifier (0xFC) and humidifier (0xFD). Protocol layouts derived from midea-local.",
+        "de": "Volle Steuerung für Ventilator (0xFA), Luftreiniger (0xFC) und Luftbefeuchter (0xFD). Protokoll-Layouts aus midea-local übernommen.",
+        "ru": "Полное управление вентилятором (0xFA), очистителем воздуха (0xFC) и увлажнителем (0xFD). Протокол взят из midea-local.",
+        "pt": "Controlo completo para ventoinha (0xFA), purificador (0xFC) e humidificador (0xFD). Protocolo derivado do midea-local.",
+        "nl": "Volledige bediening voor ventilator (0xFA), luchtreiniger (0xFC) en luchtbevochtiger (0xFD). Protocol uit midea-local.",
+        "fr": "Contrôle complet du ventilateur (0xFA), purificateur (0xFC) et humidificateur (0xFD). Protocole issu de midea-local.",
+        "it": "Controllo completo per ventilatore (0xFA), purificatore (0xFC) e umidificatore (0xFD). Protocollo da midea-local.",
+        "es": "Control completo para ventilador (0xFA), purificador (0xFC) y humidificador (0xFD). Protocolo de midea-local.",
+        "pl": "Pełne sterowanie wentylatorem (0xFA), oczyszczaczem (0xFC) i nawilżaczem (0xFD). Protokół z midea-local.",
+        "uk": "Повне керування вентилятором (0xFA), очищувачем (0xFC) і зволожувачем (0xFD). Протокол з midea-local.",
+        "zh-cn": "为风扇 (0xFA)、净化器 (0xFC) 与加湿器 (0xFD) 提供完整控制。协议参考 midea-local。"
+      },
       "1.1.0": {
         "en": "Full control for dehumidifier (0xA1) and commercial AC (0xCC). Poll interval is now expressed in seconds (default 30 s) since polling runs locally.",
         "de": "Volle Steuerung für Luftentfeuchter (0xA1) und Kommerzklimagerät (0xCC). Poll-Intervall jetzt in Sekunden (Standard 30 s), da das Polling lokal läuft.",
