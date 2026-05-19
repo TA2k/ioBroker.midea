@@ -221,6 +221,15 @@ device ids so the implementation can be diagnosed from logs alone.
 -   Read-only telemetry for refrigerator (`0xCA`), pressure/rice cookers
     (`0xE8`/`0xEA`/`0xEC`), oven/steamer (`0xB1`/`0xB3`/`0xB4`) and air-box
     (`0xAD`) — these types do not expose a `MessageSet` upstream.
+-   Feature-parity pass against `midea-local`: standalone parser/setter for
+    commercial AC (`0xCC`, replacing the residential AC reuse), new-protocol
+    single-property setters (`body_type 0x14`) for `0xE2`/`0xE3` water heaters,
+    full `0xC3` heat-pump telemetry (basic, energy, silence, eco, disinfect,
+    unit parameters across body types `0x01`/`0x04`/`0x05`/`0x07`/`0x09`/
+    `0x10`), `0xB6` range-hood `0x0A`/`0xA2` push notify (oilcup/cleaning),
+    `0xA1` dehumidifier `childLock`, and additional `0xAC` C0 telemetry fields
+    (kickQuilt, preventCold, comfortSleepSwitch, smartDry, swingLR, fresh-air
+    filter timers).
 
 ### 1.2.0
 
