@@ -486,6 +486,7 @@ class MideaAdapter extends utils.Adapter {
     }
 
     async onReady() {
+        await this.deleteLegacyTree();
         await this.setStateAsync("info.connection", false, true);
 
         if (!this.config.user || !this.config.password) {
@@ -497,7 +498,8 @@ class MideaAdapter extends utils.Adapter {
         this.pollIntervalMs = intervalSec * 1000;
         this.log.debug(`Midea adapter starting up, poll interval=${intervalSec} s`);
 
-        this.cloud = new midea.CloudClient({
+        this.cloud = midea.createCloudClient({
+            app: this.config.cloudApp || "msmarthome",
             user: this.config.user,
             password: this.config.password,
             logger: this.log,
@@ -509,8 +511,83 @@ class MideaAdapter extends utils.Adapter {
             this.log.error(`Initial discovery failed: ${errMessage(err)}`);
         }
 
-        await this.subscribeStatesAsync("devices.*.controls.*");
+        await this.subscribeStatesAsync("*.control.*");
         this.schedulePoll();
+    }
+
+    /**
+     * One-shot cleanup of the pre-1.4.0 object tree. The 1.4.0 layout drops
+     * the `devices.<id>` prefix and renames `controls` to `control`, so any
+     * leftover state from older versions would just sit there as orphans.
+     * We delete every top-level object under the instance and recreate the
+     * `info` channel from scratch so runDiscoveryCycle() builds the new
+     * layout cleanly.
+     */
+    async deleteLegacyTree() {
+        const flag = await this.getStateAsync("info.migrationV1");
+        if (flag && flag.val === true) return;
+
+        const all = await this.getAdapterObjectsAsync();
+        const ns = `${this.namespace}.`;
+        const topLevel = new Set();
+        let hasLegacy = false;
+        for (const fullId of Object.keys(all)) {
+            if (!fullId.startsWith(ns)) continue;
+            const top = fullId.slice(ns.length).split(".")[0];
+            if (!top) continue;
+            topLevel.add(top);
+            // Pre-1.4.0 layout had a top-level `devices` channel containing
+            // every appliance. Anything else (`info`, the new top-level device
+            // ids) is current. Without that marker we're a fresh install and
+            // skip the cleanup entirely.
+            if (top === "devices") hasLegacy = true;
+        }
+        if (!hasLegacy) {
+            await this.setStateAsync("info.migrationV1", true, true);
+            return;
+        }
+
+        this.log.info("Clearing pre-1.4.0 object tree");
+        for (const top of topLevel) {
+            try {
+                await this.delObjectAsync(top, { recursive: true });
+            } catch (err) {
+                this.log.warn(`Could not delete ${top}: ${errMessage(err)}`);
+            }
+        }
+
+        await this.setObjectNotExistsAsync("info", {
+            type: "channel",
+            common: { name: "Information" },
+            native: {},
+        });
+        await this.setObjectNotExistsAsync("info.connection", {
+            type: "state",
+            common: {
+                role: "indicator.connected",
+                name: "Device or service connected",
+                type: "boolean",
+                read: true,
+                write: false,
+                def: false,
+            },
+            native: {},
+        });
+        await this.setObjectNotExistsAsync("info.migrationV1", {
+            type: "state",
+            common: {
+                role: "indicator",
+                name: "Legacy state cleanup completed",
+                type: "boolean",
+                read: true,
+                write: false,
+                def: false,
+            },
+            native: {},
+        });
+        await this.setStateAsync("info.connection", false, true);
+        await this.setStateAsync("info.migrationV1", true, true);
+        this.log.info(`Cleanup complete (${topLevel.size} top-level item(s) cleared)`);
     }
 
     schedulePoll() {
@@ -523,6 +600,22 @@ class MideaAdapter extends utils.Adapter {
     }
 
     async runDiscoveryCycle() {
+        const cloud = this.cloud;
+        const cloudByIdName = new Map();
+        let cloudList = null;
+        if (cloud) {
+            try {
+                cloudList = await cloud.listAppliances();
+                await this.setStateAsync("info.connection", true, true);
+                for (const item of cloudList) {
+                    if (item.name) cloudByIdName.set(item.id, item.name);
+                }
+            } catch (err) {
+                this.log.warn(`Cloud listAppliances failed: ${errMessage(err)}`);
+                await this.setStateAsync("info.connection", false, true);
+            }
+        }
+
         const lanDevices = await midea.discover({ logger: this.log });
         if (lanDevices.length === 0) {
             this.log.warn(
@@ -532,6 +625,8 @@ class MideaAdapter extends utils.Adapter {
             this.log.info(`LAN discovery found ${lanDevices.length} appliance(s)`);
         }
         for (const desc of lanDevices) {
+            const cloudName = cloudByIdName.get(desc.id);
+            if (cloudName) desc.name = cloudName;
             try {
                 await this.registerDevice(desc);
             } catch (err) {
@@ -539,18 +634,11 @@ class MideaAdapter extends utils.Adapter {
             }
         }
 
-        const cloud = this.cloud;
-        if (!cloud) return;
-        try {
-            const cloudList = await cloud.listAppliances();
-            await this.setStateAsync("info.connection", true, true);
+        if (cloudList) {
             for (const item of cloudList) {
                 if (this.descriptors.has(item.id)) continue;
-                this.log.warn(`Appliance ${item.id} (${item.name}) is bound to the cloud account but did not respond to LAN discovery — control requires a local broadcast domain.`);
+                this.log.warn(`Appliance ${item.id} (${item.name}) is bound to the cloud account but did not respond to LAN discovery — control requires a local broadcast domain, or the appliance uses the legacy V1 firmware which this adapter does not support.`);
             }
-        } catch (err) {
-            this.log.warn(`Cloud listAppliances failed: ${errMessage(err)}`);
-            await this.setStateAsync("info.connection", false, true);
         }
     }
 
@@ -623,18 +711,18 @@ class MideaAdapter extends utils.Adapter {
                 this.log.debug(`refreshPowerUsage for ${descriptor.id} failed (not all units support it): ${errMessage(err)}`);
             }
         }
-        await this.setStateAsync(`devices.${descriptor.id}.info.online`, device.online, true);
+        await this.setStateAsync(`${descriptor.id}.info.online`, device.online, true);
     }
 
     /** @param {any} descriptor */
     async createDeviceShell(descriptor) {
-        const root = `devices.${descriptor.id}`;
+        const root = `${descriptor.id}`;
         await this.setObjectNotExistsAsync(root, {
             type: "device",
             common: { name: descriptor.name || descriptor.id },
             native: {},
         });
-        for (const sub of ["info", "controls", "status", "capabilities"]) {
+        for (const sub of ["info", "control", "status", "capabilities"]) {
             await this.setObjectNotExistsAsync(`${root}.${sub}`, {
                 type: "channel",
                 common: { name: sub },
@@ -645,7 +733,7 @@ class MideaAdapter extends utils.Adapter {
         const controls = TYPED_CONTROLS[descriptor.applianceType];
         if (!controls) return;
         for (const def of controls) {
-            await this.setObjectNotExistsAsync(`${root}.controls.${def.id}`, {
+            await this.setObjectNotExistsAsync(`${root}.control.${def.id}`, {
                 type: "state",
                 common: def.common,
                 native: {},
@@ -655,7 +743,7 @@ class MideaAdapter extends utils.Adapter {
 
     /** @param {any} descriptor */
     async publishDescriptor(descriptor) {
-        await this.json2iob.parse(`devices.${descriptor.id}.info`, { ...descriptor, online: false }, {
+        await this.json2iob.parse(`${descriptor.id}.info`, { ...descriptor, online: false }, {
             descriptions: {
                 id: "Device ID",
                 name: "Device name",
@@ -695,7 +783,7 @@ class MideaAdapter extends utils.Adapter {
 
         this.log.debug(`Device ${deviceId}: publishStatus ${JSON.stringify(filtered)}`);
 
-        await this.json2iob.parse(`devices.${deviceId}.status`, filtered, {
+        await this.json2iob.parse(`${deviceId}.status`, filtered, {
             descriptions: STATUS_DESCRIPTIONS,
             states: STATUS_STATE_ENUMS,
             units: STATUS_UNITS,
@@ -722,7 +810,7 @@ class MideaAdapter extends utils.Adapter {
             } else {
                 v = String(v);
             }
-            await this.setStateAsync(`devices.${deviceId}.controls.${def.id}`, v, true);
+            await this.setStateAsync(`${deviceId}.control.${def.id}`, v, true);
         }
     }
 
@@ -732,7 +820,7 @@ class MideaAdapter extends utils.Adapter {
      */
     async publishCapabilities(deviceId, caps) {
         this.log.debug(`Device ${deviceId}: publishCapabilities (${Object.keys(caps).length} flags)`);
-        await this.json2iob.parse(`devices.${deviceId}.capabilities`, caps, {
+        await this.json2iob.parse(`${deviceId}.capabilities`, caps, {
             descriptions: CAPABILITY_DESCRIPTIONS,
             write: false,
             channelName: "Capabilities",
@@ -753,15 +841,15 @@ class MideaAdapter extends utils.Adapter {
                     this.log.silly(`refreshPowerUsage(${id}) failed: ${errMessage(err)}`);
                 }
             }
-            await this.setStateAsync(`devices.${id}.info.online`, device.online, true);
-            await this.setStateAsync(`devices.${id}.status.online`, device.online, true);
+            await this.setStateAsync(`${id}.info.online`, device.online, true);
+            await this.setStateAsync(`${id}.status.online`, device.online, true);
         }
     }
 
     async onStateChange(id, state) {
         if (!state || state.ack) return;
 
-        const m = id.match(/devices\.([^.]+)\.controls\.([^.]+)$/);
+        const m = id.match(/\.([^.]+)\.control\.([^.]+)$/);
         if (!m) return;
 
         const deviceId = m[1];

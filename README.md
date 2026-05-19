@@ -197,6 +197,20 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+### **WORK IN PROGRESS**
+
+-   Adds NetHome Plus, Midea Air and Ariston Clima cloud accounts (V3 firmware
+    appliances). Pick the cloud variant in the new "Cloud app" setting; the
+    default stays MSmartHome.
+-   Object tree simplified: devices now appear directly under the instance
+    (no `devices.<id>` prefix) and the controls channel is now called
+    `control`.
+-   On first 1.4.0 start the old object tree is cleared automatically. If you
+    want to start fresh later, set `info.migrationV1` to `false` and restart
+    the adapter.
+-   V1-firmware appliances on the LAN are not supported — they show up in
+    the cloud list but never respond to local discovery.
+
 ### 1.3.1 (2026-05-19)
 
 -   Controls now stay automatically in sync with the device status across all

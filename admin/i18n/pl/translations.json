@@ -1,8 +1,10 @@
 {
-  "user": "Użytkownik aplikacji Midea / NetHome",
-  "userHelp": "Adres e-mail używany w aplikacji Midea / NetHome Plus",
-  "password": "Hasło aplikacji Midea / NetHome",
-  "passwordHelp": "Hasło używane w aplikacji Midea / NetHome Plus",
-  "interval": "Interwał odpytywania (minuty)",
-  "intervalHelp": "Jak często adapter odpytuje chmurę. Minimum 1 minuta."
+  "cloudApp": "Aplikacja chmurowa",
+  "cloudAppHelp": "Wybierz aplikację, do której podłączone są urządzenia. Domyślnie MSmartHome; NetHome Plus, Midea Air i Ariston Clima używają starszej chmury V1. Urządzenia z firmware V1 w sieci LAN nie są obsługiwane.",
+  "user": "Użytkownik konta chmurowego",
+  "userHelp": "Adres e-mail z wybranej aplikacji chmurowej",
+  "password": "Hasło konta chmurowego",
+  "passwordHelp": "Hasło z wybranej aplikacji chmurowej",
+  "interval": "Interwał odpytywania (sekundy)",
+  "intervalHelp": "Jak często adapter odpytuje każde urządzenie lokalnie przez LAN. Zakres 5–3600 sekund (domyślnie 30)."
 }

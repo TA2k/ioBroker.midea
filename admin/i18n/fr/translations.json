@@ -1,8 +1,10 @@
 {
-  "user": "Utilisateur de l'application Midea / NetHome",
-  "userHelp": "Adresse e-mail utilisée dans l'application Midea / NetHome Plus",
-  "password": "Mot de passe de l'application Midea / NetHome",
-  "passwordHelp": "Mot de passe utilisé dans l'application Midea / NetHome Plus",
-  "interval": "Intervalle d'interrogation (minutes)",
-  "intervalHelp": "Fréquence à laquelle l'adaptateur interroge le cloud. Minimum 1 minute."
+  "cloudApp": "Application cloud",
+  "cloudAppHelp": "Sélectionnez l'application à laquelle vos appareils sont liés. MSmartHome par défaut ; NetHome Plus, Midea Air et Ariston Clima utilisent l'ancien cloud V1. Les appareils en firmware V1 sur le LAN ne sont pas pris en charge.",
+  "user": "Utilisateur du compte cloud",
+  "userHelp": "Adresse e-mail utilisée dans l'application cloud choisie",
+  "password": "Mot de passe du compte cloud",
+  "passwordHelp": "Mot de passe utilisé dans l'application cloud choisie",
+  "interval": "Intervalle d'interrogation (secondes)",
+  "intervalHelp": "Fréquence à laquelle l'adaptateur interroge chaque appareil localement via le LAN. Plage 5–3600 secondes (30 par défaut)."
 }

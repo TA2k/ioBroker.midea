@@ -161,7 +161,8 @@
   "native": {
     "user": "",
     "password": "",
-    "interval": 30
+    "interval": 30,
+    "cloudApp": "msmarthome"
   },
   "objects": [],
   "instanceObjects": [
@@ -179,6 +180,19 @@
       "common": {
         "role": "indicator.connected",
         "name": "Device or service connected",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.migrationV1",
+      "type": "state",
+      "common": {
+        "role": "indicator",
+        "name": "Legacy state cleanup completed",
         "type": "boolean",
         "read": true,
         "write": false,

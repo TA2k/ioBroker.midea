@@ -2,6 +2,23 @@
   "type": "panel",
   "i18n": true,
   "items": {
+    "cloudApp": {
+      "type": "select",
+      "label": "cloudApp",
+      "help": "cloudAppHelp",
+      "newLine": true,
+      "options": [
+        { "label": "MSmartHome", "value": "msmarthome" },
+        { "label": "NetHome Plus", "value": "nethome" },
+        { "label": "Midea Air", "value": "midea-air" },
+        { "label": "Ariston Clima", "value": "ariston-clima" }
+      ],
+      "xs": 12,
+      "sm": 12,
+      "md": 6,
+      "lg": 4,
+      "xl": 4
+    },
     "user": {
       "type": "text",
       "label": "user",

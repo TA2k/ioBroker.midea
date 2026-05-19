@@ -1,8 +1,10 @@
 {
-  "user": "Midea / NetHome 应用用户",
-  "userHelp": "Midea 或 NetHome Plus 应用中使用的电子邮件地址",
-  "password": "Midea / NetHome 应用密码",
-  "passwordHelp": "Midea 或 NetHome Plus 应用中使用的密码",
-  "interval": "轮询间隔（分钟）",
-  "intervalHelp": "适配器轮询云端的频率，最少 1 分钟。"
+  "cloudApp": "云应用",
+  "cloudAppHelp": "选择设备绑定的应用。默认 MSmartHome；NetHome Plus、Midea Air 和 Ariston Clima 使用旧版 V1 云。本适配器不支持局域网内的 V1 固件设备。",
+  "user": "云账号用户",
+  "userHelp": "所选云应用使用的电子邮件地址",
+  "password": "云账号密码",
+  "passwordHelp": "所选云应用使用的密码",
+  "interval": "轮询间隔（秒）",
+  "intervalHelp": "适配器通过局域网轮询每个设备的频率。范围 5–3600 秒（默认 30）。"
 }

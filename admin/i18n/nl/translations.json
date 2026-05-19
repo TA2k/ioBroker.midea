@@ -1,8 +1,10 @@
 {
-  "user": "Midea / NetHome app-gebruiker",
-  "userHelp": "E-mailadres dat in de Midea- of NetHome Plus-app wordt gebruikt",
-  "password": "Midea / NetHome app-wachtwoord",
-  "passwordHelp": "Wachtwoord dat in de Midea- of NetHome Plus-app wordt gebruikt",
-  "interval": "Pollinginterval (minuten)",
-  "intervalHelp": "Hoe vaak de adapter de cloud opvraagt. Minimaal 1 minuut."
+  "cloudApp": "Cloud-app",
+  "cloudAppHelp": "Kies de app waaraan je apparaten gekoppeld zijn. MSmartHome is standaard; NetHome Plus, Midea Air en Ariston Clima gebruiken de oudere V1-cloud. V1-firmware apparaten in het LAN worden niet ondersteund.",
+  "user": "Cloud-account-gebruiker",
+  "userHelp": "E-mailadres uit de gekozen cloud-app",
+  "password": "Cloud-account-wachtwoord",
+  "passwordHelp": "Wachtwoord uit de gekozen cloud-app",
+  "interval": "Pollinginterval (seconden)",
+  "intervalHelp": "Hoe vaak de adapter elk apparaat lokaal via het LAN opvraagt. Bereik 5–3600 seconden (standaard 30)."
 }

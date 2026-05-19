@@ -1,8 +1,10 @@
 {
-  "user": "Midea / NetHome App user",
-  "userHelp": "E-mail address used in the Midea / NetHome Plus app",
-  "password": "Midea / NetHome App password",
-  "passwordHelp": "Password used in the Midea / NetHome Plus app",
+  "cloudApp": "Cloud app",
+  "cloudAppHelp": "Pick the app your appliances are bound to. MSmartHome is the default; NetHome Plus, Midea Air and Ariston Clima talk the legacy V1 cloud. V1-firmware appliances on the LAN are not supported.",
+  "user": "Cloud account user",
+  "userHelp": "E-mail address used in the chosen cloud app",
+  "password": "Cloud account password",
+  "passwordHelp": "Password used in the chosen cloud app",
   "interval": "Polling interval (seconds)",
   "intervalHelp": "How often the adapter polls each device locally over the LAN. Range 5–3600 seconds (default 30)."
 }

@@ -1,8 +1,10 @@
 {
-  "user": "Midea-/NetHome-App-Benutzer",
-  "userHelp": "E-Mail-Adresse aus der Midea- bzw. NetHome-Plus-App",
-  "password": "Midea-/NetHome-App-Passwort",
-  "passwordHelp": "Passwort aus der Midea- bzw. NetHome-Plus-App",
+  "cloudApp": "Cloud-App",
+  "cloudAppHelp": "Wähle die App, mit der deine Geräte verbunden sind. MSmartHome ist Standard; NetHome Plus, Midea Air und Ariston Clima sprechen die ältere V1-Cloud. V1-Firmware-Geräte im LAN werden nicht unterstützt.",
+  "user": "Cloud-Account-Benutzer",
+  "userHelp": "E-Mail-Adresse aus der gewählten Cloud-App",
+  "password": "Cloud-Account-Passwort",
+  "passwordHelp": "Passwort aus der gewählten Cloud-App",
   "interval": "Abfrageintervall (Sekunden)",
   "intervalHelp": "Wie oft der Adapter jedes Gerät lokal über das LAN abfragt. Bereich 5–3600 Sekunden (Standard 30)."
 }
