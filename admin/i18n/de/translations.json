@@ -9,8 +9,10 @@
   "intervalHelp": "Wie oft der Adapter jedes Gerät lokal über das LAN abfragt. Bereich 5–3600 Sekunden (Standard 30).",
   "refreshDevices": "Geräte aktualisieren",
   "deviceList": "Geräte",
-  "deviceListHelp": "Klicke auf \"Geräte aktualisieren\", um die Geräteliste aus dem Cloud-Account zu ziehen und die per LAN-Discovery gesehenen IPs einzumischen. Bei Geräten in einem anderen Subnetz oder hinter einem Client-isolierenden WLAN-Accesspoint bleibt die IP-Spalte leer — trage die IP von Hand ein. Der Adapter sendet bei jedem Discovery-Zyklus zusätzlich zum Broadcast auf den eigenen Subnetzen einen UDP-Unicast an jede hier eingetragene IP. Speichern drücken.",
+  "deviceListHelp": "Klicke auf \"Geräte aktualisieren\", um die Geräteliste aus dem Cloud-Account zu ziehen und die per LAN-Discovery gesehenen IPs einzumischen. Bei Geräten in einem anderen Subnetz oder hinter einem Client-isolierenden WLAN-Accesspoint bleibt die IP-Spalte leer — trage die IP von Hand ein. Token und Key holt der Adapter automatisch aus der Cloud; wenn der Handshake trotzdem fehlschlägt, kannst du beide hier von Hand setzen (z.B. aus msmart-ng). Speichern drücken.",
   "deviceListId": "Geräte-ID",
   "deviceListName": "Name",
-  "deviceListHost": "IP oder Hostname"
+  "deviceListHost": "IP oder Hostname",
+  "deviceListToken": "Token (optional)",
+  "deviceListKey": "Key (optional)"
 }

@@ -711,7 +711,7 @@ class MideaAdapter extends utils.Adapter {
         try { broadcastTargets = midea.enumerateBroadcastTargets(); } catch (_e) { /* swallow */ }
         this.log.debug(`LAN discovery: broadcasting to [${broadcastTargets.join(", ")}] on UDP/6445+20086`);
 
-        const deviceListCfg = /** @type {Array<{id?: string, name?: string, host?: string}>} */ (
+        const deviceListCfg = /** @type {Array<{id?: string, name?: string, host?: string, token?: string, key?: string}>} */ (
             Array.isArray(this.config.deviceList) ? this.config.deviceList : []
         );
         const staticIps = [];
@@ -772,6 +772,28 @@ class MideaAdapter extends utils.Adapter {
         this.log.info(`Discovery summary: cloud=${cloudIds.size}, lan=${lanIds.size}, both=${both.length}, registered=${this.devices.size}${cloudOnlyNote}${lanOnlyNote}`);
     }
 
+    /**
+     * Look up a device-list row in the admin config by id and return the
+     * {token, key} the user has typed in there, if both are non-empty. Used
+     * to override the cloud-fetched token+key for V3 handshake (escape hatch
+     * when the cloud's token doesn't authenticate, e.g. paste msmart-ng's).
+     *
+     * @param {string|number} id
+     * @returns {{token?: string, key?: string} | null}
+     */
+    findDeviceListOverride(id) {
+        const list = /** @type {Array<{id?: string, token?: string, key?: string}>} */ (
+            Array.isArray(this.config.deviceList) ? this.config.deviceList : []
+        );
+        const idStr = String(id);
+        const row = list.find((r) => r && String(r.id || "") === idStr);
+        if (!row) return null;
+        const token = typeof row.token === "string" ? row.token.trim() : "";
+        const key = typeof row.key === "string" ? row.key.trim() : "";
+        if (!token || !key) return null;
+        return { token, key };
+    }
+
     /** @param {any} descriptor */
     async registerDevice(descriptor) {
         this.descriptors.set(descriptor.id, descriptor);
@@ -791,16 +813,23 @@ class MideaAdapter extends utils.Adapter {
         let token;
         let key;
         if (descriptor.protocol === 3) {
-            try {
-                if (!this.cloud) throw new Error("cloud client not initialised");
-                ({ token, key } = await this.cloud.getToken(descriptor.udpId));
-            } catch (err) {
-                this.log.warn(
-                    `Could not fetch token/key for ${descriptor.id}: ${errMessage(err)} — the device is offline in the cloud account, or the credentials in the adapter config are wrong.`,
-                );
-                return;
+            const override = this.findDeviceListOverride(descriptor.id);
+            if (override && override.token && override.key) {
+                token = override.token;
+                key = override.key;
+                this.log.info(`Device ${descriptor.id}: using token/key from device list (admin override, token=${token.slice(0, 8)}…)`);
+            } else {
+                try {
+                    if (!this.cloud) throw new Error("cloud client not initialised");
+                    ({ token, key } = await this.cloud.getToken(descriptor.udpId));
+                } catch (err) {
+                    this.log.warn(
+                        `Could not fetch token/key for ${descriptor.id}: ${errMessage(err)} — the device is offline in the cloud account, or the credentials in the adapter config are wrong.`,
+                    );
+                    return;
+                }
+                this.log.debug(`Device ${descriptor.id}: token/key fetched (token=${token.slice(0, 8)}…)`);
             }
-            this.log.debug(`Device ${descriptor.id}: token/key fetched (token=${token.slice(0, 8)}…)`);
         } else {
             this.log.debug(`Device ${descriptor.id}: protocol=${descriptor.protocol}, skipping cloud token fetch (no auth required for V1/V2 LAN).`);
         }
@@ -1133,7 +1162,7 @@ class MideaAdapter extends utils.Adapter {
     async onMessage(obj) {
         if (!obj || obj.command !== "refreshDeviceList") return;
 
-        const formCfg = /** @type {{cloudApp?: string, user?: string, password?: string, deviceList?: Array<{id?: string, name?: string, host?: string}>}} */ (
+        const formCfg = /** @type {{cloudApp?: string, user?: string, password?: string, deviceList?: Array<{id?: string, name?: string, host?: string, token?: string, key?: string}>}} */ (
             obj.message && typeof obj.message === "object" ? obj.message : {}
         );
         const cloudApp = String(formCfg.cloudApp || this.config.cloudApp || "msmarthome");
@@ -1142,14 +1171,20 @@ class MideaAdapter extends utils.Adapter {
         const existing = Array.isArray(formCfg.deviceList)
             ? formCfg.deviceList
             : (Array.isArray(this.config.deviceList) ? this.config.deviceList : []);
-        const existingByIdHost = new Map();
+        /** @type {Map<string, {host: string, token: string, key: string, name: string}>} */
+        const existingById = new Map();
         for (const row of existing) {
             const id = String((row && row.id) || "").trim();
             if (!id) continue;
-            existingByIdHost.set(id, String((row && row.host) || "").trim());
+            existingById.set(id, {
+                host: String((row && row.host) || "").trim(),
+                token: String((row && row.token) || "").trim(),
+                key: String((row && row.key) || "").trim(),
+                name: String((row && row.name) || ""),
+            });
         }
 
-        /** @type {Array<{id: string, name: string, host: string}>} */
+        /** @type {Array<{id: string, name: string, host: string, token: string, key: string}>} */
         const merged = [];
         const seen = new Set();
         let cloudErr = null;
@@ -1170,10 +1205,13 @@ class MideaAdapter extends utils.Adapter {
                     const id = String(item.id);
                     if (!id || seen.has(id)) continue;
                     seen.add(id);
+                    const prev = existingById.get(id);
                     merged.push({
                         id,
                         name: String(item.name || ""),
-                        host: this.lastLanHosts.get(id) || existingByIdHost.get(id) || "",
+                        host: this.lastLanHosts.get(id) || (prev && prev.host) || "",
+                        token: (prev && prev.token) || "",
+                        key: (prev && prev.key) || "",
                     });
                 }
             } catch (err) {
@@ -1214,10 +1252,13 @@ class MideaAdapter extends utils.Adapter {
                 continue;
             }
             seen.add(id);
+            const prev = existingById.get(id);
             merged.push({
                 id,
                 name: "(LAN-only)",
                 host: String(desc.host || ""),
+                token: (prev && prev.token) || "",
+                key: (prev && prev.key) || "",
             });
         }
 
@@ -1231,6 +1272,8 @@ class MideaAdapter extends utils.Adapter {
                 id,
                 name: String((row && row.name) || ""),
                 host: String((row && row.host) || ""),
+                token: String((row && row.token) || ""),
+                key: String((row && row.key) || ""),
             });
         }
 

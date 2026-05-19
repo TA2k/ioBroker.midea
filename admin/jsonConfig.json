@@ -79,21 +79,33 @@
           "type": "text",
           "attr": "id",
           "title": "deviceListId",
-          "width": "30%",
+          "width": "18%",
           "readOnly": true
         },
         {
           "type": "text",
           "attr": "name",
           "title": "deviceListName",
-          "width": "35%",
+          "width": "18%",
           "readOnly": true
         },
         {
           "type": "text",
           "attr": "host",
           "title": "deviceListHost",
-          "width": "35%"
+          "width": "18%"
+        },
+        {
+          "type": "text",
+          "attr": "token",
+          "title": "deviceListToken",
+          "width": "23%"
+        },
+        {
+          "type": "text",
+          "attr": "key",
+          "title": "deviceListKey",
+          "width": "23%"
         }
       ],
       "xs": 12,

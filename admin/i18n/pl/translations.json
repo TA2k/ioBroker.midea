@@ -9,8 +9,10 @@
   "intervalHelp": "Jak często adapter odpytuje każde urządzenie lokalnie przez LAN. Zakres 5–3600 sekund (domyślnie 30).",
   "refreshDevices": "Odśwież urządzenia",
   "deviceList": "Urządzenia",
-  "deviceListHelp": "Kliknij \"Odśwież urządzenia\", aby pobrać listę urządzeń z konta chmurowego i połączyć ją z IP wykrytymi przez wyszukiwanie LAN. Dla urządzeń w innej podsieci lub za punktem dostępowym Wi-Fi izolującym klientów kolumna IP pozostanie pusta — wpisz IP ręcznie. Przy każdym cyklu wyszukiwania adapter wysyła UDP unicast do każdego IP wymienionego tutaj, oprócz broadcastu we własnych podsieciach. Naciśnij Zapisz.",
+  "deviceListHelp": "Kliknij \"Odśwież urządzenia\", aby pobrać listę urządzeń z konta chmurowego i połączyć ją z IP wykrytymi przez wyszukiwanie LAN. Dla urządzeń w innej podsieci lub za punktem dostępowym Wi-Fi izolującym klientów kolumna IP pozostanie pusta — wpisz IP ręcznie. Przy każdym cyklu wyszukiwania adapter wysyła UDP unicast do każdego IP wymienionego tutaj, oprócz broadcastu we własnych podsieciach. Token i key adapter pobiera z chmury automatycznie; jeśli handshake i tak nie działa, możesz oba wpisać tutaj ręcznie (np. z msmart-ng). Naciśnij Zapisz.",
   "deviceListId": "ID urządzenia",
   "deviceListName": "Nazwa",
-  "deviceListHost": "IP lub nazwa hosta"
+  "deviceListHost": "IP lub nazwa hosta",
+  "deviceListToken": "Token (opc.)",
+  "deviceListKey": "Key (opc.)"
 }
