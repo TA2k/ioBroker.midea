@@ -867,8 +867,16 @@ class MideaAdapter extends utils.Adapter {
             );
         });
 
+        /** @type {string|null} */
+        let authedToken = null;
+        /** @type {string|null} */
+        let authedKey = null;
         try {
-            await this._refreshCapabilitiesWithAuthRetry(device, descriptor, candidates);
+            const ok = await this._refreshCapabilitiesWithAuthRetry(device, descriptor, candidates);
+            if (ok) {
+                authedToken = ok.token;
+                authedKey = ok.key;
+            }
         } catch (err) {
             this.log.warn(`refreshCapabilities for ${descriptor.id} failed: ${errMessage(err)}`);
         }
@@ -900,6 +908,20 @@ class MideaAdapter extends utils.Adapter {
             }
         }
         await this.setStateAsync(`${descriptor.id}.info.online`, device.online, true);
+
+        // Always backfill what discovery already knows (id/name/host) into
+        // the admin device-list, even if LAN auth failed or this is a V1
+        // device that has no token/key. Token/key are only persisted when
+        // the LAN handshake actually succeeded.
+        this._persistDeviceCredentials({
+            id: descriptor.id,
+            name: descriptor.name,
+            host: descriptor.host,
+            token: authedToken,
+            key: authedKey,
+        }).catch((err) =>
+            this.log.debug(`Device ${descriptor.id}: persist deviceList row skipped (${errMessage(err)})`),
+        );
     }
 
     /**
@@ -907,12 +929,12 @@ class MideaAdapter extends utils.Adapter {
      * The Midea cloud sometimes returns valid-looking entries for both udpId
      * methods (LITTLE and BIG) but only one token actually authenticates with
      * the device on the LAN — mirrors midea-beautiful-air's lan.py behaviour.
-     * After a successful auth, persist the working token/key into the device
-     * list config row so the user can see (and override) what was negotiated.
+     * Returns the working candidate on success so the caller can persist it.
      *
      * @param {any} device
      * @param {any} descriptor
      * @param {Array<{method: string, token: string, key: string}>|null} candidates
+     * @returns {Promise<{method: string, token: string, key: string}|null>}
      */
     async _refreshCapabilitiesWithAuthRetry(device, descriptor, candidates) {
         const tries = candidates && candidates.length ? candidates.length : 1;
@@ -930,17 +952,9 @@ class MideaAdapter extends utils.Adapter {
                 if (candidates) {
                     const ok = candidates[i];
                     this.log.info(`Device ${descriptor.id}: LAN authenticated with udpId method ${ok.method}`);
-                    this._persistDeviceCredentials({
-                        id: descriptor.id,
-                        name: descriptor.name,
-                        host: descriptor.host,
-                        token: ok.token,
-                        key: ok.key,
-                    }).catch((err) =>
-                        this.log.debug(`Device ${descriptor.id}: persist token/key skipped (${errMessage(err)})`),
-                    );
+                    return ok;
                 }
-                return;
+                return null;
             } catch (err) {
                 lastErr = err;
                 const msg = errMessage(err);
@@ -951,49 +965,64 @@ class MideaAdapter extends utils.Adapter {
             }
         }
         if (lastErr) throw lastErr;
+        return null;
     }
 
     /**
-     * Write the cloud-fetched (and LAN-verified) token/key back into the
-     * adapter's deviceList config so the user can see them in the admin
-     * table. Only fills empty cells — manual user entries always win. Also
-     * backfills id/name/host on rows the user typed by IP only (matched by
-     * host when id is empty), so the table doesn't end up with duplicate
-     * rows. The write is a no-op when the row already has token+key, so
-     * the adapter restart that ioBroker triggers on native config changes
-     * happens at most once per device.
+     * Write what discovery (and optionally LAN auth) knows about the device
+     * back into the adapter's deviceList config so the user sees the rows
+     * populated in the admin table without having to click "Refresh
+     * devices". Only fills empty cells — manual user entries always win.
+     * Also matches existing rows by host when id is empty so an IP-only
+     * row the user typed gets backfilled instead of duplicated. The write
+     * is a no-op when nothing actually changed, so the adapter restart
+     * that ioBroker triggers on native config changes happens at most once
+     * per device per missing field.
      *
-     * @param {{id: string, name?: string, host?: string, token: string, key: string}} desc
+     * @param {{id: string, name?: string, host?: string, token?: string|null, key?: string|null}} desc
      */
     async _persistDeviceCredentials(desc) {
-        if (!desc || !desc.token || !desc.key) return;
+        if (!desc || !desc.id) return;
         const list = /** @type {Array<{id?: string, name?: string, host?: string, token?: string, key?: string}>} */ (
             Array.isArray(this.config.deviceList) ? this.config.deviceList.slice() : []
         );
         const idStr = String(desc.id);
         const hostStr = String(desc.host || "").trim();
+        const nameStr = String(desc.name || "").trim();
+        const tokenStr = desc.token ? String(desc.token).trim() : "";
+        const keyStr = desc.key ? String(desc.key).trim() : "";
         let row = list.find((r) => r && String(r.id || "") === idStr);
         if (!row && hostStr) {
             row = list.find((r) => r && !String(r.id || "").trim() && String(r.host || "").trim() === hostStr);
         }
-        const existingToken = row && typeof row.token === "string" ? row.token.trim() : "";
-        const existingKey = row && typeof row.key === "string" ? row.key.trim() : "";
         const existingId = row && typeof row.id === "string" ? row.id.trim() : "";
         const existingName = row && typeof row.name === "string" ? row.name.trim() : "";
         const existingHost = row && typeof row.host === "string" ? row.host.trim() : "";
-        if (row && existingId && existingToken && existingKey && (existingName || !desc.name) && (existingHost || !hostStr)) {
-            return;
-        }
+        const existingToken = row && typeof row.token === "string" ? row.token.trim() : "";
+        const existingKey = row && typeof row.key === "string" ? row.key.trim() : "";
+        const wantId = !existingId;
+        const wantName = !existingName && nameStr;
+        const wantHost = !existingHost && hostStr;
+        const wantToken = !existingToken && tokenStr;
+        const wantKey = !existingKey && keyStr;
+        if (row && !wantId && !wantName && !wantHost && !wantToken && !wantKey) return;
         if (!row) {
             row = { id: idStr };
             list.push(row);
         }
-        if (!existingId) row.id = idStr;
-        if (!existingName && desc.name) row.name = desc.name;
-        if (!existingHost && hostStr) row.host = hostStr;
-        if (!existingToken) row.token = desc.token;
-        if (!existingKey) row.key = desc.key;
-        this.log.info(`Device ${idStr}: storing id/name/host/token/key into device list (admin table) — adapter will reload.`);
+        if (wantId) row.id = idStr;
+        if (wantName) row.name = nameStr;
+        if (wantHost) row.host = hostStr;
+        if (wantToken) row.token = tokenStr;
+        if (wantKey) row.key = keyStr;
+        const what = [
+            wantId ? "id" : null,
+            wantName ? "name" : null,
+            wantHost ? "host" : null,
+            wantToken ? "token" : null,
+            wantKey ? "key" : null,
+        ].filter(Boolean).join("/");
+        this.log.info(`Device ${idStr}: storing ${what} into device list (admin table) — adapter will reload.`);
         await this.updateConfig({ deviceList: list });
     }
 
