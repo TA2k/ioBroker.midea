@@ -317,7 +317,13 @@ class MideaAdapter extends utils.Adapter {
 
     async runDiscoveryCycle() {
         const lanDevices = await midea.discover({ logger: this.log });
-        this.log.info(`LAN discovery found ${lanDevices.length} appliance(s)`);
+        if (lanDevices.length === 0) {
+            this.log.warn(
+                "LAN discovery found 0 appliance(s) — your ioBroker host is not on the same broadcast domain as the appliance, or UDP 6445 is firewalled. Across VLANs you need a UDP broadcast relay (e.g. udpbroadcastrelay).",
+            );
+        } else {
+            this.log.info(`LAN discovery found ${lanDevices.length} appliance(s)`);
+        }
         for (const desc of lanDevices) {
             try {
                 await this.registerDevice(desc);
@@ -365,7 +371,9 @@ class MideaAdapter extends utils.Adapter {
             if (!this.cloud) throw new Error("cloud client not initialised");
             ({ token, key } = await this.cloud.getToken(descriptor.udpId));
         } catch (err) {
-            this.log.warn(`Could not fetch token/key for ${descriptor.id}: ${errMessage(err)}`);
+            this.log.warn(
+                `Could not fetch token/key for ${descriptor.id}: ${errMessage(err)} — the device is offline in the cloud account, or the credentials in the adapter config are wrong.`,
+            );
             return;
         }
         this.log.debug(`Device ${descriptor.id}: token/key fetched (token=${token.slice(0, 8)}…)`);

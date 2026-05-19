@@ -15,6 +15,7 @@ admin/i18n/*/flat.txt
 
 # release-script / dev-server
 .dev-server/
+.commitinfo
 
 # editor
 .vscode/

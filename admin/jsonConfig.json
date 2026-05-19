@@ -7,9 +7,11 @@
       "label": "user",
       "help": "userHelp",
       "newLine": true,
+      "xs": 12,
       "sm": 12,
       "md": 6,
-      "lg": 4
+      "lg": 4,
+      "xl": 4
     },
     "password": {
       "type": "password",
@@ -18,9 +20,11 @@
       "repeat": false,
       "visible": true,
       "newLine": true,
+      "xs": 12,
       "sm": 12,
       "md": 6,
-      "lg": 4
+      "lg": 4,
+      "xl": 4
     },
     "interval": {
       "type": "number",
@@ -29,9 +33,11 @@
       "min": 5,
       "max": 3600,
       "newLine": true,
+      "xs": 12,
       "sm": 12,
       "md": 6,
-      "lg": 4
+      "lg": 4,
+      "xl": 4
     }
   }
 }
