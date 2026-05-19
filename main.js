@@ -812,6 +812,8 @@ class MideaAdapter extends utils.Adapter {
 
         let token;
         let key;
+        /** @type {Array<{method: string, token: string, key: string}>|null} */
+        let candidates = null;
         if (descriptor.protocol === 3) {
             const override = this.findDeviceListOverride(descriptor.id);
             if (override && override.token && override.key) {
@@ -821,14 +823,24 @@ class MideaAdapter extends utils.Adapter {
             } else {
                 try {
                     if (!this.cloud) throw new Error("cloud client not initialised");
-                    ({ token, key } = await this.cloud.getToken(descriptor.id));
+                    candidates = await this.cloud.getTokenCandidates(descriptor.id);
                 } catch (err) {
                     this.log.warn(
                         `Could not fetch token/key for ${descriptor.id}: ${errMessage(err)} — the device is offline in the cloud account, or the credentials in the adapter config are wrong.`,
                     );
                     return;
                 }
-                this.log.debug(`Device ${descriptor.id}: token/key fetched (token=${token.slice(0, 8)}…)`);
+                if (!candidates.length) {
+                    this.log.warn(
+                        `No token/key pair returned for ${descriptor.id} — the device is offline in the cloud account, or the credentials in the adapter config are wrong.`,
+                    );
+                    return;
+                }
+                token = candidates[0].token;
+                key = candidates[0].key;
+                this.log.debug(
+                    `Device ${descriptor.id}: ${candidates.length} token candidate(s) [${candidates.map((c) => c.method).join(", ")}], starting with ${candidates[0].method} (token=${token.slice(0, 8)}…)`,
+                );
             }
         } else {
             this.log.debug(`Device ${descriptor.id}: protocol=${descriptor.protocol}, skipping cloud token fetch (no auth required for V1/V2 LAN).`);
@@ -856,7 +868,7 @@ class MideaAdapter extends utils.Adapter {
         });
 
         try {
-            await device.refreshCapabilities();
+            await this._refreshCapabilitiesWithAuthRetry(device, descriptor, candidates);
         } catch (err) {
             this.log.warn(`refreshCapabilities for ${descriptor.id} failed: ${errMessage(err)}`);
         }
@@ -888,6 +900,101 @@ class MideaAdapter extends utils.Adapter {
             }
         }
         await this.setStateAsync(`${descriptor.id}.info.online`, device.online, true);
+    }
+
+    /**
+     * Run refreshCapabilities() with auth-retry across cloud token candidates.
+     * The Midea cloud sometimes returns valid-looking entries for both udpId
+     * methods (LITTLE and BIG) but only one token actually authenticates with
+     * the device on the LAN — mirrors midea-beautiful-air's lan.py behaviour.
+     * After a successful auth, persist the working token/key into the device
+     * list config row so the user can see (and override) what was negotiated.
+     *
+     * @param {any} device
+     * @param {any} descriptor
+     * @param {Array<{method: string, token: string, key: string}>|null} candidates
+     */
+    async _refreshCapabilitiesWithAuthRetry(device, descriptor, candidates) {
+        const tries = candidates && candidates.length ? candidates.length : 1;
+        let lastErr = null;
+        for (let i = 0; i < tries; i++) {
+            if (i > 0 && candidates) {
+                const next = candidates[i];
+                this.log.info(
+                    `Device ${descriptor.id}: LAN auth failed with udpId method ${candidates[i - 1].method}, retrying with ${next.method}`,
+                );
+                device.setLanCredentials(descriptor.host, next.token, next.key, descriptor.port);
+            }
+            try {
+                await device.refreshCapabilities();
+                if (candidates) {
+                    const ok = candidates[i];
+                    this.log.info(`Device ${descriptor.id}: LAN authenticated with udpId method ${ok.method}`);
+                    this._persistDeviceCredentials({
+                        id: descriptor.id,
+                        name: descriptor.name,
+                        host: descriptor.host,
+                        token: ok.token,
+                        key: ok.key,
+                    }).catch((err) =>
+                        this.log.debug(`Device ${descriptor.id}: persist token/key skipped (${errMessage(err)})`),
+                    );
+                }
+                return;
+            } catch (err) {
+                lastErr = err;
+                const msg = errMessage(err);
+                const authFailed = /authenticate ERROR|authenticate failed|authenticate error/i.test(msg);
+                if (!authFailed || !candidates || i + 1 >= tries) {
+                    throw err;
+                }
+            }
+        }
+        if (lastErr) throw lastErr;
+    }
+
+    /**
+     * Write the cloud-fetched (and LAN-verified) token/key back into the
+     * adapter's deviceList config so the user can see them in the admin
+     * table. Only fills empty cells — manual user entries always win. Also
+     * backfills id/name/host on rows the user typed by IP only (matched by
+     * host when id is empty), so the table doesn't end up with duplicate
+     * rows. The write is a no-op when the row already has token+key, so
+     * the adapter restart that ioBroker triggers on native config changes
+     * happens at most once per device.
+     *
+     * @param {{id: string, name?: string, host?: string, token: string, key: string}} desc
+     */
+    async _persistDeviceCredentials(desc) {
+        if (!desc || !desc.token || !desc.key) return;
+        const list = /** @type {Array<{id?: string, name?: string, host?: string, token?: string, key?: string}>} */ (
+            Array.isArray(this.config.deviceList) ? this.config.deviceList.slice() : []
+        );
+        const idStr = String(desc.id);
+        const hostStr = String(desc.host || "").trim();
+        let row = list.find((r) => r && String(r.id || "") === idStr);
+        if (!row && hostStr) {
+            row = list.find((r) => r && !String(r.id || "").trim() && String(r.host || "").trim() === hostStr);
+        }
+        const existingToken = row && typeof row.token === "string" ? row.token.trim() : "";
+        const existingKey = row && typeof row.key === "string" ? row.key.trim() : "";
+        const existingId = row && typeof row.id === "string" ? row.id.trim() : "";
+        const existingName = row && typeof row.name === "string" ? row.name.trim() : "";
+        const existingHost = row && typeof row.host === "string" ? row.host.trim() : "";
+        if (row && existingId && existingToken && existingKey && (existingName || !desc.name) && (existingHost || !hostStr)) {
+            return;
+        }
+        if (!row) {
+            row = { id: idStr };
+            list.push(row);
+        }
+        if (!existingId) row.id = idStr;
+        if (!existingName && desc.name) row.name = desc.name;
+        if (!existingHost && hostStr) row.host = hostStr;
+        if (!existingToken) row.token = desc.token;
+        if (!existingKey) row.key = desc.key;
+        this.log.info(`Device ${idStr}: storing id/name/host/token/key into device list (admin table) — adapter will reload.`);
+        await this.updateConfig({ deviceList: list });
     }
 
     /** @param {any} descriptor */
@@ -1034,7 +1141,6 @@ class MideaAdapter extends utils.Adapter {
                 }
             }
             await this.setStateAsync(`${id}.info.online`, device.online, true);
-            await this.setStateAsync(`${id}.status.online`, device.online, true);
         }
     }
 
