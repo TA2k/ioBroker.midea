@@ -7,9 +7,9 @@
   "passwordHelp": "Passwort aus der gewählten Cloud-App",
   "interval": "Abfrageintervall (Sekunden)",
   "intervalHelp": "Wie oft der Adapter jedes Gerät lokal über das LAN abfragt. Bereich 5–3600 Sekunden (Standard 30).",
-  "refreshDevices": "Geräte aus Cloud + LAN aktualisieren",
+  "refreshDevices": "Geräte aktualisieren",
   "deviceList": "Geräte",
-  "deviceListHelp": "Klicke auf \"Geräte aktualisieren\", um die Geräteliste aus dem Cloud-Account zu ziehen und die per LAN-Discovery gesehenen IPs einzumischen. Bei Geräten in einem anderen Subnetz oder hinter einem Client-isolierenden WLAN-Accesspoint bleibt die IP-Spalte leer — trage die IP von Hand ein. Der Adapter sendet bei jedem Discovery-Zyklus zusätzlich zum Broadcast auf den eigenen Subnetzen einen UDP-Unicast an jede hier eingetragene IP. Zum Übernehmen das Formular speichern.",
+  "deviceListHelp": "Klicke auf \"Geräte aktualisieren\", um die Geräteliste aus dem Cloud-Account zu ziehen und die per LAN-Discovery gesehenen IPs einzumischen. Bei Geräten in einem anderen Subnetz oder hinter einem Client-isolierenden WLAN-Accesspoint bleibt die IP-Spalte leer — trage die IP von Hand ein. Der Adapter sendet bei jedem Discovery-Zyklus zusätzlich zum Broadcast auf den eigenen Subnetzen einen UDP-Unicast an jede hier eingetragene IP. Speichern drücken.",
   "deviceListId": "Geräte-ID",
   "deviceListName": "Name",
   "deviceListHost": "IP oder Hostname"

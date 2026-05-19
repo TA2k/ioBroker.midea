@@ -7,9 +7,9 @@
   "passwordHelp": "Password used in the chosen cloud app",
   "interval": "Polling interval (seconds)",
   "intervalHelp": "How often the adapter polls each device locally over the LAN. Range 5–3600 seconds (default 30).",
-  "refreshDevices": "Refresh devices from cloud + LAN",
+  "refreshDevices": "Refresh devices",
   "deviceList": "Devices",
-  "deviceListHelp": "Click \"Refresh devices\" to pull the appliance list from the cloud account and merge in any IPs LAN discovery has seen. For appliances on a different subnet or behind a Wi-Fi access point that isolates clients, the IP column stays empty — type the IP by hand. The adapter unicast-probes every IP listed here on each discovery cycle in addition to broadcasting on its own subnets. Save the form to apply changes.",
+  "deviceListHelp": "Click \"Refresh devices\" to pull the appliance list from the cloud account and merge in any IPs LAN discovery has seen. For appliances on a different subnet or behind a Wi-Fi access point that isolates clients, the IP column stays empty — type the IP by hand. The adapter unicast-probes every IP listed here on each discovery cycle in addition to broadcasting on its own subnets. Press save to apply.",
   "deviceListId": "Device ID",
   "deviceListName": "Name",
   "deviceListHost": "IP or hostname"

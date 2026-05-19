@@ -7,9 +7,9 @@
   "passwordHelp": "Contraseña de la app cloud elegida",
   "interval": "Intervalo de sondeo (segundos)",
   "intervalHelp": "Frecuencia con la que el adaptador consulta cada dispositivo localmente por LAN. Rango 5–3600 segundos (30 por defecto).",
-  "refreshDevices": "Actualizar dispositivos desde nube + LAN",
+  "refreshDevices": "Actualizar dispositivos",
   "deviceList": "Dispositivos",
-  "deviceListHelp": "Haz clic en \"Actualizar dispositivos\" para traer la lista de aparatos desde la cuenta en la nube y combinar las IP detectadas por el descubrimiento LAN. Para los aparatos en otra subred o detrás de un punto de acceso Wi-Fi que aísla clientes, la columna de IP queda vacía — escribe la IP a mano. En cada ciclo de descubrimiento el adaptador envía un UDP unicast a cada IP listada aquí, además del broadcast en sus propias subredes. Guarda el formulario para aplicar.",
+  "deviceListHelp": "Haz clic en \"Actualizar dispositivos\" para traer la lista de aparatos desde la cuenta en la nube y combinar las IP detectadas por el descubrimiento LAN. Para los aparatos en otra subred o detrás de un punto de acceso Wi-Fi que aísla clientes, la columna de IP queda vacía — escribe la IP a mano. En cada ciclo de descubrimiento el adaptador envía un UDP unicast a cada IP listada aquí, además del broadcast en sus propias subredes. Pulsa Guardar.",
   "deviceListId": "ID del dispositivo",
   "deviceListName": "Nombre",
   "deviceListHost": "IP o nombre de host"

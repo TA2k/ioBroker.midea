@@ -7,9 +7,9 @@
   "passwordHelp": "Password dell'app cloud scelta",
   "interval": "Intervallo di polling (secondi)",
   "intervalHelp": "Frequenza con cui l'adattatore interroga ogni dispositivo localmente via LAN. Intervallo 5–3600 secondi (default 30).",
-  "refreshDevices": "Aggiorna dispositivi da cloud + LAN",
+  "refreshDevices": "Aggiorna dispositivi",
   "deviceList": "Dispositivi",
-  "deviceListHelp": "Clicca su \"Aggiorna dispositivi\" per recuperare l'elenco degli apparecchi dall'account cloud e unire gli IP visti dalla discovery LAN. Per gli apparecchi su un'altra sottorete o dietro un access point Wi-Fi che isola i client la colonna IP resta vuota — inserisci l'IP a mano. A ogni ciclo di discovery l'adattatore invia un UDP unicast a ogni IP elencato qui, oltre al broadcast sulle proprie sottoreti. Salva il modulo per applicare.",
+  "deviceListHelp": "Clicca su \"Aggiorna dispositivi\" per recuperare l'elenco degli apparecchi dall'account cloud e unire gli IP visti dalla discovery LAN. Per gli apparecchi su un'altra sottorete o dietro un access point Wi-Fi che isola i client la colonna IP resta vuota — inserisci l'IP a mano. A ogni ciclo di discovery l'adattatore invia un UDP unicast a ogni IP elencato qui, oltre al broadcast sulle proprie sottoreti. Premi Salva.",
   "deviceListId": "ID dispositivo",
   "deviceListName": "Nome",
   "deviceListHost": "IP o hostname"

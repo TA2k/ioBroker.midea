@@ -668,7 +668,7 @@ class MideaAdapter extends utils.Adapter {
                         online: item.online,
                     });
                 }
-                this.log.debug(`Cloud listing: ${cloudList.length} appliance(s)`);
+                this.log.info(`Cloud listing: ${cloudList.length} appliance(s)`);
                 for (const item of cloudList) {
                     const typeHex = `0x${Number(item.type || 0).toString(16)}`;
                     this.log.debug(`  cloud: id=${item.id} name="${item.name || ""}" type=${typeHex} online=${item.online}`);
@@ -1124,6 +1124,7 @@ class MideaAdapter extends utils.Adapter {
         const merged = [];
         const seen = new Set();
         let cloudErr = null;
+        let cloudCount = 0;
 
         // Cloud side. Failure is logged but does not abort the LAN side.
         if (user && password) {
@@ -1135,6 +1136,7 @@ class MideaAdapter extends utils.Adapter {
                     logger: this.log,
                 });
                 const list = await tmpCloud.listAppliances();
+                cloudCount = list.length;
                 for (const item of list) {
                     const id = String(item.id);
                     if (!id || seen.has(id)) continue;
@@ -1205,11 +1207,65 @@ class MideaAdapter extends utils.Adapter {
 
         merged.sort((a, b) => a.id.localeCompare(b.id));
 
-        this.log.info(`refreshDeviceList: returning ${merged.length} device(s) (cloud${cloudErr ? " failed" : ""}, lan=${lanDevices.length})`);
+        this.log.info(`refreshDeviceList: returning ${merged.length} device(s) (cloud${cloudErr ? " failed" : ""}=${cloudCount}, lan=${lanDevices.length})`);
+
+        const toast = await this.buildRefreshToast(merged.length, cloudCount, lanDevices.length, cloudErr);
 
         if (obj.callback) {
-            this.sendTo(obj.from, obj.command, { native: { deviceList: merged } }, obj.callback);
+            /** @type {{native: {deviceList: typeof merged}, result?: string, error?: string}} */
+            const response = { native: { deviceList: merged } };
+            if (toast.error) response.error = toast.error;
+            else response.result = toast.result;
+            this.sendTo(obj.from, obj.command, response, obj.callback);
         }
+    }
+
+    /**
+     * Build the toast string returned to admin after refreshDeviceList.
+     * Picks a language from system.config and falls back to English. Returns
+     * `{error}` when no devices were found AND the cloud login failed
+     * (red toast), otherwise `{result}` (green toast).
+     *
+     * @param {number} total
+     * @param {number} cloudCount
+     * @param {number} lanCount
+     * @param {string|null} cloudErr
+     */
+    async buildRefreshToast(total, cloudCount, lanCount, cloudErr) {
+        let lang = "en";
+        try {
+            const sys = await this.getForeignObjectAsync("system.config");
+            if (sys && sys.common && sys.common.language) lang = String(sys.common.language);
+        } catch (_e) { /* swallow */ }
+
+        /** @type {(key: "found" | "cloudFailed" | "nothing") => string} */
+        const t = (key) => {
+            const dict = {
+                en: {
+                    found: `${total} device(s) found (${cloudCount} from cloud, ${lanCount} on LAN)`,
+                    cloudFailed: `cloud login failed`,
+                    nothing: `no devices found — check cloud credentials and that ioBroker shares the LAN`,
+                },
+                de: {
+                    found: `${total} Gerät(e) gefunden (${cloudCount} aus Cloud, ${lanCount} im LAN)`,
+                    cloudFailed: `Cloud-Login fehlgeschlagen`,
+                    nothing: `Keine Geräte gefunden — Cloud-Zugangsdaten prüfen und sicherstellen, dass ioBroker im selben LAN ist`,
+                },
+                ru: {
+                    found: `Найдено устройств: ${total} (из облака: ${cloudCount}, в LAN: ${lanCount})`,
+                    cloudFailed: `вход в облако не удался`,
+                    nothing: `Устройства не найдены — проверьте учётные данные облака и что ioBroker в той же LAN`,
+                },
+            };
+            return (dict[lang] || dict.en)[key];
+        };
+
+        if (total === 0 && cloudErr) {
+            return { error: t("nothing") + ` (${t("cloudFailed")})` };
+        }
+        let msg = t("found");
+        if (cloudErr) msg += ` — ${t("cloudFailed")}`;
+        return { result: msg };
     }
 
     onUnload(callback) {
