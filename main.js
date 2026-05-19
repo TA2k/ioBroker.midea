@@ -637,18 +637,13 @@ class MideaAdapter extends utils.Adapter {
         if (cloudList) {
             for (const item of cloudList) {
                 if (this.descriptors.has(item.id)) continue;
-                this.log.warn(`Appliance ${item.id} (${item.name}) is bound to the cloud account but did not respond to LAN discovery — control requires a local broadcast domain, or the appliance uses the legacy V1 firmware which this adapter does not support.`);
+                this.log.warn(`Appliance ${item.id} (${item.name}) is bound to the cloud account but did not respond to LAN discovery — control requires a local broadcast domain, or UDP/6445 is firewalled.`);
             }
         }
     }
 
     /** @param {any} descriptor */
     async registerDevice(descriptor) {
-        if (!descriptor.v3) {
-            this.log.warn(`Skipping ${descriptor.id} (${descriptor.applianceTypeName}): V2 protocol is not supported by this adapter.`);
-            return;
-        }
-
         this.descriptors.set(descriptor.id, descriptor);
 
         await this.createDeviceShell(descriptor);
@@ -662,16 +657,20 @@ class MideaAdapter extends utils.Adapter {
 
         let token;
         let key;
-        try {
-            if (!this.cloud) throw new Error("cloud client not initialised");
-            ({ token, key } = await this.cloud.getToken(descriptor.udpId));
-        } catch (err) {
-            this.log.warn(
-                `Could not fetch token/key for ${descriptor.id}: ${errMessage(err)} — the device is offline in the cloud account, or the credentials in the adapter config are wrong.`,
-            );
-            return;
+        if (descriptor.protocol === 3) {
+            try {
+                if (!this.cloud) throw new Error("cloud client not initialised");
+                ({ token, key } = await this.cloud.getToken(descriptor.udpId));
+            } catch (err) {
+                this.log.warn(
+                    `Could not fetch token/key for ${descriptor.id}: ${errMessage(err)} — the device is offline in the cloud account, or the credentials in the adapter config are wrong.`,
+                );
+                return;
+            }
+            this.log.debug(`Device ${descriptor.id}: token/key fetched (token=${token.slice(0, 8)}…)`);
+        } else {
+            this.log.debug(`Device ${descriptor.id}: protocol=${descriptor.protocol}, skipping cloud token fetch (no auth required for V1/V2 LAN).`);
         }
-        this.log.debug(`Device ${descriptor.id}: token/key fetched (token=${token.slice(0, 8)}…)`);
 
         const device = midea.createDevice(descriptor, {
             token,
@@ -757,6 +756,7 @@ class MideaAdapter extends utils.Adapter {
                 firmwareVersion: "Firmware",
                 sn: "Serial number",
                 online: "Online",
+                protocol: "LAN protocol (1, 2 or 3)",
                 v3: "V3 protocol",
                 udpId: "UDP ID (cloud token lookup)",
             },

@@ -10,21 +10,28 @@
 [![NPM](https://nodei.co/npm/iobroker.midea.png?downloads=true)](https://nodei.co/npm/iobroker.midea/)
 
 ioBroker adapter for Midea, Dimstal and Royal Clima air conditioners. Talks the
-**Midea V3 LAN protocol** directly to your appliance — the cloud account is only
-contacted once per device to retrieve the encryption token/key pair. After that,
-all status polls and commands run locally over the broadcast domain.
+**Midea LAN protocol** directly to your appliance — V3 (default), V2 and V1
+firmware are all supported. The cloud account is only contacted to retrieve
+encryption tokens for V3 appliances and to enrich device names; V1 and V2
+appliances run cloudless.
 
 ## How it works
 
-1. UDP broadcast on port 6445 to discover all Midea V3 appliances on the LAN.
-2. The adapter authenticates against the Midea overseas cloud
-   (`mp-prod.appsmb.com`) once and asks for the per-device `{token, key}` pair
-   needed for the LAN handshake.
-3. From then on, control runs over TCP/6444 with the 8370 transport: AES-128-ECB
-   for the inner command body, AES-256-CBC + HMAC-SHA-256 for the session
-   transport, and CRC8 + MD5 checksum framing.
+1. UDP broadcast on port 6445 to discover all Midea appliances on the LAN.
+   V3 firmware replies with a 5a5a/8370 binary frame, V2 with a raw 5a5a frame
+   and V1 with an `<?xml …>` response (the adapter then opens a short TCP
+   round-trip to the appliance to learn its device id).
+2. For V3 appliances the adapter authenticates against the configured cloud
+   (MSmartHome by default; NetHome Plus, Midea Air or Ariston Clima are
+   selectable in *Cloud app*) and asks for the per-device `{token, key}` pair
+   needed for the LAN handshake. V1 and V2 appliances do not need a cloud
+   token — discovery alone is enough to control them.
+3. From then on, control runs over TCP/6444. V3 uses the 8370 transport
+   (AES-256-CBC + HMAC-SHA-256 session) wrapping AES-128-ECB encrypted command
+   bodies. V1 and V2 send the same AES-128-ECB command bodies inside raw 5a5a
+   packets without the 8370 envelope and without a session key.
 
-The cloud is only used for the initial token fetch and to list appliances that
+The cloud is only used to fetch V3 token/key pairs and to list appliances that
 the broadcast did not reach. There is no live data in the cloud path.
 
 ## Requirements
@@ -33,14 +40,12 @@ the broadcast did not reach. There is no live data in the cloud path.
 - The ioBroker host must share an L2 broadcast domain with the appliance — UDP
   6445 must reach it. Across VLANs you need a UDP broadcast relay (e.g.
   `udpbroadcastrelay`).
-- A **MSmartHome** account (the international Midea app, package
-  `com.midea.ai.overseas`, available as *MSmartHome* on
-  [Google Play](https://play.google.com/store/apps/details?id=com.midea.ai.overseas)
-  and the iOS App Store). This is the only app variant the adapter speaks:
-  cloud host `mp-prod.appsmb.com`, V3 sign protocol, MSmartHome appKey.
-
-  If your devices were set up in *Midea Air* or *NetHome Plus*, install
-  *MSmartHome* and re-bind them there.
+- For V3-firmware appliances (most of the current AC line-up): a cloud account
+  in the matching app. *MSmartHome* (`com.midea.ai.overseas`,
+  [Google Play](https://play.google.com/store/apps/details?id=com.midea.ai.overseas))
+  is the default. *NetHome Plus*, *Midea Air* and *Ariston Clima* are also
+  supported and can be picked in the *Cloud app* setting. V1- and V2-firmware
+  appliances are controlled cloudless and ignore the credentials.
 
 ## Configuration
 
@@ -197,6 +202,16 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+### **WORK IN PROGRESS**
+
+-   Adds LAN support for V1- and V2-firmware appliances. They are now
+    discovered alongside V3 devices and controlled directly over TCP/6444 —
+    no cloud token required (V1 only needs the cloud for the device list, V2
+    works fully offline).
+-   Tested only against V3 hardware; V1/V2 paths are ported from the
+    `midea-local` reference implementation. Reports of mis-decoded frames are
+    welcome.
+
 ### 1.4.0 (2026-05-19)
 
 -   Adds NetHome Plus, Midea Air and Ariston Clima cloud accounts (V3 firmware
