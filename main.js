@@ -510,6 +510,13 @@ class MideaAdapter extends utils.Adapter {
         this.devices = new Map();
         /** @type {Map<string, any>} */
         this.descriptors = new Map();
+        /**
+         * Cloud-listed appliances keyed by id. Populated on each discovery
+         * cycle so onStateChange can produce an actionable warning when the
+         * user writes to a control whose device is not currently registered.
+         * @type {Map<string, {name?: string, type?: number, online?: boolean}>}
+         */
+        this.cloudAppliances = new Map();
         /** @type {midea.CloudClient|null} */
         this.cloud = null;
         this.pollTimer = null;
@@ -644,14 +651,29 @@ class MideaAdapter extends utils.Adapter {
             try {
                 cloudList = await cloud.listAppliances();
                 await this.setStateAsync("info.connection", true, true);
+                this.cloudAppliances.clear();
                 for (const item of cloudList) {
                     if (item.name) cloudByIdName.set(item.id, item.name);
+                    this.cloudAppliances.set(item.id, {
+                        name: item.name,
+                        type: item.type,
+                        online: item.online,
+                    });
+                }
+                this.log.debug(`Cloud listing: ${cloudList.length} appliance(s)`);
+                for (const item of cloudList) {
+                    const typeHex = `0x${Number(item.type || 0).toString(16)}`;
+                    this.log.debug(`  cloud: id=${item.id} name="${item.name || ""}" type=${typeHex} online=${item.online}`);
                 }
             } catch (err) {
                 this.log.warn(`Cloud listAppliances failed: ${errMessage(err)}`);
                 await this.setStateAsync("info.connection", false, true);
             }
         }
+
+        let broadcastTargets = [];
+        try { broadcastTargets = midea.enumerateBroadcastTargets(); } catch (_e) { /* swallow */ }
+        this.log.debug(`LAN discovery: broadcasting to [${broadcastTargets.join(", ")}] on UDP/6445+20086`);
 
         const lanDevices = await midea.discover({ logger: this.log });
         if (lanDevices.length === 0) {
@@ -661,6 +683,11 @@ class MideaAdapter extends utils.Adapter {
         } else {
             this.log.info(`LAN discovery found ${lanDevices.length} appliance(s)`);
         }
+        for (const desc of lanDevices) {
+            const typeHex = `0x${Number(desc.applianceType || 0).toString(16)}`;
+            this.log.debug(`  lan: id=${desc.id} host=${desc.host} port=${desc.port} type=${typeHex} (${desc.applianceTypeName}) protocol=${desc.protocol}`);
+        }
+
         for (const desc of lanDevices) {
             const cloudName = cloudByIdName.get(desc.id);
             if (cloudName) desc.name = cloudName;
@@ -677,11 +704,26 @@ class MideaAdapter extends utils.Adapter {
                 this.log.warn(`Appliance ${item.id} (${item.name}) is bound to the cloud account but did not respond to LAN discovery — control requires a local broadcast domain, or UDP/6445 is firewalled.`);
             }
         }
+
+        // Reconciliation summary so the user can see at a glance what is in
+        // the cloud, what is on the LAN, and which IDs differ. Helps diagnose
+        // "unknown/unregistered device" warnings later.
+        const lanIds = new Set(lanDevices.map((d) => d.id));
+        const cloudIds = new Set((cloudList || []).map((c) => c.id));
+        const both = [...cloudIds].filter((id) => lanIds.has(id));
+        const cloudOnly = [...cloudIds].filter((id) => !lanIds.has(id));
+        const lanOnly = [...lanIds].filter((id) => !cloudIds.has(id));
+        const cloudOnlyNote = cloudOnly.length ? ` cloud-only=[${cloudOnly.join(", ")}]` : "";
+        const lanOnlyNote = lanOnly.length ? ` lan-only=[${lanOnly.join(", ")}]` : "";
+        this.log.info(`Discovery summary: cloud=${cloudIds.size}, lan=${lanIds.size}, both=${both.length}, registered=${this.devices.size}${cloudOnlyNote}${lanOnlyNote}`);
     }
 
     /** @param {any} descriptor */
     async registerDevice(descriptor) {
         this.descriptors.set(descriptor.id, descriptor);
+        this.log.debug(
+            `registerDevice: id=${descriptor.id} host=${descriptor.host} type=0x${Number(descriptor.applianceType || 0).toString(16)} (${descriptor.applianceTypeName}) protocol=${descriptor.protocol}`,
+        );
 
         await this.createDeviceShell(descriptor);
         await this.publishDescriptor(descriptor);
@@ -913,6 +955,50 @@ class MideaAdapter extends utils.Adapter {
         }
     }
 
+    /**
+     * Compose an actionable warning when a control write hits a deviceId
+     * that has no live device instance. We distinguish the three causes the
+     * user can actually act on:
+     *   1) cloud-known but offline / not on the LAN this cycle
+     *   2) cloud-known but its appliance type has no control surface here
+     *   3) orphan: the deviceId matches no current cloud or LAN appliance,
+     *      so the state object is leftover from a previous configuration
+     *      and should be removed (or the device re-paired).
+     * @param {string} deviceId
+     * @param {string} control
+     * @returns {string}
+     */
+    _describeUnregisteredDevice(deviceId, control) {
+        const cloudInfo = this.cloudAppliances.get(deviceId);
+        const descriptor = this.descriptors.get(deviceId);
+        const label = cloudInfo && cloudInfo.name
+            ? `${deviceId} (${cloudInfo.name})`
+            : deviceId;
+
+        if (descriptor) {
+            // registerDevice was reached but devices.set never ran — typically
+            // an unsupported applianceType or a token-fetch failure earlier.
+            const typeHex = `0x${Number(descriptor.applianceType || 0).toString(16)}`;
+            const hostNote = descriptor.host ? ` at ${descriptor.host}` : "";
+            return `Control ${control} ignored: device ${label}${hostNote} (${descriptor.applianceTypeName || "unknown"}, type ${typeHex}) was discovered but has no control surface or its token/key fetch failed — check earlier log lines for this device.`;
+        }
+        if (cloudInfo) {
+            // List the broadcast targets we are actually using so the user can
+            // compare with the appliance's known subnet (the typical cause of
+            // this warning is a host on a different /24 than the appliance).
+            let broadcasts = [];
+            try { broadcasts = midea.enumerateBroadcastTargets(); } catch (_e) { /* swallow */ }
+            const broadcastNote = broadcasts.length
+                ? ` ioBroker is broadcasting to [${broadcasts.join(", ")}] on UDP/6445 — make sure one of these covers the appliance's subnet.`
+                : "";
+            const onlineNote = cloudInfo.online === false
+                ? "the cloud reports it offline"
+                : "it did not respond to LAN discovery (different broadcast domain or UDP/6445 firewalled)";
+            return `Control ${control} ignored: device ${label} is in your cloud account but currently unreachable on the LAN — ${onlineNote}.${broadcastNote} Power-cycle the appliance or fix the network path, then restart the adapter.`;
+        }
+        return `Control ${control} ignored: device ${deviceId} is not in your Midea cloud account and was not discovered on the LAN. The state object is most likely a leftover from a previous configuration — delete it under objects ${this.namespace}.${deviceId}, or re-pair the appliance in the Midea app.`;
+    }
+
     async onStateChange(id, state) {
         if (!state || state.ack) return;
 
@@ -923,7 +1009,13 @@ class MideaAdapter extends utils.Adapter {
         const control = m[2];
         const device = this.devices.get(deviceId);
         if (!device) {
-            this.log.warn(`Control ${control} written for unknown/unregistered device ${deviceId}`);
+            this.log.debug(
+                `onStateChange: deviceId=${deviceId} control=${control} not in devices map. ` +
+                `devices=[${[...this.devices.keys()].join(",")}], ` +
+                `descriptors=[${[...this.descriptors.keys()].join(",")}], ` +
+                `cloud=[${[...this.cloudAppliances.keys()].join(",")}]`,
+            );
+            this.log.warn(this._describeUnregisteredDevice(deviceId, control));
             return;
         }
 
