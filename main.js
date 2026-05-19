@@ -5,10 +5,6 @@ const Json2iob = require("json2iob");
 
 const midea = require("./lib/midea");
 const { ACDevice } = require("./lib/midea/devices/ac");
-const { DehumidifierDevice } = require("./lib/midea/devices/dehumidifier");
-const { FanDevice } = require("./lib/midea/devices/fan");
-const { PurifierDevice } = require("./lib/midea/devices/purifier");
-const { HumidifierDevice } = require("./lib/midea/devices/humidifier");
 
 /**
  * @param {unknown} err
@@ -470,14 +466,6 @@ const TYPED_CONTROLS = {
     [APPLIANCE.BATHROOM_FAN]: BATHROOM_FAN_CONTROLS,
 };
 
-/**
- * @param {number} applianceType
- * @returns {Array<{id: string, common: ioBroker.StateCommon}>|null}
- */
-function controlsFor(applianceType) {
-    return TYPED_CONTROLS[applianceType] || null;
-}
-
 class MideaAdapter extends utils.Adapter {
     constructor(options) {
         super({ ...options, name: "midea" });
@@ -578,7 +566,7 @@ class MideaAdapter extends utils.Adapter {
         await this.createDeviceShell(descriptor);
         await this.publishDescriptor(descriptor);
 
-        const controls = controlsFor(descriptor.applianceType);
+        const controls = TYPED_CONTROLS[descriptor.applianceType];
         if (!controls) {
             this.log.info(`Device ${descriptor.id} (${descriptor.applianceTypeName}) registered as metadata only — no control surface implemented for type 0x${descriptor.applianceType.toString(16)}.`);
             return;
@@ -602,7 +590,7 @@ class MideaAdapter extends utils.Adapter {
             key,
             logger: this.log,
         });
-        // controlsFor() already returned non-null above, so this device has a
+        // TYPED_CONTROLS check above already returned non-null, so this device has a
         // declared control surface; we wire it up.
 
         this.devices.set(descriptor.id, device);
@@ -654,7 +642,7 @@ class MideaAdapter extends utils.Adapter {
             });
         }
 
-        const controls = controlsFor(descriptor.applianceType);
+        const controls = TYPED_CONTROLS[descriptor.applianceType];
         if (!controls) return;
         for (const def of controls) {
             await this.setObjectNotExistsAsync(`${root}.controls.${def.id}`, {
@@ -667,32 +655,22 @@ class MideaAdapter extends utils.Adapter {
 
     /** @param {any} descriptor */
     async publishDescriptor(descriptor) {
-        const info = {
-            id: descriptor.id,
-            name: descriptor.name,
-            host: descriptor.host,
-            macAddress: descriptor.macAddress,
-            applianceType: descriptor.applianceType,
-            applianceTypeName: descriptor.applianceTypeName,
-            firmwareVersion: descriptor.firmwareVersion,
-            sn: descriptor.sn,
-            online: false,
-            v3: descriptor.v3,
-            applianceSubType: descriptor.applianceSubType,
-        };
-        await this.json2iob.parse(`devices.${descriptor.id}.info`, info, {
+        await this.json2iob.parse(`devices.${descriptor.id}.info`, { ...descriptor, online: false }, {
             descriptions: {
                 id: "Device ID",
                 name: "Device name",
                 host: "LAN address",
+                port: "LAN port",
                 macAddress: "MAC address",
+                ssid: "WiFi SSID",
                 applianceType: "Appliance type (hex)",
                 applianceTypeName: "Appliance type (name)",
+                applianceSubType: "Appliance sub-type",
                 firmwareVersion: "Firmware",
                 sn: "Serial number",
                 online: "Online",
                 v3: "V3 protocol",
-                applianceSubType: "Appliance sub-type",
+                udpId: "UDP ID (cloud token lookup)",
             },
             channelName: "Device info",
             write: false,
@@ -725,42 +703,26 @@ class MideaAdapter extends utils.Adapter {
             channelName: "Status",
         });
 
-        if (changes.powerOn !== undefined) {
-            await this.setStateAsync(`devices.${deviceId}.controls.powerOn`, !!changes.powerOn, true);
-        }
-        if (changes.mode !== undefined) {
-            await this.setStateAsync(`devices.${deviceId}.controls.mode`, changes.mode, true);
-        }
-        if (changes.temperatureSetpoint !== undefined) {
-            await this.setStateAsync(`devices.${deviceId}.controls.temperatureSetpoint`, changes.temperatureSetpoint, true);
-        }
-        if (changes.fanSpeed !== undefined) {
-            await this.setStateAsync(`devices.${deviceId}.controls.fanSpeed`, changes.fanSpeed, true);
-        }
-        if (changes.fanSpeedName !== undefined) {
-            await this.setStateAsync(`devices.${deviceId}.controls.fanSpeedName`, changes.fanSpeedName, true);
-        }
-        if (changes.swing !== undefined) {
-            await this.setStateAsync(`devices.${deviceId}.controls.swing`, changes.swing, true);
-        }
-        for (const flag of ["ecoMode", "turboMode", "sleepMode", "purify", "dryClean", "frostProtection", "ionMode", "pumpSwitch", "verticalSwing", "childLock", "oscillate", "anion", "standby", "disinfect"]) {
-            if (changes[flag] !== undefined) {
-                await this.setStateAsync(`devices.${deviceId}.controls.${flag}`, !!changes[flag], true);
+        const descriptor = this.descriptors.get(deviceId);
+        if (!descriptor) return;
+        const controls = TYPED_CONTROLS[descriptor.applianceType];
+        if (!controls) return;
+        for (const def of controls) {
+            if (!(def.id in changes)) continue;
+            if (def.common.read === false) continue;
+            let v = changes[def.id];
+            if (v === undefined || v === null) continue;
+            if (def.id === "temperatureUnit") {
+                v = v === 1 || v === "fahrenheit" ? "fahrenheit" : "celsius";
+            } else if (def.common.type === "boolean") {
+                v = !!v;
+            } else if (def.common.type === "number") {
+                v = Number(v);
+                if (Number.isNaN(v)) continue;
+            } else {
+                v = String(v);
             }
-        }
-        for (const named of ["oscillationMode", "oscillationAngle", "tiltingAngle", "detectMode", "screenDisplayName"]) {
-            if (changes[named] !== undefined && changes[named] !== null) {
-                await this.setStateAsync(`devices.${deviceId}.controls.${named}`, String(changes[named]), true);
-            }
-        }
-        if (changes.temperatureUnit !== undefined) {
-            await this.setStateAsync(`devices.${deviceId}.controls.temperatureUnit`, changes.temperatureUnit === 1 ? "fahrenheit" : "celsius", true);
-        }
-        if (changes.targetHumidity !== undefined) {
-            await this.setStateAsync(`devices.${deviceId}.controls.targetHumidity`, Number(changes.targetHumidity), true);
-        }
-        if (changes.tankWarningLevel !== undefined) {
-            await this.setStateAsync(`devices.${deviceId}.controls.tankWarningLevel`, Number(changes.tankWarningLevel), true);
+            await this.setStateAsync(`devices.${deviceId}.controls.${def.id}`, v, true);
         }
     }
 
@@ -826,140 +788,24 @@ class MideaAdapter extends utils.Adapter {
         }
 
         const update = {};
-        if (device instanceof ACDevice) {
-            switch (control) {
-                case "powerOn":
-                case "ecoMode":
-                case "turboMode":
-                case "sleepMode":
-                case "purify":
-                case "dryClean":
-                case "frostProtection":
-                    update[control] = !!state.val;
-                    break;
-                case "mode":
-                case "temperatureUnit":
-                case "swing":
-                    update[control] = String(state.val);
-                    break;
-                case "temperatureSetpoint":
-                    update.temperatureSetpoint = Number(state.val);
-                    break;
-                case "fanSpeed":
-                    update.fanSpeed = Number(state.val);
-                    break;
-                case "fanSpeedName":
-                    update.fanSpeed = String(state.val);
-                    break;
-                default:
-                    this.log.warn(`Unhandled AC control ${control}`);
-                    return;
-            }
-        } else if (device instanceof DehumidifierDevice) {
-            switch (control) {
-                case "powerOn":
-                case "ionMode":
-                case "sleepMode":
-                case "pumpSwitch":
-                case "verticalSwing":
-                    update[control] = !!state.val;
-                    break;
-                case "mode":
-                    update.mode = String(state.val);
-                    break;
-                case "targetHumidity":
-                    update.targetHumidity = Number(state.val);
-                    break;
-                case "tankWarningLevel":
-                    update.tankWarningLevel = Number(state.val);
-                    break;
-                case "fanSpeed":
-                    update.fanSpeed = Number(state.val);
-                    break;
-                case "fanSpeedName":
-                    update.fanSpeed = String(state.val);
-                    break;
-                default:
-                    this.log.warn(`Unhandled dehumidifier control ${control}`);
-                    return;
-            }
-        } else if (device instanceof FanDevice) {
-            switch (control) {
-                case "powerOn":
-                case "childLock":
-                case "oscillate":
-                    update[control] = !!state.val;
-                    break;
-                case "mode":
-                case "oscillationMode":
-                case "oscillationAngle":
-                case "tiltingAngle":
-                    update[control] = String(state.val);
-                    break;
-                case "fanSpeed":
-                    update.fanSpeed = Number(state.val);
-                    break;
-                default:
-                    this.log.warn(`Unhandled fan control ${control}`);
-                    return;
-            }
-        } else if (device instanceof PurifierDevice) {
-            switch (control) {
-                case "powerOn":
-                case "anion":
-                case "childLock":
-                case "standby":
-                    update[control] = !!state.val;
-                    break;
-                case "mode":
-                case "detectMode":
-                    update[control] = String(state.val);
-                    break;
-                case "fanSpeedName":
-                    update.fanSpeed = String(state.val);
-                    break;
-                case "screenDisplayName":
-                    update.screenDisplay = String(state.val);
-                    break;
-                default:
-                    this.log.warn(`Unhandled purifier control ${control}`);
-                    return;
-            }
-        } else if (device instanceof HumidifierDevice) {
-            switch (control) {
-                case "powerOn":
-                case "disinfect":
-                    update[control] = !!state.val;
-                    break;
-                case "mode":
-                    update.mode = String(state.val);
-                    break;
-                case "targetHumidity":
-                    update.targetHumidity = Number(state.val);
-                    break;
-                case "fanSpeedName":
-                    update.fanSpeed = String(state.val);
-                    break;
-                case "screenDisplayName":
-                    update.screenDisplay = String(state.val);
-                    break;
-                default:
-                    this.log.warn(`Unhandled humidifier control ${control}`);
-                    return;
-            }
-        } else {
-            const descriptor = this.descriptors.get(deviceId);
-            const defs = descriptor ? controlsFor(descriptor.applianceType) : null;
-            const def = defs ? defs.find((d) => d.id === control) : null;
-            if (!def) {
-                this.log.warn(`Unhandled control ${control} for device ${deviceId}`);
-                return;
-            }
-            const t = def.common.type;
-            if (t === "boolean") update[control] = !!state.val;
-            else if (t === "number") update[control] = Number(state.val);
-            else update[control] = String(state.val);
+        const descriptor = this.descriptors.get(deviceId);
+        const defs = descriptor ? TYPED_CONTROLS[descriptor.applianceType] : null;
+        const def = defs ? defs.find((d) => d.id === control) : null;
+        if (!def) {
+            this.log.warn(`Unhandled control ${control} for device ${deviceId}`);
+            return;
         }
+        const t = def.common.type;
+        let v;
+        if (t === "boolean") v = !!state.val;
+        else if (t === "number") v = Number(state.val);
+        else v = String(state.val);
+
+        // Some controls expose a friendly "*Name" alias for what the device-side
+        // setter accepts under the unsuffixed key (fanSpeed accepts the string,
+        // screenDisplay accepts the string).
+        const RENAME = { fanSpeedName: "fanSpeed", screenDisplayName: "screenDisplay" };
+        update[RENAME[control] || control] = v;
 
         try {
             await device.setStatus(update);

@@ -39,16 +39,6 @@ the broadcast did not reach. There is no live data in the cloud path.
   and the iOS App Store). This is the only app variant the adapter speaks:
   cloud host `mp-prod.appsmb.com`, V3 sign protocol, MSmartHome appKey.
 
-  Other Midea apps are **not** compatible — they use different hosts, app keys
-  and signing schemes:
-
-  | App | Package / Brand | Why not supported |
-  | --- | --- | --- |
-  | *Midea Air* | `com.midea.aircondition.obm` | legacy V1/V2 cloud (`mapp.appsmb.com`), different sign scheme |
-  | *NetHome Plus* | legacy app | legacy V1/V2 cloud, different appKey |
-  | *MSmartHome 美的美居* | China region | host `mp-prod.smartmidea.net`, currently hard-coded to overseas |
-  | brand rebrands (e.g. *Comfee*, *Toshiba Home AC Control*) | various | usually MSmartHome-compatible, but with their own appKey — not auto-detected |
-
   If your devices were set up in *Midea Air* or *NetHome Plus*, install
   *MSmartHome* and re-bind them there.
 
@@ -207,6 +197,17 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+
+### **WORK IN PROGRESS**
+
+-   Generic status-to-control mirror: every control defined for an appliance
+    type is automatically kept in sync with the device-reported status (no
+    more hand-picked field list per type).
+-   Generic control writer: `onStateChange` derives the value cast and the
+    target key from the control definition instead of per-device switch
+    statements.
+-   Build/release fixes: removed broken `after_bump` exec stage from
+    `.releaseconfig.json`, dropped unused `tough-cookie` dependency.
 
 ### 1.3.0
 
