@@ -60,11 +60,11 @@ the broadcast did not reach. There is no live data in the cloud path.
 ```text
 midea.0
 ├── info.connection                 — boolean: cloud reachable
-└── devices.<deviceId>
+└── <deviceId>
     ├── info.*                      — id, name, host, mac, firmware, online…
     ├── capabilities.*              — flags reported by the appliance (B5)
     ├── status.*                    — current device state (read-only)
-    └── controls.*                  — writeable commands
+    └── control.*                   — writeable commands
 ```
 
 ### Controls (residential AC, 0xAC)
