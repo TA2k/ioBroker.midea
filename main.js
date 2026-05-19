@@ -328,7 +328,7 @@ const GAS_BOILER_CONTROLS = [
     { id: "bathingTemperature", common: numTemp("Bathing temperature", 35, 60, 45) },
     { id: "coldWaterSingle", common: onOff("Cold water single") },
     { id: "coldWaterDot", common: onOff("Cold water dot") },
-    { id: "heatingMode", common: enumState("Heating mode", { economic: "economic", normal: "normal", fast: "fast" }, "normal") },
+    { id: "heatingMode", common: enumState("Heating mode", { normal_mode: "normal_mode", out_mode: "out_mode", home_mode: "home_mode", sleep_mode: "sleep_mode" }, "normal_mode") },
 ];
 
 /** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
