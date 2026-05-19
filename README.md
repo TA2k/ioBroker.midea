@@ -33,16 +33,31 @@ the broadcast did not reach. There is no live data in the cloud path.
 - The ioBroker host must share an L2 broadcast domain with the appliance — UDP
   6445 must reach it. Across VLANs you need a UDP broadcast relay (e.g.
   `udpbroadcastrelay`).
-- A Midea overseas cloud account (the same email/password you use in the
-  *Midea Air* / *NetHome Plus* phone app). Region-specific apps (e.g. Chinese
-  *MSmartHome*) are **not** supported.
+- A **MSmartHome** account (the international Midea app, package
+  `com.midea.ai.overseas`, available as *MSmartHome* on
+  [Google Play](https://play.google.com/store/apps/details?id=com.midea.ai.overseas)
+  and the iOS App Store). This is the only app variant the adapter speaks:
+  cloud host `mp-prod.appsmb.com`, V3 sign protocol, MSmartHome appKey.
+
+  Other Midea apps are **not** compatible — they use different hosts, app keys
+  and signing schemes:
+
+  | App | Package / Brand | Why not supported |
+  | --- | --- | --- |
+  | *Midea Air* | `com.midea.aircondition.obm` | legacy V1/V2 cloud (`mapp.appsmb.com`), different sign scheme |
+  | *NetHome Plus* | legacy app | legacy V1/V2 cloud, different appKey |
+  | *MSmartHome 美的美居* | China region | host `mp-prod.smartmidea.net`, currently hard-coded to overseas |
+  | brand rebrands (e.g. *Comfee*, *Toshiba Home AC Control*) | various | usually MSmartHome-compatible, but with their own appKey — not auto-detected |
+
+  If your devices were set up in *Midea Air* or *NetHome Plus*, install
+  *MSmartHome* and re-bind them there.
 
 ## Configuration
 
 | Field      | Description                                                                   |
 | ---------- | ----------------------------------------------------------------------------- |
-| `user`     | Midea overseas account e-mail.                                                |
-| `password` | Midea overseas account password.                                              |
+| `user`     | E-mail of your MSmartHome account.                                            |
+| `password` | Password of your MSmartHome account.                                          |
 | `interval` | Poll interval in seconds (5–3600, default 30). Each device is polled locally. |
 
 ## Object tree
@@ -103,9 +118,32 @@ your scripts on what the appliance actually supports.
 
 ## Supported appliance types
 
-Full control: residential air conditioner (`0xAC`), commercial air conditioner
-(`0xCC`, same UART layout as `0xAC`), dehumidifier (`0xA1`), fan (`0xFA`),
-air purifier (`0xFC`), humidifier (`0xFD`).
+Coverage spans all 36 Midea V3 appliance types described in
+[midea-local](https://github.com/midea-lan/midea-local).
+
+Full control:
+
+- `0xAC` residential AC, `0xCC` commercial AC, `0xA1` dehumidifier, `0xFA` fan,
+  `0xFC` air purifier, `0xFD` humidifier.
+- `0xCE` fresh-air, `0xCF` heat pump, `0xCD` heat-pump water heater,
+  `0xC3` heat-pump controller (zones, DHW, silent/eco/disinfect).
+- `0xDA` top-load washer, `0xDB` front-load washer, `0xDC` dryer.
+- `0xE2` electric water heater, `0xE3` gas water heater, `0xE6` gas boiler,
+  `0xFB` electric heater.
+- `0xE1` dishwasher, `0xB0` microwave, `0xBF` integrated oven, `0xB6` range hood,
+  `0xB8` vacuum, `0xC2` smart toilet, `0xED` water purifier.
+- `0x13` light, `0x26` bathroom heater, `0x34` bathroom dishwasher,
+  `0x40` bathroom fan.
+
+Read-only metadata (no `MessageSet` defined upstream):
+
+- `0xCA` refrigerator.
+- `0xE8` pressure cooker, `0xEA`/`0xEC` rice cookers.
+- `0xB1` oven, `0xB3` steamer, `0xB4` oven-steam combo.
+- `0xAD` air-box (PM2.5 / VOC sensor).
+
+For every controllable type, the writable fields are exposed under
+`devices.<id>.controls.*`; sensor values land under `devices.<id>.status.*`.
 
 ### Controls (fan, 0xFA)
 
@@ -169,6 +207,20 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+
+### 1.3.0
+
+-   Coverage for all 36 Midea V3 appliance types described in
+    [midea-local](https://github.com/midea-lan/midea-local).
+-   Full control added for heat pumps (`0xCF`/`0xCD`/`0xC3`), washers and dryer
+    (`0xDA`/`0xDB`/`0xDC`), water heaters (`0xE2`/`0xE3`), gas boiler (`0xE6`),
+    electric heater (`0xFB`), dishwashers (`0xE1`/`0x34`), microwave (`0xB0`),
+    integrated oven (`0xBF`), range hood (`0xB6`), vacuum (`0xB8`), smart toilet
+    (`0xC2`), water purifier (`0xED`), bathroom light/heater/fan (`0x13`/`0x26`/
+    `0x40`) and fresh-air (`0xCE`).
+-   Read-only telemetry for refrigerator (`0xCA`), pressure/rice cookers
+    (`0xE8`/`0xEA`/`0xEC`), oven/steamer (`0xB1`/`0xB3`/`0xB4`) and air-box
+    (`0xAD`) — these types do not expose a `MessageSet` upstream.
 
 ### 1.2.0
 

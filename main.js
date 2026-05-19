@@ -246,23 +246,242 @@ const HUMIDIFIER_CONTROLS = [
     { id: "disinfect", common: { name: "Disinfect", type: "boolean", role: "switch", read: true, write: true, def: false } },
 ];
 
+/** @returns {ioBroker.StateCommon} */
+const onOff = (name) => ({ name, type: "boolean", role: "switch", read: true, write: true, def: false });
+/** @returns {ioBroker.StateCommon} */
+const power = () => ({ name: "Power on/off", type: "boolean", role: "switch.power", read: true, write: true, def: false });
+/** @returns {ioBroker.StateCommon} */
+const numLevel = (name, min, max, def, unit) => ({ name, type: "number", role: "level", read: true, write: true, min, max, def, ...(unit ? { unit } : {}) });
+/** @returns {ioBroker.StateCommon} */
+const numTemp = (name, min, max, def) => ({ name, type: "number", role: "level.temperature", unit: "°C", read: true, write: true, min, max, def });
+/** @returns {ioBroker.StateCommon} */
+const enumState = (name, states, def) => ({ name, type: "string", role: "state", read: true, write: true, def, states });
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const FRESH_AIR_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "fanSpeed", common: numLevel("Fan speed", 0, 100, 40) },
+    { id: "linkToAc", common: onOff("Link to AC") },
+    { id: "sleepMode", common: onOff("Sleep mode") },
+    { id: "ecoMode", common: onOff("Eco mode") },
+    { id: "auxHeating", common: onOff("Aux heating") },
+    { id: "powerfulPurify", common: onOff("Powerful purify") },
+    { id: "scheduled", common: onOff("Scheduled") },
+    { id: "childLock", common: onOff("Child lock") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const HEATPUMP_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "mode", common: enumState("Mode", { off: "off", auto: "auto", cool: "cool", heat: "heat" }, "auto") },
+    { id: "targetTemperature", common: numTemp("Target temperature", 5, 60, 25) },
+    { id: "auxHeating", common: onOff("Aux heating") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const HEAT_PUMP_WATER_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "mode", common: enumState("Mode", { off: "off", energy: "energy", standard: "standard", hot: "hot", smart: "smart", vacation: "vacation" }, "standard") },
+    { id: "targetTemperature", common: numTemp("Target temperature", 30, 75, 50) },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const HEAT_PUMP_CTRL_CONTROLS = [
+    { id: "zone1Power", common: onOff("Zone 1 power") },
+    { id: "zone2Power", common: onOff("Zone 2 power") },
+    { id: "dhwPower", common: onOff("DHW power") },
+    { id: "zone1Curve", common: onOff("Zone 1 climate curve") },
+    { id: "zone2Curve", common: onOff("Zone 2 climate curve") },
+    { id: "tbh", common: onOff("Tank booster heater (TBH)") },
+    { id: "fastDhw", common: onOff("Fast DHW") },
+    { id: "mode", common: numLevel("Mode (raw 1..5)", 1, 5, 2) },
+    { id: "zone1TargetTemp", common: numTemp("Zone 1 target temperature", 5, 60, 25) },
+    { id: "zone2TargetTemp", common: numTemp("Zone 2 target temperature", 5, 60, 25) },
+    { id: "dhwTargetTemp", common: numTemp("DHW target temperature", 30, 75, 45) },
+    { id: "roomTargetTemp", common: numTemp("Room target temperature", 5, 35, 22) },
+    { id: "silentMode", common: onOff("Silent mode") },
+    { id: "silentLevel", common: enumState("Silent level", { off: "off", silent: "silent", super_silent: "super_silent" }, "off") },
+    { id: "ecoMode", common: onOff("Eco mode") },
+    { id: "disinfect", common: onOff("Disinfect") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const WASHER_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "start", common: onOff("Start / pause") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const ELECTRIC_HEATER_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "mode", common: numLevel("Mode (raw)", 0, 5, 0) },
+    { id: "heatingLevel", common: numLevel("Heating level", 0, 10, 0) },
+    { id: "targetTemperature", common: numTemp("Target temperature", 5, 35, 22) },
+    { id: "childLock", common: onOff("Child lock") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const GAS_BOILER_CONTROLS = [
+    { id: "mainPower", common: power() },
+    { id: "heatingPower", common: onOff("Heating power") },
+    { id: "heatingTemperature", common: numTemp("Heating temperature", 30, 80, 60) },
+    { id: "bathingTemperature", common: numTemp("Bathing temperature", 35, 60, 45) },
+    { id: "coldWaterSingle", common: onOff("Cold water single") },
+    { id: "coldWaterDot", common: onOff("Cold water dot") },
+    { id: "heatingMode", common: enumState("Heating mode", { economic: "economic", normal: "normal", fast: "fast" }, "normal") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const GAS_WATER_HEATER_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "targetTemperature", common: numTemp("Target temperature", 35, 75, 45) },
+    { id: "zeroColdWater", common: onOff("Zero cold water") },
+    { id: "zeroColdPulse", common: onOff("Zero cold pulse") },
+    { id: "smartVolume", common: onOff("Smart volume") },
+    { id: "protection", common: onOff("Protection") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const ELECTRIC_WATER_HEATER_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "targetTemperature", common: numTemp("Target temperature", 30, 75, 50) },
+    { id: "wholeTankHeating", common: onOff("Whole tank heating") },
+    { id: "variableHeating", common: onOff("Variable heating") },
+    { id: "protection", common: onOff("Protection") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const DISHWASHER_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "mode", common: numLevel("Mode (raw)", 0, 20, 0) },
+    { id: "work", common: numLevel("Work command (raw)", 0, 8, 3) },
+    { id: "childLock", common: onOff("Child lock") },
+    { id: "storage", common: onOff("Storage mode") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const MICROWAVE_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "childLock", common: onOff("Child lock") },
+    { id: "workMode", common: numLevel("Work mode (raw)", 0, 30, 0) },
+    { id: "workTime", common: numLevel("Work time (s)", 0, 86400, 60, "s") },
+    { id: "temperature", common: numTemp("Temperature", 0, 250, 0) },
+    { id: "firePower", common: numLevel("Fire power", 0, 100, 0) },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const INTEGRATED_OVEN_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "childLock", common: onOff("Child lock") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const RANGE_HOOD_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "fanLevel", common: numLevel("Fan level", 0, 4, 0) },
+    { id: "light", common: onOff("Light") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const VACUUM_CONTROLS = [
+    { id: "workMode", common: enumState("Work mode", { charge: "charge", work: "work", stop: "stop", pause: "pause" }, "stop") },
+    { id: "cleanMode", common: numLevel("Clean mode", 0, 10, 2) },
+    { id: "fanLevel", common: numLevel("Fan level", 0, 5, 2) },
+    { id: "waterLevel", common: numLevel("Water level", 0, 5, 1) },
+    { id: "voiceVolume", common: numLevel("Voice volume", 0, 10, 0) },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const SMART_TOILET_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "childLock", common: onOff("Child lock") },
+    { id: "sensorLight", common: onOff("Sensor light") },
+    { id: "foamShield", common: onOff("Foam shield") },
+    { id: "dryLevel", common: numLevel("Dry level", 0, 3, 0) },
+    { id: "seatTempLevel", common: numLevel("Seat temperature level", 0, 7, 0) },
+    { id: "waterTempLevel", common: numLevel("Water temperature level", 0, 7, 0) },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const WATER_PURIFIER_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "childLock", common: onOff("Child lock") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const LIGHT_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "brightness", common: numLevel("Brightness", 0, 255, 128) },
+    { id: "colorTemperature", common: numLevel("Color temperature", 0, 255, 128) },
+    { id: "effect", common: numLevel("Effect (1..5)", 1, 5, 1) },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const BATHROOM_HEATER_CONTROLS = [
+    { id: "mainLight", common: onOff("Main light") },
+    { id: "nightLight", common: onOff("Night light") },
+    { id: "mode", common: enumState("Mode", { 0: "off", 1: "heat_high", 2: "heat_low", 3: "bath", 4: "blow", 5: "ventilation", 6: "dry" }, "0") },
+    { id: "direction", common: numLevel("Direction (0xFD = oscillate)", 0, 255, 253) },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const DISHWASHER_X34_CONTROLS = [
+    { id: "powerOn", common: power() },
+    { id: "childLock", common: onOff("Child lock") },
+];
+
+/** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
+const BATHROOM_FAN_CONTROLS = [
+    { id: "light", common: onOff("Light") },
+    { id: "fanSpeed", common: numLevel("Fan speed (0..2)", 0, 2, 0) },
+    { id: "ventilation", common: onOff("Ventilation") },
+    { id: "smellySensor", common: onOff("Smelly sensor") },
+];
+
+const APPLIANCE = midea.APPLIANCE_TYPE;
+const TYPED_CONTROLS = {
+    [APPLIANCE.AC]: AC_CONTROLS,
+    [APPLIANCE.COMMERCIAL_AC]: AC_CONTROLS,
+    [APPLIANCE.DEHUMIDIFIER]: DEHUMIDIFIER_CONTROLS,
+    [APPLIANCE.FAN]: FAN_CONTROLS,
+    [APPLIANCE.PURIFIER]: PURIFIER_CONTROLS,
+    [APPLIANCE.HUMIDIFIER]: HUMIDIFIER_CONTROLS,
+    [APPLIANCE.FRESH_AIR]: FRESH_AIR_CONTROLS,
+    [APPLIANCE.HEATPUMP]: HEATPUMP_CONTROLS,
+    [APPLIANCE.HEAT_PUMP_WATER]: HEAT_PUMP_WATER_CONTROLS,
+    [APPLIANCE.HEAT_PUMP_CONTROLLER]: HEAT_PUMP_CTRL_CONTROLS,
+    [APPLIANCE.TOP_LOAD_WASHER]: WASHER_CONTROLS,
+    [APPLIANCE.FRONT_LOAD_WASHER]: WASHER_CONTROLS,
+    [APPLIANCE.DRYER]: WASHER_CONTROLS,
+    [APPLIANCE.ELECTRIC_HEATER]: ELECTRIC_HEATER_CONTROLS,
+    [APPLIANCE.GAS_BOILER]: GAS_BOILER_CONTROLS,
+    [APPLIANCE.GAS_WATER_HEATER]: GAS_WATER_HEATER_CONTROLS,
+    [APPLIANCE.ELECTRIC_WATER_HEATER]: ELECTRIC_WATER_HEATER_CONTROLS,
+    [APPLIANCE.DISHWASHER]: DISHWASHER_CONTROLS,
+    [APPLIANCE.MICROWAVE]: MICROWAVE_CONTROLS,
+    [APPLIANCE.INTEGRATED_OVEN]: INTEGRATED_OVEN_CONTROLS,
+    [APPLIANCE.RANGE_HOOD]: RANGE_HOOD_CONTROLS,
+    [APPLIANCE.VACUUM]: VACUUM_CONTROLS,
+    [APPLIANCE.SMART_TOILET]: SMART_TOILET_CONTROLS,
+    [APPLIANCE.WATER_PURIFIER]: WATER_PURIFIER_CONTROLS,
+    [APPLIANCE.LIGHT]: LIGHT_CONTROLS,
+    [APPLIANCE.BATHROOM_HEATER]: BATHROOM_HEATER_CONTROLS,
+    [APPLIANCE.DISHWASHER_X34]: DISHWASHER_X34_CONTROLS,
+    [APPLIANCE.BATHROOM_FAN]: BATHROOM_FAN_CONTROLS,
+};
+
 /**
  * @param {number} applianceType
  * @returns {Array<{id: string, common: ioBroker.StateCommon}>|null}
  */
 function controlsFor(applianceType) {
-    if (applianceType === midea.APPLIANCE_TYPE.AC || applianceType === midea.APPLIANCE_TYPE.COMMERCIAL_AC) return AC_CONTROLS;
-    if (applianceType === midea.APPLIANCE_TYPE.DEHUMIDIFIER) return DEHUMIDIFIER_CONTROLS;
-    if (applianceType === midea.APPLIANCE_TYPE.FAN) return FAN_CONTROLS;
-    if (applianceType === midea.APPLIANCE_TYPE.PURIFIER) return PURIFIER_CONTROLS;
-    if (applianceType === midea.APPLIANCE_TYPE.HUMIDIFIER) return HUMIDIFIER_CONTROLS;
-    return null;
+    return TYPED_CONTROLS[applianceType] || null;
 }
 
 class MideaAdapter extends utils.Adapter {
     constructor(options) {
         super({ ...options, name: "midea" });
-        /** @type {Map<string, InstanceType<typeof ACDevice>|InstanceType<typeof DehumidifierDevice>|InstanceType<typeof FanDevice>|InstanceType<typeof PurifierDevice>|InstanceType<typeof HumidifierDevice>>} */
+        /** @type {Map<string, any>} */
         this.devices = new Map();
         /** @type {Map<string, any>} */
         this.descriptors = new Map();
@@ -383,14 +602,8 @@ class MideaAdapter extends utils.Adapter {
             key,
             logger: this.log,
         });
-        if (!(device instanceof ACDevice)
-            && !(device instanceof DehumidifierDevice)
-            && !(device instanceof FanDevice)
-            && !(device instanceof PurifierDevice)
-            && !(device instanceof HumidifierDevice)) {
-            this.log.warn(`Device ${descriptor.id} did not produce a controllable device — skipping control wiring.`);
-            return;
-        }
+        // controlsFor() already returned non-null above, so this device has a
+        // declared control surface; we wire it up.
 
         this.devices.set(descriptor.id, device);
 
@@ -735,8 +948,17 @@ class MideaAdapter extends utils.Adapter {
                     return;
             }
         } else {
-            this.log.warn(`Unhandled device class for control ${control}`);
-            return;
+            const descriptor = this.descriptors.get(deviceId);
+            const defs = descriptor ? controlsFor(descriptor.applianceType) : null;
+            const def = defs ? defs.find((d) => d.id === control) : null;
+            if (!def) {
+                this.log.warn(`Unhandled control ${control} for device ${deviceId}`);
+                return;
+            }
+            const t = def.common.type;
+            if (t === "boolean") update[control] = !!state.val;
+            else if (t === "number") update[control] = Number(state.val);
+            else update[control] = String(state.val);
         }
 
         try {
