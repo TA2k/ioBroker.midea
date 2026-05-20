@@ -202,6 +202,9 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+### **WORK IN PROGRESS**
+- (copilot) Adapter requires node.js >= 22 now
+
 ### 1.5.0 (2026-05-19)
 
 -   Adds LAN support for V1- and V2-firmware appliances. They are now
