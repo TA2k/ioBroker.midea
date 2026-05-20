@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "midea",
-    "version": "1.7.0",
+    "version": "1.7.1",
     "news": {
+      "1.7.1": {
+        "en": "-   Adds a fixture-driven test suite for the unified `_processFrame`\n    hook introduced in 1.7.0. Covers all 26 device classes and replays\n    two real captures (A1 dehumidifier) so future parser changes break\n    loudly. No runtime behaviour change.",
+        "de": "- Fügt eine montagegetriebene Testsuite für den einheitlichen ` processFrame` hinzu\nhaken in 1.7.0 eingeführt. deckt alle 26 Geräteklassen und Wiederholungen ab\nzwei reale Erfassungen (A1 Entfeuchter), so dass zukünftige Parser Änderungen Pause\nlaut. Keine Laufzeitverhaltensänderung.",
+        "ru": "- Добавляет тестовый набор на основе светильника для унифицированного \" processFrame\"\nкрюк введен в 1.7.0. Охватывает все 26 классов устройств и повторов\nдва реальных захвата (A1 осушитель), так что будущий парсер изменяет разрыв\nгромко. Поведение во время выполнения не меняется.",
+        "pt": "- Adiciona um conjunto de teste baseado em dispositivos para o ` processFrame' unificado\ngancho introduzido em 1.7.0. Cobre todas as 26 classes de dispositivos e repetições\nduas capturas reais (desumidificador A1) para que o analisador futuro mude\nem voz alta. Nenhuma mudança de comportamento em tempo de execução.",
+        "nl": "- Voegt een door een armatuur aangedreven testsuite toe voor de unified processFrame\nhaak geïntroduceerd in 1.7.0. Omvat alle 26 apparaatklassen en herhalingen\ntwee echte opnames (A1-ontvochtiger) zodat toekomstige parser veranderingen breken\nhardop. Geen runtime gedragsverandering.",
+        "fr": "- Ajoute une suite d'essai pilotée par le montage pour le ` processFrame` unifié\ncrochet introduit dans 1.7.0. Couvre les 26 classes d'appareils et replays\ndeux vraies captures (déshumidificateur A1) pour que les futurs changements d'analyse se brisent\nfort. Aucun changement de comportement d'exécution.",
+        "it": "- Aggiunge una suite di prova integrata per il ` processFrame` unificato\ngancio introdotto in 1.7.0. Copre tutte le 26 classi di dispositivi e ripetizioni\ndue vere catture (A1 deumidificatore) così il futuro parser cambia rottura\nad alta voce. Nessun cambiamento di comportamento di runtime.",
+        "es": "- Agrega una suite de prueba impulsada por la unidad ' processFrame`\ngancho introducido en 1.7.0. Cubre todas las 26 clases de dispositivos y reproducciones\ndos capturas reales (A1 deshumidificador) así que los cambios futuros del parser rompen\nfuerte. No hay cambio de comportamiento en tiempo de ejecución.",
+        "pl": "- Dodaje zestaw testowy napędzany mocowaniem dla ujednoliconej '_ procesFrame'\nhak wprowadzony w pozycji 1.7.0. Obejmuje wszystkie 26 klas urządzeń i powtórzeń\ndwa prawdziwe uchwyty (Osuszacz A1) więc przyszłe parser zmienia przerwę\ngłośno. Brak zmian zachowania w czasie biegu.",
+        "uk": "- Додає фіксаторно-привідний люкс для єдиного ` processFrame`\nгачок введений в 1.7.0. Обкладинки всіх 26 класів пристроїв та релей\nдва реальні захоплення (A1 осушувач) так майбутні зміни парсера\nголосно. Не змінюйте часової поведінки.",
+        "zh-cn": "- 为统一的`进程Frame ' 添加固定驱动测试套件\n钩子介绍于1.7.0. 覆盖全部26个设备类和重播\n两个真正的捕捉器(A1除湿器),所以未来的剖析器更改中断\n大声点 运行时间行为没有变化."
+      },
       "1.7.0": {
         "en": "Mirrors midea-local's single recv-loop architecture: every appliance frame — query reply, set reply, or unsolicited push — now flows through the same per-device parser via a unified `_processFrame` hook. Spontaneous push notifications the appliance emits about a second after a setStatus (and any state changes initiated outside the adapter, e.g. via the phone app or remote) are decoded and merged into the status instead of being logged as 'unsolicited frame' warnings. Devices benefit transparently — no per-class override needed except where the parser is source-dependent.",
         "de": "Spiegelt midea-locals Einzel-Recv-Loop-Architektur: jeder Geräte-Frame — Query-Antwort, Set-Antwort oder spontane Push-Meldung — läuft jetzt über denselben geräteklassen-eigenen Parser via einheitlichem `_processFrame`-Hook. Push-Frames, die das Gerät rund eine Sekunde nach einem setStatus selbst sendet (und Zustandsänderungen, die ausserhalb des Adapters ausgelöst wurden, z. B. per Handy-App oder Fernbedienung), werden jetzt entschlüsselt und in den Status gemerged, statt als 'unsolicited frame'-Warnung zu landen. Alle Geräteklassen profitieren transparent — kein Override pro Klasse nötig, ausser dort wo der Parser quellenabhängig ist.",
@@ -80,97 +93,6 @@
         "pl": "Poprawki AC: zmiana jednej opcji nie przełącza już przypadkowo trybu komfort ani innych flag. Zmiana samej mocy świeżego powietrza lub samej prędkości wentylatora nie resetuje już drugiego pola. Odczyty energii na niektórych urządzeniach V3 nie pokazują już wartości ujemnych.",
         "uk": "Виправлення AC: зміна однієї опції більше не перемикає випадково комфорт-режим чи інші прапори. Зміна лише потужності припливного повітря або лише швидкості вентилятора більше не скидає інше значення. Показання енергії на деяких пристроях V3 більше не стають від'ємними.",
         "zh-cn": "空调修复：更改一个选项不再误切舒适模式或其他标志。只调整新风功率或只调整风扇风速，不再重置另一项。某些 V3 设备的能耗读数不再变为负值。"
-      },
-      "1.5.0": {
-        "en": "Adds LAN support for V1- and V2-firmware appliances: they are now discovered alongside V3 devices and controlled directly over TCP/6444, no cloud token required. Tested only against V3 hardware; the V1/V2 paths are ported from the midea-local reference implementation.",
-        "de": "LAN-Unterstützung für Geräte mit V1- und V2-Firmware: Sie werden jetzt zusammen mit V3-Geräten erkannt und direkt über TCP/6444 gesteuert, ohne Cloud-Token. Nur gegen V3-Hardware getestet; die V1/V2-Pfade sind von der midea-local-Referenzimplementierung portiert.",
-        "ru": "Добавлена поддержка LAN для устройств с прошивкой V1 и V2: они обнаруживаются вместе с V3-устройствами и управляются напрямую через TCP/6444, без облачного токена. Протестировано только на V3-оборудовании; пути V1/V2 перенесены из эталонной реализации midea-local.",
-        "pt": "Suporte LAN para aparelhos com firmware V1 e V2: passam a ser descobertos juntamente com os V3 e controlados diretamente por TCP/6444, sem token de nuvem. Testado apenas contra hardware V3; os caminhos V1/V2 foram portados da implementação de referência midea-local.",
-        "nl": "LAN-ondersteuning voor apparaten met V1- en V2-firmware: ze worden nu samen met V3-apparaten ontdekt en rechtstreeks via TCP/6444 bediend, zonder cloud-token. Alleen getest tegen V3-hardware; de V1/V2-paden zijn geport van de midea-local-referentie-implementatie.",
-        "fr": "Prise en charge LAN des appareils en firmware V1 et V2 : ils sont désormais découverts en même temps que les V3 et pilotés directement via TCP/6444, sans jeton cloud. Testé uniquement sur du matériel V3 ; les chemins V1/V2 sont portés depuis l'implémentation de référence midea-local.",
-        "it": "Supporto LAN per gli apparecchi con firmware V1 e V2: ora vengono rilevati insieme ai V3 e comandati direttamente via TCP/6444, senza token cloud. Testato solo contro hardware V3; i percorsi V1/V2 sono portati dall'implementazione di riferimento midea-local.",
-        "es": "Soporte LAN para aparatos con firmware V1 y V2: ahora se descubren junto a los V3 y se controlan directamente por TCP/6444, sin token de nube. Probado solo contra hardware V3; las rutas V1/V2 están portadas de la implementación de referencia midea-local.",
-        "pl": "Obsługa LAN dla urządzeń z firmware V1 i V2: są wykrywane obok urządzeń V3 i sterowane bezpośrednio przez TCP/6444, bez tokenu chmurowego. Przetestowane tylko na sprzęcie V3; ścieżki V1/V2 zostały przeniesione z referencyjnej implementacji midea-local.",
-        "uk": "Підтримка LAN для пристроїв із прошивкою V1 та V2: вони виявляються разом із V3-пристроями і керуються безпосередньо через TCP/6444, без хмарного токена. Перевірено лише на V3-обладнанні; шляхи V1/V2 портовані з еталонної реалізації midea-local.",
-        "zh-cn": "新增对 V1 和 V2 固件设备的局域网支持：它们与 V3 设备一同被发现，并直接通过 TCP/6444 控制，无需云端令牌。仅在 V3 硬件上测试过；V1/V2 路径是从 midea-local 参考实现移植而来。"
-      },
-      "1.4.0": {
-        "en": "Adds NetHome Plus, Midea Air and Ariston Clima cloud accounts (V3 firmware appliances) — pick the cloud variant in the new Cloud app setting. Object tree simplified: devices now appear directly under the instance, the control channel is renamed control. The old tree is cleared automatically on first start. V1-firmware appliances on the LAN are not supported.",
-        "de": "Unterstützt jetzt auch NetHome Plus, Midea Air und Ariston Clima (V3-Firmware) — die Cloud-Variante wird in der neuen Einstellung Cloud-App gewählt. Objektbaum vereinfacht: Geräte liegen direkt unter der Instanz, der Steuerkanal heißt jetzt control. Der alte Baum wird beim ersten Start automatisch gelöscht. Geräte mit V1-Firmware werden im LAN nicht unterstützt.",
-        "ru": "Добавлены облачные учётные записи NetHome Plus, Midea Air и Ariston Clima (устройства с прошивкой V3) — вариант выбирается в новой настройке Cloud app. Дерево объектов упрощено: устройства теперь располагаются прямо под инстансом, канал управления переименован в control. Старое дерево очищается автоматически при первом запуске. Устройства с прошивкой V1 в LAN не поддерживаются.",
-        "pt": "Adiciona contas NetHome Plus, Midea Air e Ariston Clima (aparelhos com firmware V3) — escolha a variante na nova definição Cloud app. Árvore de objetos simplificada: os dispositivos ficam diretamente sob a instância e o canal de controlo passa a chamar-se control. A árvore antiga é apagada automaticamente no primeiro arranque. Aparelhos com firmware V1 na LAN não são suportados.",
-        "nl": "Ondersteunt nu NetHome Plus, Midea Air en Ariston Clima (V3-firmware) — kies de variant in de nieuwe instelling Cloud app. Objectboom vereenvoudigd: apparaten staan nu direct onder de instantie en het bedieningskanaal heet control. De oude boom wordt bij de eerste start automatisch gewist. Apparaten met V1-firmware in het LAN worden niet ondersteund.",
-        "fr": "Ajoute les comptes cloud NetHome Plus, Midea Air et Ariston Clima (appareils en firmware V3) — choisissez la variante dans le nouveau réglage Cloud app. Arborescence simplifiée : les appareils sont désormais directement sous l'instance et le canal de commande s'appelle control. L'ancienne arborescence est effacée automatiquement au premier démarrage. Les appareils en firmware V1 sur le LAN ne sont pas pris en charge.",
-        "it": "Aggiunge gli account NetHome Plus, Midea Air e Ariston Clima (apparecchi con firmware V3) — scegli la variante nella nuova impostazione Cloud app. Albero oggetti semplificato: i dispositivi compaiono direttamente sotto l'istanza e il canale di controllo si chiama control. All'avvio l'albero vecchio viene eliminato automaticamente. Gli apparecchi con firmware V1 in LAN non sono supportati.",
-        "es": "Añade las cuentas NetHome Plus, Midea Air y Ariston Clima (aparatos con firmware V3) — elige la variante en el nuevo ajuste Cloud app. Árbol de objetos simplificado: los dispositivos cuelgan ahora directamente de la instancia y el canal de control se llama control. El árbol antiguo se borra automáticamente en el primer arranque. Los aparatos con firmware V1 en la LAN no son compatibles.",
-        "pl": "Dodaje konta NetHome Plus, Midea Air oraz Ariston Clima (urządzenia z firmware V3) — wariant wybiera się w nowym ustawieniu Cloud app. Drzewo obiektów uproszczone: urządzenia są teraz bezpośrednio pod instancją, a kanał sterowania nazywa się control. Stare drzewo jest czyszczone automatycznie przy pierwszym starcie. Urządzenia z firmware V1 w sieci LAN nie są obsługiwane.",
-        "uk": "Додає облікові записи NetHome Plus, Midea Air та Ariston Clima (пристрої з прошивкою V3) — варіант вибирається в новому налаштуванні Cloud app. Дерево об'єктів спрощене: пристрої тепер розташовані одразу під інстансом, канал керування перейменовано на control. Старе дерево автоматично видаляється при першому запуску. Пристрої з прошивкою V1 у LAN не підтримуються.",
-        "zh-cn": "新增 NetHome Plus、Midea Air 和 Ariston Clima 云账号支持（V3 固件设备） — 在新的 Cloud app 设置中选择云类型。简化对象树：设备现在直接位于实例之下，控制通道更名为 control。首次启动会自动清空旧的对象树。LAN 中的 V1 固件设备不被支持。"
-      },
-      "1.3.1": {
-        "en": "Controls now stay automatically in sync with the device status across all appliance types. Internal refactor — no behavior changes for end users.",
-        "de": "Controls bleiben jetzt für alle Gerätetypen automatisch synchron mit dem Gerätestatus. Internes Refactoring — keine Verhaltensänderungen für Nutzer.",
-        "ru": "Элементы управления теперь автоматически синхронизируются со статусом устройства для всех типов приборов. Внутренний рефакторинг — поведение не меняется.",
-        "pt": "Os controlos ficam agora automaticamente sincronizados com o estado do dispositivo em todos os tipos de aparelho. Refactor interno — sem alterações de comportamento.",
-        "nl": "Bedieningen blijven nu voor alle apparaattypes automatisch synchroon met de apparaatstatus. Interne refactor — geen gedragswijziging.",
-        "fr": "Les commandes restent désormais synchronisées automatiquement avec l'état de l'appareil pour tous les types. Refactor interne — pas de changement de comportement.",
-        "it": "I controlli ora restano automaticamente sincronizzati con lo stato del dispositivo per tutti i tipi. Refactor interno — nessun cambiamento di comportamento.",
-        "es": "Los controles se mantienen ahora sincronizados automáticamente con el estado del dispositivo para todos los tipos. Refactor interno — sin cambios de comportamiento.",
-        "pl": "Sterowania pozostają teraz automatycznie zsynchronizowane ze statusem urządzenia dla wszystkich typów. Wewnętrzny refactor — bez zmian zachowania.",
-        "uk": "Елементи керування тепер автоматично синхронізуються зі статусом пристрою для всіх типів. Внутрішній рефакторинг — без зміни поведінки.",
-        "zh-cn": "所有家电类型的控件现在会自动与设备状态保持同步。内部重构 — 行为无变化。"
-      },
-      "1.3.0": {
-        "en": "Coverage for all 36 Midea appliance types. Full control for heat pumps, washers and dryer, water heaters, gas boiler, electric heater, dishwashers, microwave, oven, range hood, vacuum, smart toilet, water purifier, bathroom light/heater/fan and fresh-air. Read-only data for refrigerator, pressure/rice cookers, oven/steamer and air-box.",
-        "de": "Unterstützung für alle 36 Midea-Gerätetypen. Volle Steuerung für Wärmepumpen, Wasch-/Trockner, Warmwasserbereiter, Gas-Therme, Heizgerät, Geschirrspüler, Mikrowelle, Backofen, Dunstabzug, Saugroboter, Smart-Toilette, Wasserfilter, Bad-Licht/-Heizer/-Lüfter und Frischluft. Nur lesend: Kühlschrank, Druck-/Reiskocher, Backofen/Dampf und Air-Box.",
-        "ru": "Поддержка всех 36 типов устройств Midea. Полное управление тепловыми насосами, стиральными/сушильными машинами, водонагревателями, газовым котлом, электрообогревателем, посудомойками, микроволновкой, духовкой, вытяжкой, пылесосом, умным унитазом, очистителем воды, светом/обогревателем/вентилятором ванной и приточной вентиляцией. Только чтение: холодильник, мульти-/рисоварки, духовка/пароварка и Air-Box.",
-        "pt": "Cobertura para os 36 tipos de aparelhos Midea. Controlo completo para bombas de calor, máquinas de lavar/secar, esquentadores, caldeira a gás, aquecedor, máquinas de loiça, micro-ondas, forno, exaustor, aspirador, sanita inteligente, purificador de água, iluminação/aquecedor/ventilador de casa de banho e ar fresco. Apenas leitura: frigorífico, panelas de pressão/arroz, forno/vaporizador e air-box.",
-        "nl": "Ondersteuning voor alle 36 Midea-apparaattypes. Volledige bediening voor warmtepompen, was/drogers, boilers, gasketel, kachel, vaatwassers, magnetron, oven, afzuigkap, stofzuiger, slimme toilet, waterzuiveraar, badkamer-licht/-verwarming/-ventilator en frisse lucht. Alleen lezen: koelkast, snel-/rijstkokers, oven/stomer en air-box.",
-        "fr": "Support de tous les 36 types d'appareils Midea. Contrôle complet pour pompes à chaleur, lave-linge/sèche-linge, chauffe-eau, chaudière gaz, radiateur, lave-vaisselle, micro-ondes, four, hotte, aspirateur, toilette connectée, purificateur d'eau, lumière/chauffage/ventilateur de salle de bain et VMC. Lecture seule : réfrigérateur, autocuiseurs/cuiseurs à riz, four/cuiseur vapeur et air-box.",
-        "it": "Supporto per tutti i 36 tipi di elettrodomestici Midea. Controllo completo per pompe di calore, lavatrici/asciugatrici, scaldabagni, caldaia gas, stufa, lavastoviglie, microonde, forno, cappa, robot aspirapolvere, WC smart, depuratore acqua, luce/riscaldamento/ventola del bagno e VMC. Sola lettura: frigorifero, pentole a pressione/cuociriso, forno/vaporiera e air-box.",
-        "es": "Soporte para los 36 tipos de electrodomésticos Midea. Control completo para bombas de calor, lavadoras/secadoras, calentadores, caldera de gas, calefactor, lavavajillas, microondas, horno, campana, aspirador, inodoro inteligente, purificador de agua, luz/calefactor/ventilador de baño y aire fresco. Solo lectura: frigorífico, ollas a presión/arroceras, horno/vaporera y air-box.",
-        "pl": "Obsługa wszystkich 36 typów urządzeń Midea. Pełne sterowanie pompami ciepła, pralkami/suszarkami, bojlerami, kotłem gazowym, grzejnikiem, zmywarkami, mikrofalówką, piekarnikiem, okapem, odkurzaczem, inteligentną toaletą, oczyszczaczem wody, światłem/grzejnikiem/wentylatorem łazienki i wentylacją. Tylko odczyt: lodówka, szybkowary/ryżowary, piekarnik/parowar i air-box.",
-        "uk": "Підтримка всіх 36 типів пристроїв Midea. Повне керування тепловими насосами, пральними/сушарками, бойлерами, газовим котлом, обігрівачем, посудомийками, мікрохвильовкою, духовкою, витяжкою, пилососом, розумним унітазом, очищувачем води, світлом/обігрівачем/вентилятором ванної та припливом. Лише читання: холодильник, скороварки/рисоварки, духовка/пароварка та air-box.",
-        "zh-cn": "覆盖全部 36 种 Midea 家电类型。完整控制热泵、洗衣机/烘干机、热水器、燃气壁挂炉、电暖器、洗碗机、微波炉、烤箱、油烟机、扫地机器人、智能马桶、净水器、浴室灯/加热器/风扇与新风。只读：冰箱、压力锅/电饭煲、蒸烤一体机与空气盒。"
-      },
-      "1.2.0": {
-        "en": "Full control for fan, air purifier, and humidifier.",
-        "de": "Volle Steuerung für Ventilator, Luftreiniger und Luftbefeuchter.",
-        "ru": "Полное управление вентилятором, очистителем воздуха и увлажнителем.",
-        "pt": "Controlo completo para ventoinha, purificador de ar e humidificador.",
-        "nl": "Volledige bediening voor ventilator, luchtreiniger en luchtbevochtiger.",
-        "fr": "Contrôle complet pour ventilateur, purificateur d'air et humidificateur.",
-        "it": "Controllo completo per ventilatore, purificatore d'aria e umidificatore.",
-        "es": "Control completo para ventilador, purificador de aire y humidificador.",
-        "pl": "Pełne sterowanie wentylatorem, oczyszczaczem powietrza i nawilżaczem.",
-        "uk": "Повне керування вентилятором, очищувачем повітря та зволожувачем.",
-        "zh-cn": "为风扇、空气净化器与加湿器提供完整控制。"
-      },
-      "1.1.0": {
-        "en": "Full control for dehumidifier and commercial AC. Poll interval is now in seconds (default 30 s).",
-        "de": "Volle Steuerung für Luftentfeuchter und Kommerzklimagerät. Poll-Intervall jetzt in Sekunden (Standard 30 s).",
-        "ru": "Полное управление осушителем и коммерческим кондиционером. Интервал опроса теперь в секундах (по умолчанию 30 с).",
-        "pt": "Controlo completo para desumidificador e ar condicionado comercial. Intervalo de polling em segundos (padrão 30 s).",
-        "nl": "Volledige bediening voor ontvochtiger en commerciële airco. Poll-interval nu in seconden (standaard 30 s).",
-        "fr": "Contrôle complet pour déshumidificateur et climatisation commerciale. Intervalle de polling en secondes (30 s par défaut).",
-        "it": "Controllo completo per deumidificatore e climatizzatore commerciale. Intervallo di polling in secondi (default 30 s).",
-        "es": "Control completo para deshumidificador y AC comercial. Intervalo de sondeo en segundos (30 s por defecto).",
-        "pl": "Pełne sterowanie osuszaczem i komercyjnym klimatyzatorem. Interwał odpytywania w sekundach (domyślnie 30 s).",
-        "uk": "Повне керування осушувачем та комерційним кондиціонером. Інтервал опитування у секундах (30 с за замовч.).",
-        "zh-cn": "为除湿机与商用空调提供完整控制。轮询间隔现以秒为单位（默认 30 秒）。"
-      },
-      "1.0.0": {
-        "en": "Breaking change: rewritten on the LAN-first Midea V3 protocol. The cloud is only used to fetch each device's token/key. Adds device discovery, local status polling, full AC controls and metadata for other appliances.",
-        "de": "Breaking Change: Neuimplementierung auf dem LAN-first Midea-V3-Protokoll. Die Cloud dient nur noch zum Abruf von Token/Key je Gerät. Neu: Geräteerkennung, lokales Status-Polling, volle AC-Steuerung sowie Metadaten für weitere Geräte.",
-        "ru": "Критическое изменение: переписан на LAN-протокол Midea V3. Облако используется только для получения token/key устройства. Добавлены автообнаружение, локальный опрос статуса, полное управление кондиционером и метаданные для прочих приборов.",
-        "pt": "Alteração incompatível: reescrito sobre o protocolo Midea V3 LAN. A nuvem só obtém o token/chave por dispositivo. Inclui descoberta, polling local, controlos completos de AC e metadados para outros aparelhos.",
-        "nl": "Breaking change: herschreven op het LAN-first Midea V3-protocol. De cloud wordt alleen gebruikt om token/key per apparaat op te halen. Inclusief discovery, lokale statuspolling, volledige AC-bediening en metadata voor overige apparaten.",
-        "fr": "Changement majeur : réécrit sur le protocole LAN Midea V3. Le cloud sert uniquement à récupérer le token/clé par appareil. Ajoute la découverte, le polling local, les commandes complètes de la climatisation et les métadonnées pour les autres appareils.",
-        "it": "Modifica incompatibile: riscritto sul protocollo LAN Midea V3. Il cloud serve solo a recuperare token/chiave per dispositivo. Include discovery, polling locale di stato, controlli AC completi e metadati per gli altri apparecchi.",
-        "es": "Cambio incompatible: reescrito sobre el protocolo LAN Midea V3. La nube solo se usa para obtener token/clave por dispositivo. Añade descubrimiento, sondeo local, controles completos de AC y metadatos para otros equipos.",
-        "pl": "Zmiana niekompatybilna: napisany ponownie na protokole LAN Midea V3. Chmura służy wyłącznie do pobrania tokenu/klucza dla urządzenia. Dodaje wykrywanie, lokalne odpytywanie statusu, pełne sterowanie AC i metadane pozostałych urządzeń.",
-        "uk": "Несумісна зміна: переписано на LAN-протокол Midea V3. Хмара використовується лише для отримання token/key пристрою. Додано виявлення, локальне опитування статусу, повне керування кондиціонером та метадані інших пристроїв.",
-        "zh-cn": "重大更改：基于局域网优先的 Midea V3 协议重写。云端仅用于获取每台设备的 token/key。新增发现、本地状态轮询、完整空调控制以及其他家电的元数据。"
       }
     },
     "titleLang": {

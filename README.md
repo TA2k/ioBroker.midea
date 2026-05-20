@@ -202,6 +202,13 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+### 1.7.1 (2026-05-20)
+
+-   Adds a fixture-driven test suite for the unified `_processFrame`
+    hook introduced in 1.7.0. Covers all 26 device classes and replays
+    two real captures (A1 dehumidifier) so future parser changes break
+    loudly. No runtime behaviour change.
+
 ### 1.5.0 (2026-05-19)
 
 -   Adds LAN support for V1- and V2-firmware appliances. They are now
