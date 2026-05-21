@@ -755,6 +755,34 @@ class MideaAdapter extends utils.Adapter {
         if (cloudList) {
             for (const item of cloudList) {
                 if (this.descriptors.has(item.id)) continue;
+                // Manual IP override: the user typed a host into the
+                // deviceList admin row, so UDP discovery is irrelevant —
+                // skip the broadcast-domain warning and try TCP/6444
+                // directly. V3 firmware is assumed (MSmartHome / Midea
+                // Air / NetHome Plus all list V3 appliances; V1/V2 paths
+                // run cloudless and shouldn't reach this branch).
+                const manualRow = deviceListCfg.find((r) => r && String(r.id || "") === String(item.id));
+                const manualHost = manualRow && typeof manualRow.host === "string" ? manualRow.host.trim() : "";
+                if (manualHost) {
+                    const descriptor = {
+                        id: String(item.id),
+                        name: item.name,
+                        host: manualHost,
+                        port: 6444,
+                        applianceType: item.type,
+                        applianceTypeName: midea.APPLIANCE_TYPES[item.type] || "unknown",
+                        protocol: 3,
+                    };
+                    this.log.info(
+                        `Appliance ${item.id} (${item.name}) did not answer UDP discovery — trying configured IP ${manualHost} via TCP/6444 directly.`,
+                    );
+                    try {
+                        await this.registerDevice(descriptor);
+                    } catch (err) {
+                        this.log.warn(`Could not initialise device ${item.id} via configured IP ${manualHost}: ${errMessage(err)}`);
+                    }
+                    continue;
+                }
                 this.log.warn(`Appliance ${item.id} (${item.name}) is bound to the cloud account but did not respond to LAN discovery — control requires a local broadcast domain, or UDP/6445 is firewalled.`);
             }
         }
