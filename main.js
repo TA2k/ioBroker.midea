@@ -854,13 +854,13 @@ class MideaAdapter extends utils.Adapter {
                     candidates = await this.cloud.getTokenCandidates(descriptor.id);
                 } catch (err) {
                     this.log.warn(
-                        `Could not fetch token/key for ${descriptor.id}: ${errMessage(err)} — the device is offline in the cloud account, or the credentials in the adapter config are wrong.`,
+                        `Could not fetch token/key for ${descriptor.id}: ${errMessage(err)} — the cloud refused to issue LAN credentials for this appliance. Likely the appliance is registered in a different cloud app than the one selected in the adapter (try MSmartHome / NetHome Plus / Midea Air / Ariston Clima), or the appliance was re-paired and is no longer bound to this account.`,
                     );
                     return;
                 }
                 if (!candidates.length) {
                     this.log.warn(
-                        `No token/key pair returned for ${descriptor.id} — the device is offline in the cloud account, or the credentials in the adapter config are wrong.`,
+                        `No token/key pair returned for ${descriptor.id} — cloud accepted the request but did not return a matching udpId. Likely the appliance is registered in a different cloud app than the one selected in the adapter, or it was re-paired and is no longer bound to this account.`,
                     );
                     return;
                 }
