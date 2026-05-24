@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "midea",
-    "version": "1.7.1",
+    "version": "1.8.0",
     "news": {
+      "1.8.0": {
+        "en": "-   Fixes MSmartHome `getToken` 3004 on regional accounts: the V3 client now follows the cloud's MAS re-route, sends the missing auth header, and falls back from LITTLE to BIG udpId.",
+        "de": "-   Fix für MSmartHome-`getToken`-Fehler 3004 bei Konten mit regionalem MAS-Server: Der V3-Client folgt jetzt dem MAS-Reroute der Cloud, sendet den fehlenden Auth-Header und fällt bei LITTLE auf BIG-udpId zurück.",
+        "ru": "-   Исправлена ошибка MSmartHome `getToken` 3004 для региональных аккаунтов: V3-клиент теперь следует MAS-перенаправлению облака, отправляет недостающий заголовок auth и переходит с LITTLE на BIG udpId.",
+        "pt": "-   Corrige `getToken` 3004 do MSmartHome em contas regionais: o cliente V3 segue agora o reencaminhamento MAS da cloud, envia o cabeçalho de autenticação em falta e recorre ao udpId BIG quando o LITTLE falha.",
+        "nl": "-   Fix voor MSmartHome `getToken` 3004 op regionale accounts: de V3-client volgt nu de MAS-reroute van de cloud, stuurt de ontbrekende auth-header en valt van LITTLE terug op BIG udpId.",
+        "fr": "-   Corrige l'erreur MSmartHome `getToken` 3004 sur les comptes régionaux : le client V3 suit désormais la redirection MAS du cloud, envoie l'en-tête d'authentification manquant et bascule de LITTLE vers BIG udpId.",
+        "it": "-   Risolve l'errore MSmartHome `getToken` 3004 sugli account regionali: il client V3 ora segue il re-route MAS del cloud, invia l'header di autenticazione mancante e ripiega da LITTLE a BIG udpId.",
+        "es": "-   Corrige `getToken` 3004 de MSmartHome en cuentas regionales: el cliente V3 sigue ahora el redireccionamiento MAS de la nube, envía la cabecera de autenticación que faltaba y recurre al udpId BIG cuando falla LITTLE.",
+        "pl": "-   Naprawia błąd MSmartHome `getToken` 3004 na kontach regionalnych: klient V3 podąża teraz za przekierowaniem MAS chmury, wysyła brakujący nagłówek uwierzytelniania i przełącza się z LITTLE na BIG udpId.",
+        "uk": "-   Виправлено помилку MSmartHome `getToken` 3004 на регіональних акаунтах: V3-клієнт тепер слідує MAS-перенаправленню хмари, надсилає відсутній заголовок аутентифікації та перемикається з LITTLE на BIG udpId.",
+        "zh-cn": "-   修复区域账号上的 MSmartHome `getToken` 3004 错误：V3 客户端现在会跟随云端的 MAS 重定向，补发缺失的鉴权头，并在 LITTLE udpId 失败时回退到 BIG。"
+      },
       "1.7.1": {
         "en": "-   Adds a fixture-driven test suite for the unified `_processFrame`\n    hook introduced in 1.7.0. Covers all 26 device classes and replays\n    two real captures (A1 dehumidifier) so future parser changes break\n    loudly. No runtime behaviour change.",
         "de": "- Fügt eine montagegetriebene Testsuite für den einheitlichen ` processFrame` hinzu\nhaken in 1.7.0 eingeführt. deckt alle 26 Geräteklassen und Wiederholungen ab\nzwei reale Erfassungen (A1 Entfeuchter), so dass zukünftige Parser Änderungen Pause\nlaut. Keine Laufzeitverhaltensänderung.",

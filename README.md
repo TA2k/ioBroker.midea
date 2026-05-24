@@ -202,6 +202,12 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+### 1.8.0 (2026-05-24)
+
+-   Fixes MSmartHome `getToken` 3004 on regional accounts: the V3
+    client now follows the cloud's MAS re-route, sends the missing
+    auth header, and falls back from LITTLE to BIG udpId.
+
 ### 1.7.1 (2026-05-20)
 
 -   Adds a fixture-driven test suite for the unified `_processFrame`
