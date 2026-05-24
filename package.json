@@ -1,6 +1,6 @@
 {
   "name": "iobroker.midea",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Adapter for Midea, Dimstal and Royal Clima air conditioners",
   "author": {
     "name": "TA2k",

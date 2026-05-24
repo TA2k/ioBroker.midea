@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "midea",
-    "version": "1.8.0",
+    "version": "1.8.1",
     "news": {
+      "1.8.1": {
+        "en": "-   Fixes MSmartHome `getToken` 3004 (\"value is illegal\") by aligning the V3 cloud request with msmart-ng: drops the `uid:null` and `platformId` body fields, the `Authorization` header, switches `random` to crypto-random hex and `stamp` to UTC.",
+        "de": "-   Fix für MSmartHome-`getToken`-Fehler 3004 („value is illegal"): V3-Cloud-Request an msmart-ng angeglichen — `uid:null` und `platformId` aus dem Body entfernt, `Authorization`-Header weg, `random` jetzt kryptografischer Hex-Wert, `stamp` in UTC.",
+        "ru": "-   Исправлена ошибка MSmartHome `getToken` 3004 («value is illegal»): запрос V3 приведён в соответствие с msmart-ng — убраны поля `uid:null` и `platformId`, заголовок `Authorization`, `random` теперь крипто-hex, `stamp` в UTC.",
+        "pt": "-   Corrige `getToken` 3004 do MSmartHome (\"value is illegal\") alinhando o pedido V3 com o msmart-ng: remove os campos `uid:null` e `platformId` do corpo e o cabeçalho `Authorization`, passa `random` a hex aleatório e `stamp` para UTC.",
+        "nl": "-   Fix voor MSmartHome `getToken` 3004 (\"value is illegal\"): V3-cloudrequest afgestemd op msmart-ng — `uid:null` en `platformId` uit body, `Authorization`-header weg, `random` als crypto-hex en `stamp` in UTC.",
+        "fr": "-   Corrige l'erreur MSmartHome `getToken` 3004 (« value is illegal ») en alignant la requête V3 sur msmart-ng : suppression des champs `uid:null` et `platformId` du corps et de l'en-tête `Authorization`, `random` passe en hex aléatoire et `stamp` en UTC.",
+        "it": "-   Risolve l'errore MSmartHome `getToken` 3004 (\"value is illegal\") allineando la richiesta V3 a msmart-ng: rimossi i campi `uid:null` e `platformId` dal body e l'header `Authorization`, `random` in hex casuale e `stamp` in UTC.",
+        "es": "-   Corrige `getToken` 3004 de MSmartHome (\"value is illegal\") alineando la petición V3 con msmart-ng: elimina los campos `uid:null` y `platformId` del cuerpo y la cabecera `Authorization`, pasa `random` a hex aleatorio y `stamp` a UTC.",
+        "pl": "-   Naprawia błąd MSmartHome `getToken` 3004 („value is illegal") przez dopasowanie żądania V3 do msmart-ng: usunięcie pól `uid:null` i `platformId` z body oraz nagłówka `Authorization`, `random` jako losowy hex, `stamp` w UTC.",
+        "uk": "-   Виправлено помилку MSmartHome `getToken` 3004 («value is illegal»): запит V3 узгоджено з msmart-ng — поля `uid:null` і `platformId` прибрано з тіла, заголовок `Authorization` видалено, `random` тепер крипто-hex, `stamp` у UTC.",
+        "zh-cn": "-   修复 MSmartHome `getToken` 3004（\"value is illegal\"）：V3 云请求与 msmart-ng 对齐 — 移除 body 中的 `uid:null` 和 `platformId`，去掉 `Authorization` 头，`random` 改为加密随机 hex，`stamp` 改为 UTC。"
+      },
       "1.8.0": {
         "en": "-   Fixes MSmartHome `getToken` 3004 on regional accounts: the V3 client now follows the cloud's MAS re-route, sends the missing auth header, and falls back from LITTLE to BIG udpId.",
         "de": "-   Fix für MSmartHome-`getToken`-Fehler 3004 bei Konten mit regionalem MAS-Server: Der V3-Client folgt jetzt dem MAS-Reroute der Cloud, sendet den fehlenden Auth-Header und fällt bei LITTLE auf BIG-udpId zurück.",

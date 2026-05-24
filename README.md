@@ -202,6 +202,14 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+### 1.8.1 (2026-05-24)
+
+-   Fixes MSmartHome `getToken` 3004 ("value is illegal") by aligning
+    the V3 cloud request with the msmart-ng reference: drops the
+    `uid:null` and `platformId` body fields, the `Authorization` header,
+    switches the `random` header to crypto-random hex and the `stamp`
+    to UTC.
+
 ### 1.8.0 (2026-05-24)
 
 -   Fixes MSmartHome `getToken` 3004 on regional accounts: the V3
