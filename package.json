@@ -1,6 +1,6 @@
 {
   "name": "iobroker.midea",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "Adapter for Midea, Dimstal and Royal Clima air conditioners",
   "author": {
     "name": "TA2k",
@@ -37,7 +37,7 @@
     "@eslint/js": "^10.0.1",
     "@iobroker/testing": "^5.2.2",
     "@tsconfig/node22": "^22.0.5",
-    "@types/node": "^25.9.0",
+    "@types/node": "^25.9.1",
     "eslint": "^10.4.0",
     "globals": "^17.6.0",
     "prettier": "^3.8.3",

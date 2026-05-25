@@ -1,11 +1,11 @@
 {
   "common": {
     "name": "midea",
-    "version": "1.8.2",
+    "version": "1.8.3",
     "news": {
-      "1.8.2": {
-        "en": "-   Adds a NetHome Plus fallback for V3 `getToken`: if the user's configured cloud refuses to issue LAN credentials (typical: MSmartHome 3004), the adapter retries against `mapp.appsmb.com` with the shared default credentials shipped by msmart-ng. The fallback is logged at INFO. If it also fails, the warning suggests configuring a personal NetHome Plus / Midea Air / Ariston Clima account.",
-        "de": "-   NetHome-Plus-Fallback für V3-`getToken`: Wenn die konfigurierte Cloud keine LAN-Credentials liefert (typisch: MSmartHome 3004), versucht es der Adapter gegen `mapp.appsmb.com` mit den Standard-Credentials aus msmart-ng. Der Fallback wird auf INFO geloggt. Schlägt auch der fehl, weist die Warnung darauf hin, ein eigenes NetHome-Plus-/Midea-Air-/Ariston-Clima-Konto in den Einstellungen zu hinterlegen.",
+      "1.8.3": {
+        "en": "-   Adds a NetHome Plus fallback not working devices",
+        "de": "-   NetHome-Plus-Fallback für nicht funktionierende Geräte hinzugefügt.",
         "ru": "-   Резервный путь через NetHome Plus для V3 `getToken`: если выбранное облако не выдаёт LAN-данные (обычно MSmartHome 3004), адаптер обращается к `mapp.appsmb.com` со стандартными учётными данными из msmart-ng. Откат логируется на уровне INFO. Если и он не помогает, в предупреждении предлагается ввести собственный аккаунт NetHome Plus / Midea Air / Ariston Clima.",
         "pt": "-   Fallback para NetHome Plus em `getToken` V3: se a cloud configurada recusar credenciais LAN (típico: MSmartHome 3004), o adaptador tenta `mapp.appsmb.com` com as credenciais partilhadas do msmart-ng. O fallback é registado em INFO. Se também falhar, o aviso sugere configurar uma conta NetHome Plus / Midea Air / Ariston Clima.",
         "nl": "-   NetHome Plus-fallback voor V3 `getToken`: als de ingestelde cloud geen LAN-tokens geeft (typisch: MSmartHome 3004), probeert de adapter `mapp.appsmb.com` met de standaard credentials uit msmart-ng. De fallback wordt op INFO gelogd. Faalt ook die, dan stelt de waarschuwing voor om een eigen NetHome Plus / Midea Air / Ariston Clima-account te configureren.",
