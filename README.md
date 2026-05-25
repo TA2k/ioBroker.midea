@@ -202,6 +202,16 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+### 1.8.2 (2026-05-25)
+
+-   Adds a NetHome Plus fallback for V3 `getToken`. If the user's
+    configured cloud refuses to issue LAN credentials (typical:
+    MSmartHome 3004), the adapter automatically retries against
+    `mapp.appsmb.com` with the shared default credentials shipped by
+    msmart-ng. The fallback is logged at INFO. If it also fails, the
+    warning suggests configuring a personal NetHome Plus / Midea Air /
+    Ariston Clima account in the adapter settings.
+
 ### 1.8.1 (2026-05-24)
 
 -   Fixes MSmartHome `getToken` 3004 ("value is illegal") by aligning

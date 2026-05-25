@@ -534,7 +534,7 @@ class MideaAdapter extends utils.Adapter {
          * @type {Promise<any>}
          */
         this.discoverChain = Promise.resolve();
-        /** @type {midea.CloudClient|null} */
+        /** @type {midea.CloudClient|midea.CloudClientV1|null} */
         this.cloud = null;
         this.pollTimer = null;
         this.shuttingDown = false;
@@ -851,7 +851,7 @@ class MideaAdapter extends utils.Adapter {
             } else {
                 try {
                     if (!this.cloud) throw new Error("cloud client not initialised");
-                    candidates = await this.cloud.getTokenCandidates(descriptor.id);
+                    candidates = await midea.getTokenCandidatesWithFallback(this.cloud, descriptor.id, this.log);
                 } catch (err) {
                     this.log.warn(
                         `Could not fetch token/key for ${descriptor.id}: ${errMessage(err)} — the cloud session is fine (otherwise discovery would have failed) but it refused to issue LAN credentials for this udpId. Please attach a debug log to a GitHub issue so the udpId derivation can be checked.`,
@@ -860,7 +860,7 @@ class MideaAdapter extends utils.Adapter {
                 }
                 if (!candidates.length) {
                     this.log.warn(
-                        `No token/key pair returned for ${descriptor.id} — neither udpId derivation matched a tokenlist entry. Please attach a debug log to a GitHub issue so the derivation can be checked.`,
+                        `No token/key pair returned for ${descriptor.id} — neither udpId derivation matched a tokenlist entry. If you have your own NetHome Plus / Midea Air / Ariston Clima account, configure it as the cloud app in the adapter settings.`,
                     );
                     return;
                 }
