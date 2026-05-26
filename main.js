@@ -538,6 +538,18 @@ class MideaAdapter extends utils.Adapter {
         this.cloud = null;
         this.pollTimer = null;
         this.shuttingDown = false;
+        /**
+         * Buffer of pending deviceList row updates keyed by device id.
+         * Each `_persistDeviceCredentials` call merges into this map and
+         * (re)arms a 1 s flush timer. ioBroker reloads the adapter on every
+         * native-config write, so coalescing the field-by-field updates that
+         * arrive across discovery / handshake / cloud-listing into one write
+         * collapses the onboarding restart storm to a single reload.
+         * @type {Map<string, {id: string, name?: string, host?: string, token?: string|null, key?: string|null}>}
+         */
+        this._pendingDeviceListUpdates = new Map();
+        /** @type {NodeJS.Timeout|null} */
+        this._pendingDeviceListTimer = null;
         this.json2iob = new Json2iob(this);
         this.pollIntervalMs = 30 * 1000;
 
@@ -947,9 +959,7 @@ class MideaAdapter extends utils.Adapter {
             host: descriptor.host,
             token: authedToken,
             key: authedKey,
-        }).catch((err) =>
-            this.log.debug(`Device ${descriptor.id}: persist deviceList row skipped (${errMessage(err)})`),
-        );
+        });
     }
 
     /**
@@ -1009,48 +1019,99 @@ class MideaAdapter extends utils.Adapter {
      *
      * @param {{id: string, name?: string, host?: string, token?: string|null, key?: string|null}} desc
      */
-    async _persistDeviceCredentials(desc) {
+    /**
+     * Write what discovery (and optionally LAN auth) knows about the device
+     * back into the adapter's deviceList config so the user sees the rows
+     * populated in the admin table without having to click "Refresh
+     * devices". Only fills empty cells — manual user entries always win.
+     * Also matches existing rows by host when id is empty so an IP-only
+     * row the user typed gets backfilled instead of duplicated.
+     *
+     * Buffers each call into `_pendingDeviceListUpdates` and (re)arms a 1 s
+     * debounce timer. Discovery / LAN handshake / cloud listing arrive in
+     * separate async phases during onboarding; ioBroker restarts the
+     * adapter on every native-config write, so coalescing collapses the
+     * 2-3 reloads per first start into one.
+     *
+     * @param {{id: string, name?: string, host?: string, token?: string|null, key?: string|null}} desc
+     */
+    _persistDeviceCredentials(desc) {
         if (!desc || !desc.id) return;
+        const idStr = String(desc.id);
+        const prev = this._pendingDeviceListUpdates.get(idStr) || { id: idStr };
+        if (desc.name !== undefined) prev.name = desc.name;
+        if (desc.host !== undefined) prev.host = desc.host;
+        if (desc.token !== undefined) prev.token = desc.token;
+        if (desc.key !== undefined) prev.key = desc.key;
+        this._pendingDeviceListUpdates.set(idStr, prev);
+        if (this._pendingDeviceListTimer) clearTimeout(this._pendingDeviceListTimer);
+        if (this.shuttingDown) return;
+        this._pendingDeviceListTimer = setTimeout(() => {
+            this._pendingDeviceListTimer = null;
+            this._flushDeviceListUpdates().catch((err) =>
+                this.log.debug(`deviceList flush failed: ${errMessage(err)}`),
+            );
+        }, 1000);
+    }
+
+    /**
+     * Apply the buffered deviceList row updates and write the config once.
+     * No-op when nothing in the buffer would change a previously-empty
+     * field — manual user entries always win, identical-value writes are
+     * skipped to avoid an unnecessary reload.
+     */
+    async _flushDeviceListUpdates() {
+        if (!this._pendingDeviceListUpdates.size) return;
+        const pending = Array.from(this._pendingDeviceListUpdates.values());
+        this._pendingDeviceListUpdates.clear();
         const list = /** @type {Array<{id?: string, name?: string, host?: string, token?: string, key?: string}>} */ (
             Array.isArray(this.config.deviceList) ? this.config.deviceList.slice() : []
         );
-        const idStr = String(desc.id);
-        const hostStr = String(desc.host || "").trim();
-        const nameStr = String(desc.name || "").trim();
-        const tokenStr = desc.token ? String(desc.token).trim() : "";
-        const keyStr = desc.key ? String(desc.key).trim() : "";
-        let row = list.find((r) => r && String(r.id || "") === idStr);
-        if (!row && hostStr) {
-            row = list.find((r) => r && !String(r.id || "").trim() && String(r.host || "").trim() === hostStr);
+        /** @type {Array<string>} */
+        const summary = [];
+        let dirty = false;
+        for (const desc of pending) {
+            const idStr = String(desc.id);
+            const hostStr = String(desc.host || "").trim();
+            const nameStr = String(desc.name || "").trim();
+            const tokenStr = desc.token ? String(desc.token).trim() : "";
+            const keyStr = desc.key ? String(desc.key).trim() : "";
+            let row = list.find((r) => r && String(r.id || "") === idStr);
+            if (!row && hostStr) {
+                row = list.find((r) => r && !String(r.id || "").trim() && String(r.host || "").trim() === hostStr);
+            }
+            const existingId = row && typeof row.id === "string" ? row.id.trim() : "";
+            const existingName = row && typeof row.name === "string" ? row.name.trim() : "";
+            const existingHost = row && typeof row.host === "string" ? row.host.trim() : "";
+            const existingToken = row && typeof row.token === "string" ? row.token.trim() : "";
+            const existingKey = row && typeof row.key === "string" ? row.key.trim() : "";
+            const wantId = !existingId;
+            const wantName = !existingName && nameStr;
+            const wantHost = !existingHost && hostStr;
+            const wantToken = !existingToken && tokenStr;
+            const wantKey = !existingKey && keyStr;
+            if (row && !wantId && !wantName && !wantHost && !wantToken && !wantKey) continue;
+            if (!row) {
+                row = { id: idStr };
+                list.push(row);
+            }
+            if (wantId) row.id = idStr;
+            if (wantName) row.name = nameStr;
+            if (wantHost) row.host = hostStr;
+            if (wantToken) row.token = tokenStr;
+            if (wantKey) row.key = keyStr;
+            const what = [
+                wantId ? "id" : null,
+                wantName ? "name" : null,
+                wantHost ? "host" : null,
+                wantToken ? "token" : null,
+                wantKey ? "key" : null,
+            ].filter(Boolean).join("/");
+            summary.push(`${idStr}:${what}`);
+            dirty = true;
         }
-        const existingId = row && typeof row.id === "string" ? row.id.trim() : "";
-        const existingName = row && typeof row.name === "string" ? row.name.trim() : "";
-        const existingHost = row && typeof row.host === "string" ? row.host.trim() : "";
-        const existingToken = row && typeof row.token === "string" ? row.token.trim() : "";
-        const existingKey = row && typeof row.key === "string" ? row.key.trim() : "";
-        const wantId = !existingId;
-        const wantName = !existingName && nameStr;
-        const wantHost = !existingHost && hostStr;
-        const wantToken = !existingToken && tokenStr;
-        const wantKey = !existingKey && keyStr;
-        if (row && !wantId && !wantName && !wantHost && !wantToken && !wantKey) return;
-        if (!row) {
-            row = { id: idStr };
-            list.push(row);
-        }
-        if (wantId) row.id = idStr;
-        if (wantName) row.name = nameStr;
-        if (wantHost) row.host = hostStr;
-        if (wantToken) row.token = tokenStr;
-        if (wantKey) row.key = keyStr;
-        const what = [
-            wantId ? "id" : null,
-            wantName ? "name" : null,
-            wantHost ? "host" : null,
-            wantToken ? "token" : null,
-            wantKey ? "key" : null,
-        ].filter(Boolean).join("/");
-        this.log.info(`Device ${idStr}: storing ${what} into device list (admin table) — adapter will reload.`);
+        if (!dirty) return;
+        this.log.info(`Storing ${summary.join(", ")} into device list (admin table) — adapter will reload.`);
         await this.updateConfig({ deviceList: list });
     }
 
@@ -1508,6 +1569,10 @@ class MideaAdapter extends utils.Adapter {
         try {
             this.shuttingDown = true;
             if (this.pollTimer) clearTimeout(this.pollTimer);
+            if (this._pendingDeviceListTimer) {
+                clearTimeout(this._pendingDeviceListTimer);
+                this._pendingDeviceListTimer = null;
+            }
             for (const device of this.devices.values()) {
                 try { device.close(); } catch (_e) { /* swallow */ }
             }
