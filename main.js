@@ -561,6 +561,7 @@ class MideaAdapter extends utils.Adapter {
 
     async onReady() {
         await this.deleteLegacyTree();
+        await this.deleteOrphanControls();
         await this.setStateAsync("info.connection", false, true);
 
         if (!this.config.user || !this.config.password) {
@@ -587,6 +588,52 @@ class MideaAdapter extends utils.Adapter {
 
         await this.subscribeStatesAsync("*.control.*");
         this.schedulePoll();
+    }
+
+    /**
+     * Remove control-channel states whose IDs are no longer part of the
+     * current TYPED_CONTROLS definition for the device type. Cleans up
+     * renamed states from v1.x upgrades (e.g. operationalMode -> mode).
+     */
+    async deleteOrphanControls() {
+        const all = await this.getAdapterObjectsAsync();
+        const ns = `${this.namespace}.`;
+        // Build applianceType map from stored info states (descriptors not yet
+        // populated at startup — this runs before runDiscoveryCycle).
+        const appTypeByDevice = new Map();
+        for (const [fullId, obj] of Object.entries(all)) {
+            if (!fullId.startsWith(ns)) continue;
+            const rel = fullId.slice(ns.length);
+            // Match "<deviceId>.info.applianceType" state
+            if (!/^[^.]+\.info\.applianceType$/.test(rel)) continue;
+            if (obj.type !== "state") continue;
+            const deviceId = rel.split(".")[0];
+            const st = await this.getStateAsync(rel);
+            if (st && st.val != null) appTypeByDevice.set(deviceId, Number(st.val));
+        }
+        let removed = 0;
+        for (const [fullId, obj] of Object.entries(all)) {
+            if (!fullId.startsWith(ns)) continue;
+            const rel = fullId.slice(ns.length);
+            const parts = rel.split(".");
+            if (parts.length !== 3 || parts[1] !== "control") continue;
+            if (obj.type !== "state") continue;
+            const deviceId = parts[0];
+            const controlId = parts[2];
+            const appType = appTypeByDevice.get(deviceId);
+            if (appType == null) continue;
+            const defs = TYPED_CONTROLS[appType];
+            if (!defs) continue;
+            if (defs.find((d) => d.id === controlId)) continue;
+            try {
+                await this.delObjectAsync(rel);
+                this.log.info(`deleteOrphanControls: removed obsolete ${rel}`);
+                removed++;
+            } catch (err) {
+                this.log.warn(`deleteOrphanControls: could not delete ${rel}: ${errMessage(err)}`);
+            }
+        }
+        if (removed > 0) this.log.info(`deleteOrphanControls: removed ${removed} obsolete control object(s)`);
     }
 
     /**
