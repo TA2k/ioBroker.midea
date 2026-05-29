@@ -965,12 +965,7 @@ class MideaAdapter extends utils.Adapter {
                 authedKey = ok.key;
             }
         } catch (err) {
-            this.log.warn(`refreshCapabilities for ${descriptor.id} failed: ${errMessage(err)}`);
-        }
-        try {
-            await device.refreshStatus();
-        } catch (err) {
-            this.log.warn(`refreshStatus for ${descriptor.id} failed: ${errMessage(err)}`);
+            this.log.warn(`refreshCapabilities/refreshStatus for ${descriptor.id} failed: ${errMessage(err)}`);
         }
         if (device instanceof ACDevice) {
             try {
@@ -1010,11 +1005,16 @@ class MideaAdapter extends utils.Adapter {
     }
 
     /**
-     * Run refreshCapabilities() with auth-retry across cloud token candidates.
-     * The Midea cloud sometimes returns valid-looking entries for both udpId
-     * methods (LITTLE and BIG) but only one token actually authenticates with
-     * the device on the LAN — mirrors midea-beautiful-air's lan.py behaviour.
-     * Returns the working candidate on success so the caller can persist it.
+     * Run refreshCapabilities() + refreshStatus() with auth-retry across cloud
+     * token candidates. The Midea cloud sometimes returns valid-looking entries
+     * for both udpId methods (LITTLE and BIG) but only one token actually
+     * authenticates with the device on the LAN — mirrors midea-beautiful-air's
+     * lan.py behaviour. Returns the working candidate on success so the caller
+     * can persist it.
+     *
+     * Devices without a B5 capability query (refreshCapabilities is a no-op)
+     * still need an auth test, so refreshStatus is part of the retry loop —
+     * the first network call inside it triggers the LAN handshake.
      *
      * @param {any} device
      * @param {any} descriptor
@@ -1034,6 +1034,10 @@ class MideaAdapter extends utils.Adapter {
             }
             try {
                 await device.refreshCapabilities();
+                // refreshCapabilities may be a no-op for devices that don't
+                // support B5 — refreshStatus is what actually triggers the
+                // LAN handshake there, so it must share the auth-retry loop.
+                await device.refreshStatus();
                 if (candidates) {
                     const ok = candidates[i];
                     this.log.info(`Device ${descriptor.id}: LAN authenticated with udpId method ${ok.method}`);
