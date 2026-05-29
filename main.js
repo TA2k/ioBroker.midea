@@ -1005,16 +1005,16 @@ class MideaAdapter extends utils.Adapter {
     }
 
     /**
-     * Run refreshCapabilities() + refreshStatus() with auth-retry across cloud
-     * token candidates. The Midea cloud sometimes returns valid-looking entries
-     * for both udpId methods (LITTLE and BIG) but only one token actually
-     * authenticates with the device on the LAN — mirrors midea-beautiful-air's
-     * lan.py behaviour. Returns the working candidate on success so the caller
-     * can persist it.
+     * Drive the LAN auth handshake with retry across cloud token candidates.
+     * The Midea cloud sometimes returns valid-looking entries for both udpId
+     * methods (LITTLE and BIG) but only one token actually authenticates with
+     * the device on the LAN — mirrors midea-beautiful-air's lan.py behaviour.
+     * Returns the working candidate on success so the caller can persist it.
      *
-     * Devices without a B5 capability query (refreshCapabilities is a no-op)
-     * still need an auth test, so refreshStatus is part of the retry loop —
-     * the first network call inside it triggers the LAN handshake.
+     * refreshStatus is the auth probe: every device must respond to it, so
+     * its first network call exercises the V3 handshake regardless of type.
+     * refreshCapabilities runs second and re-uses the already-established
+     * tcpKey — for devices without B5 support it's a no-op anyway.
      *
      * @param {any} device
      * @param {any} descriptor
@@ -1033,11 +1033,11 @@ class MideaAdapter extends utils.Adapter {
                 device.setLanCredentials(descriptor.host, next.token, next.key, descriptor.port);
             }
             try {
-                await device.refreshCapabilities();
-                // refreshCapabilities may be a no-op for devices that don't
-                // support B5 — refreshStatus is what actually triggers the
-                // LAN handshake there, so it must share the auth-retry loop.
+                // refreshStatus first — this is the universal auth probe.
                 await device.refreshStatus();
+                // refreshCapabilities second — may be a no-op for devices
+                // without a B5 query; reuses the established tcpKey otherwise.
+                await device.refreshCapabilities();
                 if (candidates) {
                     const ok = candidates[i];
                     this.log.info(`Device ${descriptor.id}: LAN authenticated with udpId method ${ok.method}`);
