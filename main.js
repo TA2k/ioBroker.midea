@@ -562,6 +562,7 @@ class MideaAdapter extends utils.Adapter {
     async onReady() {
         await this.deleteLegacyTree();
         await this.deleteOrphanControls();
+        await this.deleteEmptyCapabilities();
         await this.setStateAsync("info.connection", false, true);
 
         if (!this.config.user || !this.config.password) {
@@ -634,6 +635,40 @@ class MideaAdapter extends utils.Adapter {
             }
         }
         if (removed > 0) this.log.info(`deleteOrphanControls: removed ${removed} obsolete control object(s)`);
+    }
+
+    /**
+     * Remove `<deviceId>.capabilities` channels that have no state objects
+     * underneath. Pre-existing installs created the empty channel for every
+     * device in createDeviceShell; we now create it lazily in
+     * publishCapabilities, so the pre-existing empty channels can go.
+     */
+    async deleteEmptyCapabilities() {
+        const all = await this.getAdapterObjectsAsync();
+        const ns = `${this.namespace}.`;
+        const capChannels = new Set();
+        const capStateParents = new Set();
+        for (const fullId of Object.keys(all)) {
+            if (!fullId.startsWith(ns)) continue;
+            const rel = fullId.slice(ns.length);
+            const parts = rel.split(".");
+            if (parts.length === 2 && parts[1] === "capabilities" && all[fullId].type === "channel") {
+                capChannels.add(rel);
+            } else if (parts.length >= 3 && parts[1] === "capabilities" && all[fullId].type === "state") {
+                capStateParents.add(`${parts[0]}.capabilities`);
+            }
+        }
+        let removed = 0;
+        for (const rel of capChannels) {
+            if (capStateParents.has(rel)) continue;
+            try {
+                await this.delObjectAsync(rel);
+                removed++;
+            } catch (err) {
+                this.log.warn(`deleteEmptyCapabilities: could not delete ${rel}: ${errMessage(err)}`);
+            }
+        }
+        if (removed > 0) this.log.info(`deleteEmptyCapabilities: removed ${removed} empty capabilities channel(s)`);
     }
 
     /**
@@ -1174,7 +1209,7 @@ class MideaAdapter extends utils.Adapter {
             common: { name: descriptor.name || descriptor.id },
             native: {},
         });
-        for (const sub of ["info", "control", "status", "capabilities"]) {
+        for (const sub of ["info", "control", "status"]) {
             await this.setObjectNotExistsAsync(`${root}.${sub}`, {
                 type: "channel",
                 common: { name: sub },
@@ -1272,6 +1307,7 @@ class MideaAdapter extends utils.Adapter {
      * @param {Record<string, any>} caps
      */
     async publishCapabilities(deviceId, caps) {
+        if (!caps || !Object.keys(caps).length) return;
         this.log.debug(`Device ${deviceId}: publishCapabilities (${Object.keys(caps).length} flags)`);
         await this.json2iob.parse(`${deviceId}.capabilities`, caps, {
             descriptions: CAPABILITY_DESCRIPTIONS,
