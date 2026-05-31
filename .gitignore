@@ -26,3 +26,6 @@ admin/i18n/*/flat.txt
 
 # local references / APK extracts
 .references/
+
+# fetched per-device Lua plugins (default --out dir of scripts/fetch-protocol-lua.js)
+lua-cache/
