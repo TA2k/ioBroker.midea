@@ -81,17 +81,22 @@ lib/midea/
 
 ## Re-generating maps from cloud Lua
 
-The parent project ships three scripts that pull the Lua plugin Midea
+The package ships four scripts that pull the Lua plugin Midea
 serves per (deviceType, sn8) and emit the JSON tables under
 `generated/`:
 
 ```bash
-node scripts/fetch-protocol-lua.js --user … --password … --type 0xa1 --sn …
-node scripts/extract-lua-tables.js
-node scripts/generate-maps.js
-# or all-in-one for steps 2+3:
+npm run fetch-lua -- --user … --password … --type 0xa1 --sn …
+npm run extract-lua
+npm run generate-maps
+npm run diff-lua             # cross-check generated maps vs the device JS classes
+# or all-in-one for extract + generate:
 npm run sync-maps
 ```
+
+The scripts take `--in` / `--out` flags to point them at custom
+cache / output dirs; defaults are CWD-relative (`lua-cache/`,
+`lua-tables/`, `generated/`).
 
 ## License
 
