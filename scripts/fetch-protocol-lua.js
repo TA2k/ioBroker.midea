@@ -151,10 +151,22 @@ async function main() {
             process.exit(2);
         }
         console.error(`[info] probing Lua for type=0x${t.toString(16)} sn=${opts.sn}`);
-        const { fileName, lua } = await fetchLuaForDevice(cloud, t, opts.sn);
-        const outPath = path.join(opts.out, fileName);
-        fs.writeFileSync(outPath, lua, "utf8");
-        console.error(`[ok]   wrote ${outPath} (${lua.length} bytes)`);
+        try {
+            const { fileName, lua } = await fetchLuaForDevice(cloud, t, opts.sn);
+            const outPath = path.join(opts.out, fileName);
+            fs.writeFileSync(outPath, lua, "utf8");
+            console.error(`[ok]   wrote ${outPath} (${lua.length} bytes)`);
+        } catch (err) {
+            const msg = (err && err.message) || String(err);
+            // code=1318 = "没有最新lua文件上传" — Midea has no plugin for this
+            // type/sn combo. Common for rare/old appliance types.
+            if (/code=1318|没有最新lua/.test(msg)) {
+                console.error(`[fail] no plugin available on the cloud for this (type, sn) combination`);
+            } else {
+                console.error(`[fail] ${msg}`);
+            }
+            process.exit(2);
+        }
         return;
     }
 
