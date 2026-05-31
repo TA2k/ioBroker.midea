@@ -1,0 +1,21 @@
+{
+  "name": "midea-lan",
+  "version": "0.1.0",
+  "description": "Standalone Midea LAN protocol client. Cloud auth (MSmartHome / NetHome Plus / Midea Air), V1/V2/V3 LAN discovery + control, 35+ appliance types.",
+  "main": "index.js",
+  "files": [
+    "*.js",
+    "devices/",
+    "generated/",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">= 18"
+  },
+  "dependencies": {
+    "axios": "^1.16.1"
+  },
+  "license": "MIT",
+  "private": true,
+  "comment": "private: drop this and pick a name + repo URL before publishing. Lifted as-is from ioBroker.midea — no ioBroker imports, only axios and Node built-ins (dgram/net/events/os/crypto)."
+}
