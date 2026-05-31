@@ -353,15 +353,15 @@ describe("AC HumidityQuery body (0x41 0x21 0x01 0x45 0x00 0x01)", function () {
     });
 });
 
-describe("AC NewProtocolQuery body (0xB1 + 8 tags)", function () {
-    it("emits all 8 NewProtocolTags in the documented order", async function () {
+describe("AC NewProtocolQuery body (0xB1 + 9 tags)", function () {
+    it("emits all 9 NewProtocolTags in the documented order", async function () {
         const dev = makeDevice();
         const getCmd = captureSetCommand(dev, fakeC0Reply());
         try { await dev.refreshNewProtocol(); } catch (_e) { /* swallow */ }
         const body = unwrapBody(getCmd());
-        // [0xB1, 0x08, lo, hi, lo, hi, ... ×8, msgId]
+        // [0xB1, 0x09, lo, hi, lo, hi, ... ×9, msgId]
         assert.equal(body[0], 0xB1);
-        assert.equal(body[1], 0x08);
+        assert.equal(body[1], 0x09);
         const expected = [
             NEW_PROTOCOL_TAGS.indirect_wind,
             NEW_PROTOCOL_TAGS.breezeless,
@@ -371,8 +371,9 @@ describe("AC NewProtocolQuery body (0xB1 + 8 tags)", function () {
             NEW_PROTOCOL_TAGS.fresh_air_2,
             NEW_PROTOCOL_TAGS.wind_lr_angle,
             NEW_PROTOCOL_TAGS.wind_ud_angle,
+            NEW_PROTOCOL_TAGS.out_silent,
         ];
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 9; i++) {
             assert.equal(body[2 + i * 2], expected[i] & 0xFF, `tag ${i} low byte`);
             assert.equal(body[3 + i * 2], (expected[i] >> 8) & 0xFF, `tag ${i} high byte`);
         }
