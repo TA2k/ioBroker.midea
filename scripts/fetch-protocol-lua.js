@@ -90,7 +90,10 @@ async function fetchLuaForDevice(cloud, applianceType, sn) {
         applianceMFCode: "0000",
         applianceSn: snEnc,
         applianceType: typeStr,
-        encryptedType: 2,
+        // NOTE the trailing space — that's the actual contract msmart uses,
+        // and the cloud server appears to be lenient about either form. We
+        // mirror msmart verbatim to stay defensive against future tightening.
+        "encryptedType ": 2,
         version: "0",
     });
 
