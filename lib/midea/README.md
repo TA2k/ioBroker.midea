@@ -58,7 +58,7 @@ for (const desc of found) {
 
 ## Layout
 
-```text
+```
 lib/midea/
 ├─ index.js            entry point — exports every device class + helpers
 ├─ cloud.js            CloudClient (V2/MSmartHome) + CloudClientV1 (NetHome/MideaAir)
@@ -81,19 +81,22 @@ lib/midea/
 
 ## Re-generating maps from cloud Lua
 
-The `generated/*.js` modules are produced once from Midea's per-device
-Lua plugin files. The fetch / extract / generate tooling lives in the
-parent ioBroker.midea repo (`scripts/`), not here — this folder ships
-the **result**, not the workflow. If you need to refresh the maps
-(rare — only when Midea ships a new plugin version), clone the parent
-repo and run there:
+The package ships four scripts that pull the Lua plugin Midea
+serves per (deviceType, sn8) and emit the JSON tables under
+`generated/`:
 
 ```bash
-node scripts/fetch-protocol-lua.js --user … --password … --type 0xa1 --sn …
-npm run sync-maps   # extract + generate
+npm run fetch-lua -- --user … --password … --type 0xa1 --sn …
+npm run extract-lua
+npm run generate-maps
+npm run diff-lua             # cross-check generated maps vs the device JS classes
+# or all-in-one for extract + generate:
+npm run sync-maps
 ```
 
-then copy the new `generated/*.js` back here.
+The scripts take `--in` / `--out` flags to point them at custom
+cache / output dirs; defaults are CWD-relative (`lua-cache/`,
+`lua-tables/`, `generated/`).
 
 ## License
 
