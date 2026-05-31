@@ -522,7 +522,7 @@ describe("device _processFrame fixtures", () => {
     describe("real captures", () => {
         const { DehumidifierDevice, APPLIANCE_TYPE_DEHUMIDIFIER } = require("../../lib/midea/devices/dehumidifier");
 
-        it("A1 dehumidifier query reply (currentHumidity=71, mode=dryer)", () => {
+        it("A1 dehumidifier query reply (currentHumidity=71, mode=dry_clothes)", () => {
             const dev = makeDevice(DehumidifierDevice);
             const frame = Buffer.from(
                 "aa22a100000000000303c80104507f7f0023000000000000000047520000000000025e",
@@ -531,7 +531,7 @@ describe("device _processFrame fixtures", () => {
             assert.equal(frame[2], APPLIANCE_TYPE_DEHUMIDIFIER);
             process(dev, frame);
             assert.equal(dev.status.powerOn, true);
-            assert.equal(dev.status.mode, "dryer");
+            assert.equal(dev.status.mode, "dry_clothes");
             assert.equal(dev.status.currentHumidity, 71);
             assert.equal(dev.status.targetHumidity, 35);
             assert.equal(dev.status.fanSpeed, 80);

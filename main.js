@@ -142,7 +142,7 @@ const STATUS_UNITS = {
 };
 
 const STATUS_STATE_ENUMS = {
-    mode: { auto: "auto", cool: "cool", dry: "dry", heat: "heat", fanonly: "fanonly", customdry: "customdry", off: "off", setpoint: "setpoint", continuous: "continuous", smart: "smart", dryer: "dryer" },
+    mode: { auto: "auto", cool: "cool", dry: "dry", heat: "heat", fanonly: "fanonly", customdry: "customdry", off: "off", set: "set", continuity: "continuity", dry_clothes: "dry clothes", dry_shoes: "dry shoes", fan: "fan", manual: "manual", continuous: "continuous", "living-room": "living-room", "bed-room": "bed-room", kitchen: "kitchen", sleep: "sleep" },
     fanSpeedName: { silent: "silent", low: "low", medium: "medium", high: "high", full: "full", auto: "auto", custom: "custom" },
     swing: { off: "off", vertical: "vertical", horizontal: "horizontal", both: "both" },
     temperatureUnit: { 0: "celsius", 1: "fahrenheit" },
@@ -236,7 +236,7 @@ const AC_CONTROLS = [
 /** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
 const DEHUMIDIFIER_CONTROLS = [
     { id: "powerOn", common: { name: "Power on/off", type: "boolean", role: "switch.power", read: true, write: true, def: false } },
-    { id: "mode", common: { name: "Operating mode", type: "string", role: "state", read: true, write: true, def: "setpoint", states: { setpoint: "setpoint", continuous: "continuous", smart: "smart", dryer: "dryer" } } },
+    { id: "mode", common: { name: "Operating mode", type: "string", role: "state", read: true, write: true, def: "set", states: { set: "set", continuity: "continuity", auto: "auto", dry_clothes: "dry clothes", dry_shoes: "dry shoes", fan: "fan" } } },
     { id: "targetHumidity", common: { name: "Target humidity", type: "number", role: "level.humidity", unit: "%", read: true, write: true, min: 0, max: 100, def: 50 } },
     { id: "fanSpeed", common: { name: "Fan speed (numeric)", type: "number", role: "level.fan", read: true, write: true, min: 0, max: 127, def: 40 } },
     { id: "fanSpeedName", common: { name: "Fan speed (named)", type: "string", role: "state", read: true, write: true, def: "low", states: { silent: "silent", low: "low", medium: "medium", high: "high", auto: "auto" } } },

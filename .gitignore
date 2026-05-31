@@ -29,3 +29,6 @@ admin/i18n/*/flat.txt
 
 # fetched per-device Lua plugins (default --out dir of scripts/fetch-protocol-lua.js)
 lua-cache/
+
+# extracted JSON tables from the Lua plugins (scripts/extract-lua-tables.js)
+lua-tables/
