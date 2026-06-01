@@ -91,12 +91,15 @@ to the lib; it is never imported at runtime.
 Midea's cloud serves a per-device protocol Lua plugin under
 `/v2/luaEncryption/luaGet`. The lib ships scripts that fetch, decrypt
 and parse those plugins so we can diff the values we hard-coded in the
-device classes against whatever the cloud currently advertises:
+device classes against whatever the cloud currently advertises. The
+parser is `luaparse` (devDependency of this sub-package), so install
+the sub-package's dev deps once before running the scripts:
 
 ```bash
 cd lib/midea
-npm run fetch-lua       # uses MIDEA_USER / MIDEA_PASSWORD env, walks the built-in
-                        # SN catalog and writes lua-cache/T_0000_<HEX>_*.lua
+npm install              # one-off — pulls luaparse for the AST extractor
+npm run fetch-lua        # uses MIDEA_USER / MIDEA_PASSWORD env, walks the built-in
+                         # SN catalog and writes lua-cache/T_0000_<HEX>_*.lua
 npm run extract-lua     # parses lua-cache/*.lua → lua-tables/*.json
 npm run generate-maps   # emits scripts/generated/<hex>.json as a snapshot of every
                         # constant we know about (modes, fans, KEY_/VALUE_/BYTE_,
