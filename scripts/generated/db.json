@@ -1,0 +1,331 @@
+{
+  "source": "T_0000_DB_41.lua",
+  "applianceType": "0xdb",
+  "modes": {},
+  "fans": {},
+  "keys": {},
+  "values": {
+    "VALUE_VERSION": 41
+  },
+  "bytes": {
+    "BYTE_CONTROL_REQUEST": 2,
+    "BYTE_CONTROL_WORK_STATUS_PAUSE": 0,
+    "BYTE_CONTROL_WORK_STATUS_START": 1,
+    "BYTE_DEVICE_TYPE": 219,
+    "BYTE_MODE_FACTORY_TEST": 1,
+    "BYTE_MODE_NORMAL": 0,
+    "BYTE_MODE_NORMAL_CONTINUS": 3,
+    "BYTE_MODE_SERVICE": 2,
+    "BYTE_POWER_OFF": 0,
+    "BYTE_POWER_ON": 1,
+    "BYTE_PROTOCOL_HEAD": 170,
+    "BYTE_PROTOCOL_LENGTH": 10,
+    "BYTE_QUERY_REQUEST": 3,
+    "BYTE_RUNNING_WORK_STATUS_DELAY": 6,
+    "BYTE_RUNNING_WORK_STATUS_END": 4,
+    "BYTE_RUNNING_WORK_STATUS_FAULT": 5,
+    "BYTE_RUNNING_WORK_STATUS_IDLE": 0,
+    "BYTE_RUNNING_WORK_STATUS_PAUSE": 3,
+    "BYTE_RUNNING_WORK_STATUS_STANDBY": 1,
+    "BYTE_RUNNING_WORK_STATUS_START": 2
+  },
+  "locals": {
+    "BYTE_CONTROL_REQUEST": 2,
+    "BYTE_CONTROL_WORK_STATUS_PAUSE": 0,
+    "BYTE_CONTROL_WORK_STATUS_START": 1,
+    "BYTE_DEVICE_TYPE": 219,
+    "BYTE_MODE_FACTORY_TEST": 1,
+    "BYTE_MODE_NORMAL": 0,
+    "BYTE_MODE_NORMAL_CONTINUS": 3,
+    "BYTE_MODE_SERVICE": 2,
+    "BYTE_POWER_OFF": 0,
+    "BYTE_POWER_ON": 1,
+    "BYTE_PROTOCOL_HEAD": 170,
+    "BYTE_PROTOCOL_LENGTH": 10,
+    "BYTE_QUERY_REQUEST": 3,
+    "BYTE_RUNNING_WORK_STATUS_DELAY": 6,
+    "BYTE_RUNNING_WORK_STATUS_END": 4,
+    "BYTE_RUNNING_WORK_STATUS_FAULT": 5,
+    "BYTE_RUNNING_WORK_STATUS_IDLE": 0,
+    "BYTE_RUNNING_WORK_STATUS_PAUSE": 3,
+    "BYTE_RUNNING_WORK_STATUS_STANDBY": 1,
+    "BYTE_RUNNING_WORK_STATUS_START": 2,
+    "VALUE_VERSION": 41
+  },
+  "strings": {
+    "active_oxygen": [
+      "1",
+      "0"
+    ],
+    "add_rinse": [
+      "1",
+      "0"
+    ],
+    "ai_flag": [
+      "on",
+      "off"
+    ],
+    "appointment": [
+      "on",
+      "off"
+    ],
+    "beforehand_wash": [
+      "on",
+      "off"
+    ],
+    "dehydration_speed": [
+      "0",
+      "400",
+      "600",
+      "800",
+      "1000",
+      "1200",
+      "1400",
+      "1600",
+      "1300"
+    ],
+    "disinfectant": [
+      "1",
+      "0"
+    ],
+    "down_light": [
+      "on",
+      "off"
+    ],
+    "dryer": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14"
+    ],
+    "easy_ironing": [
+      "on",
+      "off"
+    ],
+    "eye_wash": [
+      "1",
+      "0"
+    ],
+    "fast_clean_wash": [
+      "on",
+      "off"
+    ],
+    "hy_pro": [
+      "1",
+      "0"
+    ],
+    "intelligent_wash": [
+      "on",
+      "off"
+    ],
+    "lock": [
+      "on",
+      "off"
+    ],
+    "memory": [
+      "on",
+      "off"
+    ],
+    "microbubble": [
+      "1",
+      "0"
+    ],
+    "mode": [
+      "normal",
+      "factory_test",
+      "service",
+      "normal_continus"
+    ],
+    "nightly": [
+      "on",
+      "off"
+    ],
+    "old_speedy": [
+      "on",
+      "off"
+    ],
+    "power": [
+      "on",
+      "off"
+    ],
+    "program": [
+      "cotton",
+      "eco",
+      "fast_wash",
+      "mixed_wash",
+      "wool",
+      "ssp",
+      "sport_clothes",
+      "single_dehytration",
+      "rinsing_dehydration",
+      "big",
+      "baby_clothes",
+      "down_jacket",
+      "color",
+      "intelligent",
+      "quick_wash",
+      "shirt",
+      "fiber",
+      "enzyme",
+      "underwear",
+      "outdoor",
+      "air_wash",
+      "single_drying",
+      "steep",
+      "kids",
+      "water_cotton",
+      "fast_wash_30",
+      "fast_wash_60",
+      "water_mixed_wash",
+      "water_fiber",
+      "water_kids",
+      "water_underwear",
+      "specialist",
+      "love",
+      "water_intelligent",
+      "water_steep",
+      "water_fast_wash_30",
+      "new_water_cotton",
+      "water_eco",
+      "wash_drying_60",
+      "self_wash_5",
+      "fast_wash_min",
+      "mixed_wash_min",
+      "dehydration_min",
+      "self_wash_min",
+      "baby_clothes_min",
+      "diy0",
+      "diy1",
+      "diy2",
+      "silk_wash",
+      "prevent_allergy",
+      "cold_wash",
+      "soft_wash",
+      "remove_mite_wash",
+      "water_intense_wash",
+      "fast_dry",
+      "water_outdoor",
+      "spring_autumn_wash",
+      "summer_wash",
+      "winter_wash",
+      "jean",
+      "new_clothes_wash",
+      "silk",
+      "insight_wash",
+      "fitness_clothes",
+      "mink",
+      "fresh_air",
+      "bucket_dry",
+      "jacket",
+      "bath_towel",
+      "night_fresh_wash",
+      "heart_wash",
+      "water_cold_wash",
+      "water_prevent_allergy",
+      "water_remove_mite_wash",
+      "water_ssp",
+      "standard",
+      "green_wool",
+      "cook_wash",
+      "fresh_remove_wrinkle",
+      "steam_sterilize_wash",
+      "aromatherapy",
+      "sterilize_wash",
+      "eco_40_60",
+      "steam_care",
+      "allergy_care",
+      "greatwaves",
+      "wash45",
+      "quick12",
+      "bulky",
+      "whites",
+      "towels",
+      "delicates",
+      "drum_clean",
+      "wash_and_dry",
+      "auto_dry",
+      "time_dry"
+    ],
+    "remote_control_flag": [
+      "1",
+      "0"
+    ],
+    "silent": [
+      "1",
+      "0"
+    ],
+    "soak": [
+      "on",
+      "off"
+    ],
+    "soak_count": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "0"
+    ],
+    "speedy": [
+      "on",
+      "off"
+    ],
+    "spray_wash": [
+      "on",
+      "off"
+    ],
+    "steam_wash": [
+      "on",
+      "off"
+    ],
+    "strong_wash": [
+      "on",
+      "off"
+    ],
+    "super_clean_wash": [
+      "on",
+      "off"
+    ],
+    "temperature": [
+      "0",
+      "20",
+      "30",
+      "40",
+      "60",
+      "95",
+      "70",
+      "90",
+      "50"
+    ],
+    "ultraviolet_lamp": [
+      "1",
+      "0"
+    ],
+    "water_level": [
+      "low",
+      "mid",
+      "high",
+      "auto"
+    ],
+    "water_plus": [
+      "1",
+      "0"
+    ],
+    "wind_dispel": [
+      "1",
+      "0"
+    ]
+  },
+  "bodyOffsets": {}
+}

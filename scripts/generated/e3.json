@@ -1,0 +1,51 @@
+{
+  "source": "T_0000_E3_1.lua",
+  "applianceType": "0xe3",
+  "modes": {},
+  "fans": {},
+  "keys": {},
+  "values": {
+    "VALUE_VERSION": 1
+  },
+  "bytes": {},
+  "locals": {
+    "VALUE_VERSION": 1
+  },
+  "strings": {
+    "cloud_intelligence": [
+      "on",
+      "off"
+    ],
+    "fan": [
+      "on",
+      "off"
+    ],
+    "feedback": [
+      "on",
+      "off"
+    ],
+    "mode": [
+      "kitchen",
+      "baby",
+      "max",
+      "shower"
+    ],
+    "person_mode_one": [
+      "on",
+      "off"
+    ],
+    "person_mode_three": [
+      "on",
+      "off"
+    ],
+    "person_mode_two": [
+      "on",
+      "off"
+    ],
+    "power": [
+      "on",
+      "off"
+    ]
+  },
+  "bodyOffsets": {}
+}

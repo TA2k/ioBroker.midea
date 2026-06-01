@@ -1,0 +1,200 @@
+{
+  "source": "T_0000_E6_9.lua",
+  "applianceType": "0xe6",
+  "modes": {},
+  "fans": {},
+  "keys": {},
+  "values": {
+    "VALUE_VERSION": 9
+  },
+  "bytes": {},
+  "locals": {
+    "VALUE_VERSION": 9
+  },
+  "strings": {
+    "antifreezing": [
+      "first_level_freeze",
+      "second_level_freeze",
+      "unfrozen"
+    ],
+    "appointment": [
+      "wifi_ap",
+      "wifi_ap_rise",
+      "wifi_ap_sen",
+      "wifi_ap_rise_sen",
+      "no_wifi"
+    ],
+    "bathing_work": [
+      "on",
+      "off"
+    ],
+    "buzzing_master_switch": [
+      "no_buzzing",
+      "buzzing"
+    ],
+    "cold_water_ai": [
+      "on",
+      "off"
+    ],
+    "cold_water_appoint_master": [
+      "on",
+      "off"
+    ],
+    "cold_water_appoint_switch": [
+      "on",
+      "off"
+    ],
+    "cold_water_dot": [
+      "on",
+      "off"
+    ],
+    "cold_water_has_enabled_appoint": [
+      "on",
+      "off"
+    ],
+    "cold_water_master": [
+      "on",
+      "off"
+    ],
+    "cold_water_single": [
+      "on",
+      "off"
+    ],
+    "error": [
+      "no_error",
+      "ignition_failure",
+      "flameout",
+      "pseudo_fire",
+      "ember",
+      "thermostat_overheating",
+      "temperature_probe_overheating",
+      "fan_failure",
+      "solenoid_valve_failure",
+      "hydraulic_pressure_failure",
+      "pump_stuck",
+      "heating_outlet_sensor_short_circuit",
+      "heating_outlet_sensor_open_circuit",
+      "freeze_failure",
+      "bath_outlet_sensor_short_circuit",
+      "bath_outlet_sensor_open_circuit",
+      "heating_outlet_temperature_failure",
+      "bath_outlet_temperature_failure",
+      "condensate_clogging",
+      "gas_leakage",
+      "communication_failure",
+      "bath_overtime",
+      "co_alarm",
+      "smoke_sensor_short_circuit",
+      "smoke_sensor_open_circuit",
+      "flame_detection_failure"
+    ],
+    "fan_output": [
+      "output",
+      "no_output"
+    ],
+    "fan_type": [
+      "single_speed",
+      "double_speed",
+      "direct"
+    ],
+    "flame_feedback": [
+      "on",
+      "off"
+    ],
+    "gas_valve_manufacturer": [
+      "aike",
+      "sanguo"
+    ],
+    "heat_appointment_switch": [
+      "on",
+      "off"
+    ],
+    "heat_exchanger": [
+      "floor_heating",
+      "radiator"
+    ],
+    "heat_pump_output": [
+      "output",
+      "no_output"
+    ],
+    "heating_work": [
+      "on",
+      "off"
+    ],
+    "hold_back_43_1": [
+      "on",
+      "off"
+    ],
+    "hold_back_43_3": [
+      "on",
+      "off"
+    ],
+    "hold_back_43_4": [
+      "on",
+      "off"
+    ],
+    "hold_back_43_5": [
+      "on",
+      "off"
+    ],
+    "hold_back_43_6": [
+      "on",
+      "off"
+    ],
+    "hold_back_43_7": [
+      "on",
+      "off"
+    ],
+    "ignitor_output": [
+      "output",
+      "no_output"
+    ],
+    "in_temperature_switch": [
+      "off",
+      "on"
+    ],
+    "main_gas_valve_output": [
+      "output",
+      "no_output"
+    ],
+    "mode": [
+      "normal_mode",
+      "out_mode",
+      "home_mode",
+      "sleep_mode"
+    ],
+    "power": [
+      "on",
+      "off"
+    ],
+    "sectioning1_output": [
+      "output",
+      "no_output"
+    ],
+    "sectioning2_output": [
+      "output",
+      "no_output"
+    ],
+    "summer_mode": [
+      "on",
+      "off"
+    ],
+    "tee_valve_output": [
+      "bath_side",
+      "heat_side"
+    ],
+    "temperature_sensation_switch": [
+      "on",
+      "off"
+    ],
+    "winter_mode": [
+      "on",
+      "off"
+    ],
+    "zero_cool_pump_output": [
+      "output",
+      "no_output"
+    ]
+  },
+  "bodyOffsets": {}
+}

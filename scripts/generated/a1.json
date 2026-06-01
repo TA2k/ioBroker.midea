@@ -1,0 +1,138 @@
+{
+  "source": "T_0000_A1_11.lua",
+  "applianceType": "0xa1",
+  "modes": {
+    "0": "invalid",
+    "1": "set",
+    "2": "continuity",
+    "3": "auto",
+    "4": "dry_clothes",
+    "5": "dry_shoes",
+    "8": "fan"
+  },
+  "fans": {},
+  "keys": {
+    "KEY_ANION": "anion",
+    "KEY_CLOSE_TIME": "power_off_time_value",
+    "KEY_CURRENT_HUMIDITY": "cur_humidity",
+    "KEY_FILTER_VALUE": "filter_value",
+    "KEY_HUMIDITY": "humidity",
+    "KEY_LIGHT": "light",
+    "KEY_MODE": "mode",
+    "KEY_OPEN_TIME": "power_on_time_value",
+    "KEY_POWER": "power",
+    "KEY_TANK_STATUS": "tank_status",
+    "KEY_TIME_OFF": "power_off_timer",
+    "KEY_TIME_ON": "power_on_timer",
+    "KEY_VERSION": "version",
+    "KEY_WATER_FULL_LEVEL": "water_full_level",
+    "KEY_WATER_FULL_TIME": "water_full_time",
+    "KEY_WATER_PUMP": "water_pump",
+    "KEY_WATER_PUMP_ENABLE": "water_pump_enable",
+    "KEY_WIND_SPEED": "wind_speed"
+  },
+  "values": {
+    "VALUE_FUNCTION_OFF": "off",
+    "VALUE_FUNCTION_ON": "on",
+    "VALUE_MODE_AUTO": "auto",
+    "VALUE_MODE_CONTINUITY": "continuity",
+    "VALUE_MODE_DRY_CLOTHES": "dry_clothes",
+    "VALUE_MODE_DRY_SHOES": "dry_shoes",
+    "VALUE_MODE_FAN": "fan",
+    "VALUE_MODE_INVALID": "invalid",
+    "VALUE_MODE_SET": "set",
+    "VALUE_VERSION": 9
+  },
+  "bytes": {
+    "BYTE_ANION_OFF": 0,
+    "BYTE_ANION_ON": 64,
+    "BYTE_BUZZER_OFF": 0,
+    "BYTE_BUZZER_ON": 64,
+    "BYTE_CLOSE_TIMER_SWITCH_OFF": 127,
+    "BYTE_CLOSE_TIMER_SWITCH_ON": 128,
+    "BYTE_CONTROL_REQUEST": 2,
+    "BYTE_DEVICE_TYPE": 161,
+    "BYTE_MODE_AUTO": 3,
+    "BYTE_MODE_CONTINUITY": 2,
+    "BYTE_MODE_DRY_CLOTH": 4,
+    "BYTE_MODE_DRY_SHOES": 5,
+    "BYTE_MODE_FAN": 8,
+    "BYTE_MODE_INVALID": 0,
+    "BYTE_MODE_SET": 1,
+    "BYTE_POWER_OFF": 0,
+    "BYTE_POWER_ON": 1,
+    "BYTE_PROTOCOL_HEAD": 170,
+    "BYTE_PROTOCOL_LENGTH": 10,
+    "BYTE_QUERY_REQUEST": 3,
+    "BYTE_START_TIMER_SWITCH_OFF": 127,
+    "BYTE_START_TIMER_SWITCH_ON": 128
+  },
+  "locals": {},
+  "strings": {},
+  "bodyOffsets": {
+    "anionValue": [
+      {
+        "offset": 9,
+        "mask": 64
+      }
+    ],
+    "curHumidityValue": [
+      {
+        "offset": 16,
+        "mask": null
+      }
+    ],
+    "filterValue": [
+      {
+        "offset": 9,
+        "mask": 128
+      }
+    ],
+    "humidityValue": [
+      {
+        "offset": 7,
+        "mask": null
+      }
+    ],
+    "modeValue": [
+      {
+        "offset": 2,
+        "mask": 15
+      }
+    ],
+    "powerValue": [
+      {
+        "offset": 1,
+        "mask": 1
+      }
+    ],
+    "propertyNumber": [
+      {
+        "offset": 1,
+        "mask": null
+      },
+      {
+        "offset": 1,
+        "mask": null
+      }
+    ],
+    "tankStatusValue": [
+      {
+        "offset": 10,
+        "mask": null
+      }
+    ],
+    "waterLevelValue": [
+      {
+        "offset": 15,
+        "mask": null
+      }
+    ],
+    "windSpeedValue": [
+      {
+        "offset": 3,
+        "mask": 127
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "source": "T_0000_ED_28.lua",
+  "applianceType": "0xed",
+  "modes": {},
+  "fans": {},
+  "keys": {},
+  "values": {
+    "VALUE_VERSION": 28
+  },
+  "bytes": {
+    "BYTE_CONTROL_REQUEST": 2,
+    "BYTE_DEVICE_TYPE": 237,
+    "BYTE_PROTOCOL_HEAD": 170,
+    "BYTE_PROTOCOL_LENGTH": 10,
+    "BYTE_QUERY_REQUEST": 3,
+    "BYTE_WASH_OFF": 127,
+    "BYTE_WASH_ON": 128
+  },
+  "locals": {
+    "BYTE_CONTROL_REQUEST": 2,
+    "BYTE_DEVICE_TYPE": 237,
+    "BYTE_PROTOCOL_HEAD": 170,
+    "BYTE_PROTOCOL_LENGTH": 10,
+    "BYTE_QUERY_REQUEST": 3,
+    "BYTE_WASH_OFF": 127,
+    "BYTE_WASH_ON": 128,
+    "VALUE_VERSION": 28
+  },
+  "strings": {},
+  "bodyOffsets": {}
+}

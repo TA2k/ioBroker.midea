@@ -1,0 +1,37 @@
+{
+  "source": "T_0000_B6_1.lua",
+  "applianceType": "0xb6",
+  "modes": {},
+  "fans": {},
+  "keys": {},
+  "values": {
+    "VALUE_VERSION": 1
+  },
+  "bytes": {},
+  "locals": {
+    "VALUE_VERSION": 1
+  },
+  "strings": {
+    "ctrl_fail": [
+      "1"
+    ],
+    "error_type": [
+      "sensor_error",
+      "hotclean_error",
+      "split_error",
+      "inverter_error"
+    ],
+    "is_error": [
+      "1"
+    ],
+    "power": [
+      "delay_off"
+    ],
+    "work_status_desc": [
+      "power_off",
+      "working",
+      "power_off_delay"
+    ]
+  },
+  "bodyOffsets": {}
+}

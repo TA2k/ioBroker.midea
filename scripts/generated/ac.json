@@ -1,0 +1,492 @@
+{
+  "source": "T_0000_AC_24.lua",
+  "applianceType": "0xac",
+  "modes": {
+    "1": "auto",
+    "2": "cool",
+    "3": "dry",
+    "4": "heat",
+    "5": "fan",
+    "6": "smart_dry"
+  },
+  "fans": {
+    "20": "mute",
+    "40": "low",
+    "60": "mid",
+    "80": "high",
+    "102": "auto"
+  },
+  "keys": {
+    "KEY_AUTO_PREVENT_STRAIGHT_WIND": "auto_prevent_straight_wind",
+    "KEY_AUTO_TEMP_DOWN": "auto_temp_down",
+    "KEY_AUTO_TEMP_UP": "auto_temp_up",
+    "KEY_BUZZER": "buzzer",
+    "KEY_CHILD_PREVENT_COLD_WIND": "child_prevent_cold_wind",
+    "KEY_CLOSE_TIME": "power_off_time_value",
+    "KEY_COMFORT_POWER_SAVE": "comfort_power_save",
+    "KEY_COMFORT_SLEEP": "comfort_sleep",
+    "KEY_COMFORT_SLEEP_CURVE": "comfort_sleep_curve",
+    "KEY_COOL_HOT_SENSE": "cool_hot_sense",
+    "KEY_COOL_TEMP_DOWN": "cool_temp_down",
+    "KEY_COOL_TEMP_UP": "cool_temp_up",
+    "KEY_CURRENT_WORK_TIME": "current_work_time",
+    "KEY_DEGREE8_HEAT": "degree8_heat",
+    "KEY_DRY": "dry",
+    "KEY_ECO": "eco",
+    "KEY_ERROR_CODE": "error_code",
+    "KEY_EVEN_WIND": "even_wind",
+    "KEY_EXTREME_WIND": "extreme_wind",
+    "KEY_FA_NO_WIND_SENSE": "fa_no_wind_sense",
+    "KEY_FA_PREVENT_STRAIGHT_WIND": "fa_prevent_straight_wind",
+    "KEY_FACE_REGISTER": "face_register",
+    "KEY_FANSPEED": "wind_speed",
+    "KEY_FILTER_LEVEL": "filter_level",
+    "KEY_FILTER_VALUE": "filter_value",
+    "KEY_FRESH_AIR": "fresh_air",
+    "KEY_FRESH_FILTER_RESET": "fresh_filter_reset",
+    "KEY_FRESH_FILTER_TIME_TOTAL": "fresh_filter_time_total",
+    "KEY_FRESH_FILTER_TIME_USE": "fresh_filter_time_use",
+    "KEY_FRESH_FILTER_TIMEOUT": "fresh_filter_timeout",
+    "KEY_FRESH_FILTER_TIMEOUT_AE2": "fresh_filter_timeout_ae2",
+    "KEY_GENTLE_WIND_SENSE": "gentle_wind_sense",
+    "KEY_HEAT_TEMP_DOWN": "heat_temp_down",
+    "KEY_HEAT_TEMP_UP": "heat_temp_up",
+    "KEY_INDOOR_HUMIDITY": "indoor_humidity",
+    "KEY_INTELLIGENT_WIND": "intelligent_wind",
+    "KEY_INTENLLIGENT_CONTROL": "intelligent_control",
+    "KEY_LITTLE_ANGLE": "little_angel",
+    "KEY_MODE": "mode",
+    "KEY_NATURAL_WIND": "natural_wind",
+    "KEY_NO_WIND_SENSE": "no_wind_sense",
+    "KEY_NOBODY_ENERGY_SAVE": "nobody_energy_save",
+    "KEY_OPEN_TIME": "power_on_time_value",
+    "KEY_OPERATING_TIME": "operating_time",
+    "KEY_PARENT_CONTROL": "parent_control",
+    "KEY_PM25_VALUE": "pm25_value",
+    "KEY_PMV": "pmv",
+    "KEY_POWER": "power",
+    "KEY_POWER_SAVING": "power_saving",
+    "KEY_PRE_COOL_HOT": "pre_cool_hot",
+    "KEY_PREVENT_COLD": "prevent_cold",
+    "KEY_PREVENT_STRAIGHT_WIND": "prevent_straight_wind",
+    "KEY_PREVENT_STRAIGHT_WIND_LR": "prevent_straight_wind_lr",
+    "KEY_PREVENT_SUPER_COOL": "prevent_super_cool",
+    "KEY_PTC": "ptc",
+    "KEY_PURIFIER": "purifier",
+    "KEY_REMOTE_CONTROL_LOCK": "remote_control_lock",
+    "KEY_SCREEN_DISPLAY": "screen_display",
+    "KEY_SCREEN_DISPLAY_NOW": "screen_display_now",
+    "KEY_SECURITY": "security",
+    "KEY_SELF_CLEAN": "self_clean",
+    "KEY_SINGLE_TUYERE": "single_tuyere",
+    "KEY_SMART_DRY": "smart_dry_value",
+    "KEY_STRONG_WIND": "strong_wind",
+    "KEY_SWING_LR": "wind_swing_lr",
+    "KEY_SWING_LR_UNDER": "wind_swing_lr_under",
+    "KEY_SWING_UD": "wind_swing_ud",
+    "KEY_TEMPERATURE": "temperature",
+    "KEY_TIME_OFF": "power_off_timer",
+    "KEY_TIME_ON": "power_on_timer",
+    "KEY_TUBRO": "tubro",
+    "KEY_VERSION": "version",
+    "KEY_VOICE_CONTROL": "voice_control",
+    "KEY_VOICE_CONTROL_NEW": "voice_control_new",
+    "KEY_VOLUME_CONTROL": "volume_control",
+    "KEY_WATER_PUMP": "water_pump",
+    "KEY_WATER_WASHING": "water_washing",
+    "KEY_WIND_AVOID": "wind_avoid",
+    "KEY_WIND_STRAIGHT": "wind_straight",
+    "KEY_WIND_SWING_LR_ANGLE": "wind_swing_lr_angle",
+    "KEY_WIND_SWING_UD_ANGLE": "wind_swing_ud_angle",
+    "KEY_YB_WIND_AVOID": "yb_wind_avoid"
+  },
+  "values": {
+    "VALUE_FUNCTION_OFF": "off",
+    "VALUE_FUNCTION_ON": "on",
+    "VALUE_INDOOR_TEMPERATURE": "indoor_temperature",
+    "VALUE_MODE_AUTO": "auto",
+    "VALUE_MODE_COOL": "cool",
+    "VALUE_MODE_DRY": "dry",
+    "VALUE_MODE_FAN": "fan",
+    "VALUE_MODE_HEAT": "heat",
+    "VALUE_MODE_SMART_DRY": "smart_dry",
+    "VALUE_OUTDOOR_TEMPERATURE": "outdoor_temperature",
+    "VALUE_RUN_STATE": "runstate",
+    "VALUE_RUNNING": "running",
+    "VALUE_STOP": "stopped",
+    "VALUE_VERSION": 23
+  },
+  "bytes": {
+    "BYTE_BUZZER_OFF": 0,
+    "BYTE_BUZZER_ON": 64,
+    "BYTE_CLIENT_MODE_MOBILE": 2,
+    "BYTE_CLOSE_TIMER_SWITCH_OFF": 127,
+    "BYTE_CLOSE_TIMER_SWITCH_ON": 128,
+    "BYTE_COMFORT_POWER_SAVE_OFF": 0,
+    "BYTE_COMFORT_POWER_SAVE_ON": 1,
+    "BYTE_CONTROL_CMD": 64,
+    "BYTE_CONTROL_PROPERTY_CMD": 176,
+    "BYTE_CONTROL_REQUEST": 2,
+    "BYTE_DEVICE_TYPE": 172,
+    "BYTE_DRY_OFF": 0,
+    "BYTE_DRY_ON": 4,
+    "BYTE_ECO_OFF": 0,
+    "BYTE_ECO_ON": 128,
+    "BYTE_EVEN_WIND_OFF": 0,
+    "BYTE_EVEN_WIND_ON": 1,
+    "BYTE_EXTREME_WIND_OFF": 0,
+    "BYTE_EXTREME_WIND_ON": 1,
+    "BYTE_FANSPEED_AUTO": 102,
+    "BYTE_FANSPEED_HIGH": 80,
+    "BYTE_FANSPEED_LOW": 40,
+    "BYTE_FANSPEED_MID": 60,
+    "BYTE_FANSPEED_MUTE": 20,
+    "BYTE_MODE_AUTO": 32,
+    "BYTE_MODE_COOL": 64,
+    "BYTE_MODE_DRY": 96,
+    "BYTE_MODE_FAN": 160,
+    "BYTE_MODE_HEAT": 128,
+    "BYTE_MODE_SMART_DRY": 192,
+    "BYTE_NATURAL_WIND_OFF": 0,
+    "BYTE_NATURAL_WIND_ON": 64,
+    "BYTE_POWER_OFF": 0,
+    "BYTE_POWER_ON": 1,
+    "BYTE_PROTOCOL_HEAD": 170,
+    "BYTE_PROTOCOL_LENGTH": 10,
+    "BYTE_PTC_OFF": 0,
+    "BYTE_PTC_ON": 8,
+    "BYTE_PURIFIER_OFF": 0,
+    "BYTE_PURIFIER_ON": 32,
+    "BYTE_QUERYL_REQUEST": 3,
+    "BYTE_SINGLE_TUYERE_OFF": 0,
+    "BYTE_SINGLE_TUYERE_ON": 1,
+    "BYTE_SLEEP_OFF": 0,
+    "BYTE_SLEEP_ON": 3,
+    "BYTE_START_TIMER_SWITCH_OFF": 127,
+    "BYTE_START_TIMER_SWITCH_ON": 128,
+    "BYTE_STRONG_WIND_OFF": 0,
+    "BYTE_STRONG_WIND_ON": 32,
+    "BYTE_SWING_LR_OFF": 0,
+    "BYTE_SWING_LR_ON": 3,
+    "BYTE_SWING_LR_UNDER_DISABLE": 0,
+    "BYTE_SWING_LR_UNDER_ENABLE": 128,
+    "BYTE_SWING_LR_UNDER_OFF": 0,
+    "BYTE_SWING_LR_UNDER_ON": 128,
+    "BYTE_SWING_UD_OFF": 0,
+    "BYTE_SWING_UD_ON": 12,
+    "BYTE_TIMER_METHOD_ABS": 1,
+    "BYTE_TIMER_METHOD_DISABLE": 127,
+    "BYTE_TIMER_METHOD_REL": 0,
+    "BYTE_TIMER_SWITCH_OFF": 0,
+    "BYTE_TIMER_SWITCH_ON": 128,
+    "BYTE_VOICE_CONTROL_OFF": 0,
+    "BYTE_VOICE_CONTROL_ON": 3
+  },
+  "locals": {},
+  "strings": {
+    "auto_prevent_straight_wind": [
+      "off",
+      "on"
+    ],
+    "child_prevent_cold_wind": [
+      "off",
+      "on"
+    ],
+    "comfort_power_save": [
+      "off",
+      "on"
+    ],
+    "comfort_sleep": [
+      "off",
+      "on"
+    ],
+    "cool_hot_sense": [
+      "off",
+      "on"
+    ],
+    "even_wind": [
+      "off",
+      "on"
+    ],
+    "extreme_wind": [
+      "off",
+      "on"
+    ],
+    "fresh_air": [
+      "off",
+      "on"
+    ],
+    "gentle_wind_sense": [
+      "off",
+      "on"
+    ],
+    "intelligent_control": [
+      "off",
+      "on"
+    ],
+    "intelligent_wind": [
+      "off",
+      "on"
+    ],
+    "kick_quilt": [
+      "off",
+      "on"
+    ],
+    "little_angel": [
+      "off",
+      "on"
+    ],
+    "natural_wind": [
+      "on",
+      "off"
+    ],
+    "nobody_energy_save": [
+      "off",
+      "on"
+    ],
+    "parent_control": [
+      "off",
+      "on"
+    ],
+    "pre_cool_hot": [
+      "off",
+      "on"
+    ],
+    "prevent_cold": [
+      "off",
+      "on"
+    ],
+    "prevent_super_cool": [
+      "off",
+      "on"
+    ],
+    "screen_display_now": [
+      "off",
+      "on"
+    ],
+    "security": [
+      "off",
+      "on"
+    ],
+    "self_clean": [
+      "off",
+      "on"
+    ],
+    "single_tuyere": [
+      "off",
+      "on"
+    ],
+    "voice_control": [
+      "off",
+      "on"
+    ],
+    "water_pump": [
+      "off",
+      "on"
+    ],
+    "water_washing": [
+      "on",
+      "off"
+    ],
+    "wind_avoid": [
+      "off",
+      "on"
+    ],
+    "wind_straight": [
+      "off",
+      "on"
+    ],
+    "yb_wind_avoid": [
+      "off",
+      "on"
+    ]
+  },
+  "bodyOffsets": {
+    "closeStepMintues": [
+      {
+        "offset": 5,
+        "mask": 3
+      }
+    ],
+    "comfortableSleepSwitch": [
+      {
+        "offset": 9,
+        "mask": 64
+      }
+    ],
+    "comfortableSleepTime": [
+      {
+        "offset": 17,
+        "mask": 21
+      }
+    ],
+    "comfortableSleepValue": [
+      {
+        "offset": 8,
+        "mask": 3
+      }
+    ],
+    "comfortPowerSave": [
+      {
+        "offset": 14,
+        "mask": 1
+      },
+      {
+        "offset": 22,
+        "mask": 1
+      }
+    ],
+    "current_humidity": [
+      {
+        "offset": 4,
+        "mask": null
+      }
+    ],
+    "dryValue": [
+      {
+        "offset": 9,
+        "mask": 4
+      }
+    ],
+    "errorCode": [
+      {
+        "offset": 16,
+        "mask": null
+      }
+    ],
+    "fanspeedValue": [
+      {
+        "offset": 3,
+        "mask": 127
+      }
+    ],
+    "fresh_filter_time_total": [
+      {
+        "offset": 25,
+        "mask": null
+      }
+    ],
+    "fresh_filter_time_use": [
+      {
+        "offset": 27,
+        "mask": null
+      }
+    ],
+    "modeValue": [
+      {
+        "offset": 2,
+        "mask": 224
+      }
+    ],
+    "naturalWind": [
+      {
+        "offset": 9,
+        "mask": 2
+      }
+    ],
+    "openStepMintues": [
+      {
+        "offset": 4,
+        "mask": 3
+      }
+    ],
+    "pmv": [
+      {
+        "offset": 14,
+        "mask": 15
+      }
+    ],
+    "power_saving": [
+      {
+        "offset": 8,
+        "mask": 8
+      }
+    ],
+    "powerValue": [
+      {
+        "offset": 1,
+        "mask": 1
+      }
+    ],
+    "propertyNumber": [
+      {
+        "offset": 1,
+        "mask": null
+      },
+      {
+        "offset": 1,
+        "mask": null
+      }
+    ],
+    "PTCValue": [
+      {
+        "offset": 9,
+        "mask": 24
+      }
+    ],
+    "purifierValue": [
+      {
+        "offset": 9,
+        "mask": 32
+      }
+    ],
+    "smallIndoorTemperatureValue": [
+      {
+        "offset": 15,
+        "mask": 15
+      },
+      {
+        "offset": 18,
+        "mask": 15
+      }
+    ],
+    "smartDryValue": [
+      {
+        "offset": 19,
+        "mask": 127
+      }
+    ],
+    "strongWindValue": [
+      {
+        "offset": 8,
+        "mask": 32
+      }
+    ],
+    "swingLRUnderSwitch": [
+      {
+        "offset": 19,
+        "mask": 128
+      }
+    ],
+    "swingLRValue": [
+      {
+        "offset": 7,
+        "mask": 3
+      }
+    ],
+    "swingLRValueUnder": [
+      {
+        "offset": 20,
+        "mask": 128
+      }
+    ],
+    "swingUDValue": [
+      {
+        "offset": 7,
+        "mask": 12
+      }
+    ],
+    "temperature": [
+      {
+        "offset": 2,
+        "mask": 15
+      }
+    ],
+    "tubroValue": [
+      {
+        "offset": 10,
+        "mask": 2
+      }
+    ]
+  }
+}

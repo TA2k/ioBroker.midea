@@ -1,0 +1,59 @@
+{
+  "source": "T_0000_E1_5.lua",
+  "applianceType": "0xe1",
+  "modes": {},
+  "fans": {},
+  "keys": {},
+  "values": {
+    "VALUE_VERSION": 1
+  },
+  "bytes": {
+    "BYTE_CONTROL_REQUEST": 2,
+    "BYTE_DEVICE_TYPE": 225,
+    "BYTE_PROTOCOL_HEAD": 170,
+    "BYTE_PROTOCOL_LENGTH": 10,
+    "BYTE_QUERY_REQUEST": 3
+  },
+  "locals": {},
+  "strings": {
+    "lock": [
+      "on",
+      "off"
+    ],
+    "mode": [
+      "null",
+      "auto",
+      "intensive",
+      "normal",
+      "eco",
+      "glass",
+      "90min",
+      "rapid",
+      "soak",
+      "1hour",
+      "3in1",
+      "auto_heavy",
+      "party",
+      "quiet",
+      "auto_daily",
+      "hygiene",
+      "self_clean",
+      "auto_glass",
+      "baby_care",
+      "fruit",
+      "invalid"
+    ],
+    "operator": [
+      "start",
+      "pause"
+    ],
+    "work_status": [
+      "power_off",
+      "cancel",
+      "work",
+      "order",
+      "error"
+    ]
+  },
+  "bodyOffsets": {}
+}

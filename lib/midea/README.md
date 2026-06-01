@@ -68,35 +68,42 @@ lib/midea/
 ├─ parsers.js          shared frame decoders (C0, C1, B0/B1, A1, FA, ...)
 ├─ security.js         crypto: udpId, signing, AES-CBC/ECB, V3 auth
 ├─ logger.js           duck-typed logger wrapper (uses your console / pino / winston)
-├─ devices/
-│  ├─ base.js          BaseDevice — shared lifecycle + transport
-│  ├─ ac.js            0xAC AC + new-protocol (B0/B1)
-│  ├─ dehumidifier.js  0xA1
-│  ├─ ...              one file per appliance type
-└─ generated/          auto-generated mode/fan maps from cloud Lua plugins
-   ├─ a1-maps.js
-   ├─ ac-maps.js
-   └─ fc-maps.js
+└─ devices/
+   ├─ base.js          BaseDevice — shared lifecycle + transport
+   ├─ ac.js            0xAC AC + new-protocol (B0/B1)
+   ├─ dehumidifier.js  0xA1
+   └─ ...              one file per appliance type
 ```
 
-## Re-generating maps from cloud Lua
+The runtime is fully self-contained — every mode/fan/byte map is
+hard-coded in the device classes. Cloud-Lua extraction is a
+**development-only** workflow that lives in `scripts/` at the repo root
+(see below); it is not part of the published package and never imported
+at runtime.
 
-The package ships four scripts that pull the Lua plugin Midea
-serves per (deviceType, sn8) and emit the JSON tables under
-`generated/`:
+## Cloud-Lua diff workflow (development only)
+
+Midea's cloud serves a per-device protocol Lua plugin under
+`/v2/luaEncryption/luaGet`. The repo ships scripts that fetch, decrypt
+and parse those plugins so we can diff the values we hard-coded in the
+device classes against whatever the cloud currently advertises:
 
 ```bash
-npm run fetch-lua -- --user … --password … --type 0xa1 --sn …
-npm run extract-lua
-npm run generate-maps
-npm run diff-lua             # cross-check generated maps vs the device JS classes
-# or all-in-one for extract + generate:
-npm run sync-maps
+# from the repo root
+npm run fetch-lua    # uses MIDEA_USER / MIDEA_PASSWORD env, walks the built-in
+                     # SN catalog and writes lua-cache/T_0000_<HEX>_*.lua
+npm run extract-lua  # parses lua-cache/*.lua → lua-tables/*.json
+npm run generate-maps  # emits scripts/generated/<hex>.js as a snapshot of every
+                       # constant we know about (mode/fan/KEY/VALUE/BYTE/body-offsets)
+npm run diff-lua     # prints differences between the snapshot and the
+                     # hand-coded constants in lib/midea/devices/*.js
+npm run sync-maps    # extract + generate in one step
 ```
 
-The scripts take `--in` / `--out` flags to point them at custom
-cache / output dirs; defaults are CWD-relative (`lua-cache/`,
-`lua-tables/`, `generated/`).
+`scripts/generated/` is **only reference material** for diffing — no
+production code imports it. When the cloud publishes new constants, the
+diff surfaces them so a maintainer can decide whether to fold them into
+the device class.
 
 ## License
 

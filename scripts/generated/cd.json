@@ -1,0 +1,339 @@
+{
+  "source": "T_0000_CD_10.lua",
+  "applianceType": "0xcd",
+  "modes": {},
+  "fans": {},
+  "keys": {},
+  "values": {},
+  "bytes": {
+    "BYTE_AUTO_REPORT": 5,
+    "BYTE_CONTROL_REQUEST": 2,
+    "BYTE_CONTROL_REQUEST_FIVE": 5,
+    "BYTE_CONTROL_REQUEST_FOUR": 4,
+    "BYTE_CONTROL_REQUEST_ONE": 1,
+    "BYTE_CONTROL_REQUEST_SEVEN": 7,
+    "BYTE_CONTROL_REQUEST_SIX": 6,
+    "BYTE_CONTROL_REQUEST_THREE": 3,
+    "BYTE_CONTROL_REQUEST_TWO": 2,
+    "BYTE_DEVICE_TYPE": 205,
+    "BYTE_POWER_OFF": 0,
+    "BYTE_POWER_ON": 1,
+    "BYTE_PROTOCOL_HEAD": 170,
+    "BYTE_PROTOCOL_LENGTH": 10,
+    "BYTE_QUERYL_REQUEST": 3,
+    "BYTE_QUERYL_REQUEST_ONE": 1,
+    "BYTE_QUERYL_REQUEST_THREE": 3,
+    "BYTE_QUERYL_REQUEST_TWO": 2
+  },
+  "locals": {
+    "BYTE_AUTO_REPORT": 5,
+    "BYTE_CONTROL_REQUEST": 2,
+    "BYTE_CONTROL_REQUEST_FIVE": 5,
+    "BYTE_CONTROL_REQUEST_FOUR": 4,
+    "BYTE_CONTROL_REQUEST_ONE": 1,
+    "BYTE_CONTROL_REQUEST_SEVEN": 7,
+    "BYTE_CONTROL_REQUEST_SIX": 6,
+    "BYTE_CONTROL_REQUEST_THREE": 3,
+    "BYTE_CONTROL_REQUEST_TWO": 2,
+    "BYTE_DEVICE_TYPE": 205,
+    "BYTE_POWER_OFF": 0,
+    "BYTE_POWER_ON": 1,
+    "BYTE_PROTOCOL_HEAD": 170,
+    "BYTE_PROTOCOL_LENGTH": 10,
+    "BYTE_QUERYL_REQUEST": 3,
+    "BYTE_QUERYL_REQUEST_ONE": 1,
+    "BYTE_QUERYL_REQUEST_THREE": 3,
+    "BYTE_QUERYL_REQUEST_TWO": 2
+  },
+  "strings": {
+    "timer1_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "timer2_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "timer3_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "timer4_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "timer5_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "timer6_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week0timer1_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week0timer2_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week0timer3_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week0timer4_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week0timer5_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week0timer6_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week1timer1_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week1timer2_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week1timer3_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week1timer4_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week1timer5_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week1timer6_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week2timer1_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week2timer2_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week2timer3_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week2timer4_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week2timer5_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week2timer6_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week3timer1_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week3timer2_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week3timer3_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week3timer4_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week3timer5_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week3timer6_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week4timer1_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week4timer2_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week4timer3_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week4timer4_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week4timer5_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week4timer6_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week5timer1_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week5timer2_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week5timer3_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week5timer4_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week5timer5_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week5timer6_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week6timer1_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week6timer2_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week6timer3_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week6timer4_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week6timer5_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ],
+    "week6timer6_modevalue": [
+      "energy",
+      "standard",
+      "compatibilizing",
+      "smart"
+    ]
+  },
+  "bodyOffsets": {}
+}
