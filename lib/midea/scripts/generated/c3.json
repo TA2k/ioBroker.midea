@@ -1,0 +1,82 @@
+{
+  "source": "T_0000_C3_171H120F_2023062601.lua",
+  "applianceType": "0xc3",
+  "modes": {},
+  "fans": {},
+  "keys": {},
+  "values": {},
+  "bytes": {},
+  "locals": {
+    "BIT0": 1,
+    "BIT1": 2,
+    "BIT2": 4,
+    "BIT3": 8,
+    "BIT4": 16,
+    "BIT5": 32,
+    "BIT6": 64,
+    "BIT7": 128
+  },
+  "strings": {
+    "str_auto": [
+      "auto"
+    ],
+    "str_control": [
+      "control"
+    ],
+    "str_control_type": [
+      "control_type"
+    ],
+    "str_cool": [
+      "cool"
+    ],
+    "str_dhw": [
+      "dhw"
+    ],
+    "str_fan_coil": [
+      "fan_coil"
+    ],
+    "str_floor_heat": [
+      "floor_heat"
+    ],
+    "str_heat": [
+      "heat"
+    ],
+    "str_level_1": [
+      "level_1"
+    ],
+    "str_level_2": [
+      "level_2"
+    ],
+    "str_off": [
+      "off"
+    ],
+    "str_on": [
+      "on"
+    ],
+    "str_query": [
+      "query"
+    ],
+    "str_query_type": [
+      "query_type"
+    ],
+    "str_radiatior": [
+      "radiatior"
+    ],
+    "str_room_temperature_type": [
+      "room_temperature_type"
+    ],
+    "str_s8_invalid": [
+      "0x7f"
+    ],
+    "str_status": [
+      "status"
+    ],
+    "str_u8_invalid": [
+      "0xff"
+    ],
+    "str_water_temperature_type": [
+      "water_temperature_type"
+    ]
+  },
+  "bodyOffsets": {}
+}

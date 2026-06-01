@@ -27,8 +27,8 @@ admin/i18n/*/flat.txt
 # local references / APK extracts
 .references/
 
-# fetched per-device Lua plugins (default --out dir of scripts/fetch-protocol-lua.js)
-lua-cache/
+# fetched per-device Lua plugins (default --out dir of fetch-protocol-lua.js)
+lib/midea/lua-cache/
 
-# extracted JSON tables from the Lua plugins (scripts/extract-lua-tables.js)
-lua-tables/
+# extracted JSON tables from the Lua plugins (extract-lua-tables.js)
+lib/midea/lua-tables/

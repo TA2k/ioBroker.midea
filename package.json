@@ -61,12 +61,7 @@
     "check": "tsc --noEmit",
     "lint": "eslint .",
     "translate": "translate-adapter",
-    "release": "release-script",
-    "fetch-lua": "node scripts/fetch-protocol-lua.js",
-    "extract-lua": "node scripts/extract-lua-tables.js",
-    "diff-lua": "node scripts/diff-lua-vs-js.js",
-    "generate-maps": "node scripts/generate-maps.js",
-    "sync-maps": "node scripts/extract-lua-tables.js && node scripts/generate-maps.js"
+    "release": "release-script"
   },
   "bugs": {
     "url": "https://github.com/TA2k/ioBroker.midea/issues"

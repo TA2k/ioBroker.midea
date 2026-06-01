@@ -58,7 +58,7 @@ for (const desc of found) {
 
 ## Layout
 
-```
+```text
 lib/midea/
 ├─ index.js            entry point — exports every device class + helpers
 ├─ cloud.js            CloudClient (V2/MSmartHome) + CloudClientV1 (NetHome/MideaAir)
@@ -68,42 +68,49 @@ lib/midea/
 ├─ parsers.js          shared frame decoders (C0, C1, B0/B1, A1, FA, ...)
 ├─ security.js         crypto: udpId, signing, AES-CBC/ECB, V3 auth
 ├─ logger.js           duck-typed logger wrapper (uses your console / pino / winston)
-└─ devices/
-   ├─ base.js          BaseDevice — shared lifecycle + transport
-   ├─ ac.js            0xAC AC + new-protocol (B0/B1)
-   ├─ dehumidifier.js  0xA1
-   └─ ...              one file per appliance type
+├─ devices/
+│  ├─ base.js          BaseDevice — shared lifecycle + transport
+│  ├─ ac.js            0xAC AC + new-protocol (B0/B1)
+│  ├─ dehumidifier.js  0xA1
+│  └─ ...              one file per appliance type
+└─ scripts/            dev-only Cloud-Lua diff tooling (see below)
+   ├─ fetch-protocol-lua.js
+   ├─ extract-lua-tables.js
+   ├─ generate-maps.js
+   ├─ diff-lua-vs-js.js
+   └─ generated/<hex>.json   committed snapshot per appliance type
 ```
 
 The runtime is fully self-contained — every mode/fan/byte map is
 hard-coded in the device classes. Cloud-Lua extraction is a
-**development-only** workflow that lives in `scripts/` at the repo root
-(see below); it is not part of the published package and never imported
-at runtime.
+**development-only** workflow that lives entirely under `scripts/` next
+to the lib; it is never imported at runtime.
 
 ## Cloud-Lua diff workflow (development only)
 
 Midea's cloud serves a per-device protocol Lua plugin under
-`/v2/luaEncryption/luaGet`. The repo ships scripts that fetch, decrypt
+`/v2/luaEncryption/luaGet`. The lib ships scripts that fetch, decrypt
 and parse those plugins so we can diff the values we hard-coded in the
 device classes against whatever the cloud currently advertises:
 
 ```bash
-# from the repo root
-npm run fetch-lua    # uses MIDEA_USER / MIDEA_PASSWORD env, walks the built-in
-                     # SN catalog and writes lua-cache/T_0000_<HEX>_*.lua
-npm run extract-lua  # parses lua-cache/*.lua → lua-tables/*.json
-npm run generate-maps  # emits scripts/generated/<hex>.js as a snapshot of every
-                       # constant we know about (mode/fan/KEY/VALUE/BYTE/body-offsets)
-npm run diff-lua     # prints differences between the snapshot and the
-                     # hand-coded constants in lib/midea/devices/*.js
-npm run sync-maps    # extract + generate in one step
+cd lib/midea
+npm run fetch-lua       # uses MIDEA_USER / MIDEA_PASSWORD env, walks the built-in
+                        # SN catalog and writes lua-cache/T_0000_<HEX>_*.lua
+npm run extract-lua     # parses lua-cache/*.lua → lua-tables/*.json
+npm run generate-maps   # emits scripts/generated/<hex>.json as a snapshot of every
+                        # constant we know about (modes, fans, KEY_/VALUE_/BYTE_,
+                        # body offsets)
+npm run diff-lua        # prints differences between the snapshot and the
+                        # hand-coded constants in devices/*.js
+npm run sync-maps       # extract + generate in one step
 ```
 
-`scripts/generated/` is **only reference material** for diffing — no
-production code imports it. When the cloud publishes new constants, the
-diff surfaces them so a maintainer can decide whether to fold them into
-the device class.
+`scripts/generated/` is committed and **only reference material** for
+diffing — no production code imports it. When the cloud publishes new
+constants, the diff surfaces them so a maintainer can decide whether to
+fold them into the device class. `lua-cache/` and `lua-tables/` are
+gitignored intermediates.
 
 ## License
 

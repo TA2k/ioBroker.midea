@@ -6,6 +6,7 @@
   "files": [
     "*.js",
     "devices/",
+    "scripts/",
     "README.md"
   ],
   "engines": {
@@ -14,7 +15,14 @@
   "dependencies": {
     "axios": "^1.16.1"
   },
+  "scripts": {
+    "fetch-lua": "node scripts/fetch-protocol-lua.js",
+    "extract-lua": "node scripts/extract-lua-tables.js",
+    "generate-maps": "node scripts/generate-maps.js",
+    "diff-lua": "node scripts/diff-lua-vs-js.js",
+    "sync-maps": "node scripts/extract-lua-tables.js && node scripts/generate-maps.js"
+  },
   "license": "MIT",
   "private": true,
-  "comment": "private: drop this and pick a name + repo URL before publishing. Lifted as-is from ioBroker.midea — no ioBroker imports, only axios and Node built-ins (dgram/net/events/os/crypto)."
+  "comment": "private: drop this and pick a name + repo URL before publishing. Lifted as-is from ioBroker.midea — no ioBroker imports, only axios and Node built-ins (dgram/net/events/os/crypto). Cloud-Lua diff scripts live in scripts/ and write to ./lua-cache, ./lua-tables, scripts/generated/."
 }
