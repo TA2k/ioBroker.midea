@@ -17,94 +17,299 @@
     "BYTE_PROTOCOL_HEAD_LENGTH": 10
   },
   "locals": {},
-  "strings": {
+  "strings": {},
+  "bodyOffsets": {},
+  "exposedKeys": [
+    "acme_freezing_completion",
+    "acme_freezing_mode",
+    "acquire_icea_mode_power",
+    "acquire_water_mode_power",
+    "all_refrigeration_power",
+    "ambient_humidity_sensor_error",
+    "angle_door_open",
+    "aquatic_product",
+    "bar_door_alone_open_frequently",
+    "bar_door_open_overtime",
+    "bar_door_state",
+    "beef",
+    "beverage_big_number",
+    "beverage_mid_number",
+    "beverage_quick_time",
+    "beverage_vial_number",
+    "blue_ray_mode",
+    "brash_icea_mode_power",
+    "chicken",
+    "cross_peak_electricity",
+    "cross_peak_electricity_enter",
+    "crystallite_base1_sensor_error",
+    "crystallite_base2_sensor_error",
+    "crystallite_base3_sensor_error",
+    "crystallite_base4_sensor_error",
+    "crystallite_main_sensor_error",
+    "day",
+    "drink_valve_equal_open_high",
+    "drink_valve_equal_open_low",
+    "dry_zone",
+    "duck_meat",
+    "dumplings",
+    "e_cleaning_percentage",
+    "eeprom_read_write_error",
+    "electronic_clean_strong",
+    "electronic_clean_timeout",
+    "electronic_smell",
+    "energy_saving_mode",
+    "eradicate_pesticide_residue",
+    "eradicate_pesticide_residue_completion",
+    "eradicate_pesticide_residue_progress",
+    "fast_cold_minute",
+    "fast_freeze_minute",
+    "filter_element_use_percentage",
+    "filter_expires_mild_warning",
+    "filter_expires_severe_warning",
+    "filter_natural_time_high",
+    "filter_natural_time_low",
+    "fish",
+    "flexzone_defrosting_sensor2_error",
+    "flexzone_defrosting_sensor_error",
+    "flexzone_door_state",
+    "flexzone_sensor_error",
+    "floodlight_power",
+    "food_site",
+    "freeze_fahrenheit_level",
+    "freezer_door_auto",
+    "freezer_door_auto_control",
+    "freezer_door_open_overtime",
+    "freezer_door_state",
+    "freezing_F_temperature",
+    "freezing_all_ice_status",
+    "freezing_defrosting_overtime",
+    "freezing_defrosting_sensor_error",
+    "freezing_door_alone_open_frequently",
+    "freezing_high_temperature",
+    "freezing_ice_machine_power",
+    "freezing_ice_machine_water_status",
+    "freezing_ice_operation_error",
+    "freezing_mode",
+    "freezing_mode_completion",
+    "freezing_motor_deicing_status",
+    "freezing_motor_reset_status",
+    "freezing_power",
+    "freezing_real_temperature",
+    "freezing_sensor_error",
+    "freezing_temperature",
+    "function_zone_level",
+    "function_zone_temperature_sensor_error",
+    "gluepudding",
+    "help_door_auto",
+    "holiday_mode",
+    "human_induction_status",
+    "humidifier_water_shortage",
+    "humidify_power",
+    "humidify_setting",
+    "humidity",
+    "humidity_control_sensor_error",
+    "ice_cream",
+    "ice_electrical_machinery_error",
+    "ice_machine_fretting_switch_error",
+    "ice_machine_full",
+    "ice_machine_pipe_filter_overtime",
+    "ice_machine_sensor_error",
+    "ice_machine_temperature_error",
+    "ice_maker_times_high",
+    "ice_maker_times_low",
+    "ice_mouth_power",
+    "ice_room_door_open_overtime",
+    "ice_room_real_temperature",
+    "ice_room_sensor_error",
+    "icea_bar_function_switch",
+    "icea_mode_power",
+    "inlet_valve_equal_open_high",
+    "inlet_valve_equal_open_low",
+    "intelligent_mode",
+    "interval_room_humidity_level",
+    "is_error",
+    "leach_expire_day",
+    "left_flexzone_F_temperature",
+    "left_flexzone_power",
+    "left_flexzone_sensor_error",
+    "left_flexzone_temperature",
+    "left_variable_real_temperature",
+    "local_time_hour",
+    "local_time_minute",
+    "local_time_second",
+    "main_display_correspond_error",
+    "mcu_ice_communication_error",
+    "microcrystal_fresh",
+    "milk_mode_power",
+    "moisturize_mode",
+    "month",
+    "mutton",
+    "night_mode",
+    "no_action_door_close",
+    "normal_zone_level",
+    "normal_zone_temperature_sensor_error",
+    "open_door_too_frequently",
+    "performance_mode",
+    "plasma_aseptic_completion",
+    "plasma_aseptic_mode_power",
+    "pork",
+    "power_consumption_high",
+    "power_consumption_low",
+    "preservation_mode",
+    "quick_beverage",
+    "quick_beverage_completed",
+    "quick_beverage_completion",
+    "quick_beverage_continuing",
+    "quick_beverage_time",
+    "radar_mode_power",
+    "radar_sensor1_error",
+    "radar_sensor2_error",
+    "radar_sensor3_error",
+    "radar_sensor4_error",
+    "radar_sensor5_error",
+    "refrigeration_defrosting_overtime",
+    "refrigeration_defrosting_sensor_error",
+    "refrigeration_fahrenheit_level",
+    "refrigeration_real_temperature",
+    "refrigeration_sensor_error",
+    "remove_dew_power",
+    "right_flexzone_power",
+    "right_flexzone_sensor_error",
+    "right_flexzone_temperature",
+    "right_variable_real_temperature",
+    "ring_temperature_sensor_error",
+    "shrimp",
+    "silent_night_mode",
+    "smart_humidify",
+    "sn_writing_error",
+    "speed_door_open",
+    "storage_F_temperature",
+    "storage_all_ice_status",
+    "storage_door_alone_open_frequently",
+    "storage_door_auto_control",
+    "storage_door_open_overtime",
+    "storage_door_state",
+    "storage_heating_wire_sensor_error",
+    "storage_humidity_sensor_error",
+    "storage_ice_full_tips",
+    "storage_ice_home_door_state",
+    "storage_ice_machine_power",
+    "storage_ice_machine_sensor_error",
+    "storage_ice_machine_water_status",
+    "storage_ice_operation_error",
+    "storage_left_door_auto",
+    "storage_light_level",
+    "storage_mode",
+    "storage_mode_completion",
+    "storage_motor_deicing_status",
+    "storage_motor_reset_status",
+    "storage_power",
+    "storage_right_door_auto",
+    "storage_temperature",
+    "storage_temperature_overheating",
+    "storage_temperature_too_low",
+    "temperature_unit",
+    "time_zone",
+    "touch_door_auto",
+    "uart_receiver_error",
+    "unfreeze_power",
+    "variable_door_open_overtime",
+    "variable_mode",
+    "voice_assistant",
+    "voice_door_auto",
+    "week",
+    "year",
+    "yogurt_machine_sensor_error",
+    "zero_crossing_check_error"
+  ],
+  "acceptedValues": {
     "acme_freezing_completion": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "acme_freezing_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "acquire_icea_mode_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "acquire_water_mode_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "all_refrigeration_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "ambient_humidity_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "aquatic_product": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "bar_door_alone_open_frequently": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "bar_door_open_overtime": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "bar_door_state": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "beef": [
       "exist",
       "nonexistence"
     ],
     "blue_ray_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "brash_icea_mode_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "chicken": [
       "exist",
       "nonexistence"
     ],
     "cross_peak_electricity": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "cross_peak_electricity_enter": [
       "enter",
       "quit"
     ],
     "crystallite_base1_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "crystallite_base2_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "crystallite_base3_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "crystallite_base4_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "crystallite_main_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "dry_zone": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "duck_meat": [
       "exist",
@@ -115,530 +320,530 @@
       "nonexistence"
     ],
     "eeprom_read_write_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "electronic_clean_strong": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "electronic_smell": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "energy_saving_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "eradicate_pesticide_residue": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "eradicate_pesticide_residue_completion": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "filter_expires_mild_warning": [
-      "valid",
-      "invalid"
+      "invalid",
+      "valid"
     ],
     "filter_expires_severe_warning": [
-      "valid",
-      "invalid"
+      "invalid",
+      "valid"
     ],
     "fish": [
       "exist",
       "nonexistence"
     ],
     "flexzone_defrosting_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "flexzone_defrosting_sensor2_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "flexzone_door_state": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "flexzone_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "floodlight_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "food_site": [
       "left_freezing_room",
       "right_freezing_room"
     ],
     "freezer_door_auto": [
-      "on",
+      "invalid",
       "off",
-      "invalid"
+      "on"
     ],
     "freezer_door_auto_control": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "freezer_door_open_overtime": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "freezer_door_state": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "freezing_all_ice_status": [
-      "valid",
-      "invalid"
+      "invalid",
+      "valid"
     ],
     "freezing_defrosting_overtime": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "freezing_defrosting_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "freezing_door_alone_open_frequently": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "freezing_high_temperature": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "freezing_ice_machine_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "freezing_ice_machine_water_status": [
-      "valid",
-      "invalid"
+      "invalid",
+      "valid"
     ],
     "freezing_ice_operation_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "freezing_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "freezing_mode_completion": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "freezing_motor_deicing_status": [
-      "valid",
-      "invalid"
+      "invalid",
+      "valid"
     ],
     "freezing_motor_reset_status": [
-      "valid",
-      "invalid"
+      "invalid",
+      "valid"
     ],
     "freezing_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "freezing_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "function_zone_temperature_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "gluepudding": [
       "exist",
       "nonexistence"
     ],
     "help_door_auto": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "holiday_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "human_induction_status": [
-      "valid",
-      "invalid"
+      "invalid",
+      "valid"
     ],
     "humidifier_water_shortage": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "humidify_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "humidity": [
       "high",
       "low"
     ],
     "humidity_control_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "ice_cream": [
       "exist",
       "nonexistence"
     ],
     "ice_electrical_machinery_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "ice_machine_fretting_switch_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "ice_machine_full": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "ice_machine_pipe_filter_overtime": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "ice_machine_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "ice_machine_temperature_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "ice_mouth_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "ice_room_door_open_overtime": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "ice_room_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "icea_bar_function_switch": [
       "default",
-      "refrigeration",
-      "freezing"
+      "freezing",
+      "refrigeration"
     ],
     "icea_mode_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "intelligent_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "is_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "left_flexzone_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "left_flexzone_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "left_flexzone_temperature": [
       "0"
     ],
     "main_display_correspond_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "mcu_ice_communication_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "microcrystal_fresh": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "milk_mode_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "moisturize_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "mutton": [
       "exist",
       "nonexistence"
     ],
     "night_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "no_action_door_close": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "normal_zone_temperature_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "open_door_too_frequently": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "performance_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "plasma_aseptic_completion": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "plasma_aseptic_mode_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "pork": [
       "exist",
       "nonexistence"
     ],
     "preservation_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "quick_beverage": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "quick_beverage_completed": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "quick_beverage_completion": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "quick_beverage_continuing": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "radar_mode_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "radar_sensor1_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "radar_sensor2_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "radar_sensor3_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "radar_sensor4_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "radar_sensor5_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "refrigeration_defrosting_overtime": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "refrigeration_defrosting_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "refrigeration_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "remove_dew_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "right_flexzone_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "right_flexzone_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "right_flexzone_temperature": [
       "0"
     ],
     "ring_temperature_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "shrimp": [
       "exist",
       "nonexistence"
     ],
     "silent_night_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "smart_humidify": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "sn_writing_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "speed_door_open": [
       "fast",
       "slow"
     ],
     "storage_all_ice_status": [
-      "valid",
-      "invalid"
+      "invalid",
+      "valid"
     ],
     "storage_door_alone_open_frequently": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "storage_door_auto_control": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "storage_door_open_overtime": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "storage_door_state": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "storage_heating_wire_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "storage_humidity_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "storage_ice_full_tips": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "storage_ice_home_door_state": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "storage_ice_machine_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "storage_ice_machine_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "storage_ice_machine_water_status": [
-      "valid",
-      "invalid"
+      "invalid",
+      "valid"
     ],
     "storage_ice_operation_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "storage_left_door_auto": [
-      "on",
+      "invalid",
       "off",
-      "invalid"
+      "on"
     ],
     "storage_mode": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "storage_mode_completion": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "storage_motor_deicing_status": [
-      "valid",
-      "invalid"
+      "invalid",
+      "valid"
     ],
     "storage_motor_reset_status": [
-      "valid",
-      "invalid"
+      "invalid",
+      "valid"
     ],
     "storage_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "storage_right_door_auto": [
-      "on",
+      "invalid",
       "off",
-      "invalid"
+      "on"
     ],
     "storage_temperature_overheating": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "storage_temperature_too_low": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "temperature_unit": [
-      "fahrenheit",
-      "celsius"
+      "celsius",
+      "fahrenheit"
     ],
     "touch_door_auto": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "uart_receiver_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "unfreeze_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "variable_door_open_overtime": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "variable_mode": [
-      "soft_freezing_mode",
-      "none_mode",
-      "zero_fresh_mode",
       "cold_drink_mode",
-      "fresh_product_mode",
-      "partial_freezing_mode",
       "dry_zone_mode",
+      "freeze_mode",
       "freeze_warm_mode",
-      "freeze_mode"
+      "fresh_product_mode",
+      "none_mode",
+      "partial_freezing_mode",
+      "soft_freezing_mode",
+      "zero_fresh_mode"
     ],
     "voice_assistant": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "voice_door_auto": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "yogurt_machine_sensor_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
     "zero_crossing_check_error": [
-      "yes",
-      "no"
+      "no",
+      "yes"
     ]
   },
-  "bodyOffsets": {}
+  "encodeBytes": {}
 }

@@ -17,62 +17,9 @@
     "SUB_TYPE_VALUE": 12,
     "VERSION": 9
   },
-  "strings": {
-    "action": [
-      "set",
-      "delete",
-      "off",
-      "on"
-    ],
-    "have_reserve_task": [
-      "0",
-      "1"
-    ],
-    "infra_red_low_center_collision": [
-      "yes"
-    ],
-    "ota_mode": [
-      "command",
-      "silent"
-    ],
-    "ota_result": [
-      "succeed",
-      "failed"
-    ],
-    "query": [
-      "disturb",
-      "reserve",
-      "parts"
-    ],
-    "query_type": [
-      "work",
-      "disturb",
-      "reserve"
-    ],
-    "reset_type": [
-      "factory_restore",
-      "side_brush",
-      "filter_net",
-      "roll_brush"
-    ],
-    "set_status": [
-      "off",
-      "on"
-    ],
-    "value": [
-      "on",
-      "off"
-    ],
-    "work_status": [
-      "work",
-      "charge",
-      "stop",
-      "disturb",
-      "reserve",
-      "time",
-      "voice",
-      "reset"
-    ]
-  },
-  "bodyOffsets": {}
+  "strings": {},
+  "bodyOffsets": {},
+  "exposedKeys": [],
+  "acceptedValues": {},
+  "encodeBytes": {}
 }

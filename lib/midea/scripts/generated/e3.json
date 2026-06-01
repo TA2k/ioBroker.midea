@@ -13,39 +13,42 @@
   },
   "strings": {
     "cloud_intelligence": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "fan": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "feedback": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "mode": [
-      "kitchen",
       "baby",
+      "kitchen",
       "max",
       "shower"
     ],
     "person_mode_one": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "person_mode_three": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "person_mode_two": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ]
   },
-  "bodyOffsets": {}
+  "bodyOffsets": {},
+  "exposedKeys": [],
+  "acceptedValues": {},
+  "encodeBytes": {}
 }

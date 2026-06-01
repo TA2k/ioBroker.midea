@@ -183,124 +183,7 @@
     "BYTE_VOICE_CONTROL_ON": 3
   },
   "locals": {},
-  "strings": {
-    "auto_prevent_straight_wind": [
-      "off",
-      "on"
-    ],
-    "child_prevent_cold_wind": [
-      "off",
-      "on"
-    ],
-    "comfort_power_save": [
-      "off",
-      "on"
-    ],
-    "comfort_sleep": [
-      "off",
-      "on"
-    ],
-    "cool_hot_sense": [
-      "off",
-      "on"
-    ],
-    "even_wind": [
-      "off",
-      "on"
-    ],
-    "extreme_wind": [
-      "off",
-      "on"
-    ],
-    "fresh_air": [
-      "off",
-      "on"
-    ],
-    "gentle_wind_sense": [
-      "off",
-      "on"
-    ],
-    "intelligent_control": [
-      "off",
-      "on"
-    ],
-    "intelligent_wind": [
-      "off",
-      "on"
-    ],
-    "kick_quilt": [
-      "off",
-      "on"
-    ],
-    "little_angel": [
-      "off",
-      "on"
-    ],
-    "natural_wind": [
-      "on",
-      "off"
-    ],
-    "nobody_energy_save": [
-      "off",
-      "on"
-    ],
-    "parent_control": [
-      "off",
-      "on"
-    ],
-    "pre_cool_hot": [
-      "off",
-      "on"
-    ],
-    "prevent_cold": [
-      "off",
-      "on"
-    ],
-    "prevent_super_cool": [
-      "off",
-      "on"
-    ],
-    "screen_display_now": [
-      "off",
-      "on"
-    ],
-    "security": [
-      "off",
-      "on"
-    ],
-    "self_clean": [
-      "off",
-      "on"
-    ],
-    "single_tuyere": [
-      "off",
-      "on"
-    ],
-    "voice_control": [
-      "off",
-      "on"
-    ],
-    "water_pump": [
-      "off",
-      "on"
-    ],
-    "water_washing": [
-      "on",
-      "off"
-    ],
-    "wind_avoid": [
-      "off",
-      "on"
-    ],
-    "wind_straight": [
-      "off",
-      "on"
-    ],
-    "yb_wind_avoid": [
-      "off",
-      "on"
-    ]
-  },
+  "strings": {},
   "bodyOffsets": {
     "closeStepMintues": [
       {
@@ -360,18 +243,6 @@
         "mask": 127
       }
     ],
-    "fresh_filter_time_total": [
-      {
-        "offset": 25,
-        "mask": null
-      }
-    ],
-    "fresh_filter_time_use": [
-      {
-        "offset": 27,
-        "mask": null
-      }
-    ],
     "modeValue": [
       {
         "offset": 2,
@@ -388,12 +259,6 @@
       {
         "offset": 4,
         "mask": 3
-      }
-    ],
-    "pmv": [
-      {
-        "offset": 14,
-        "mask": 15
       }
     ],
     "power_saving": [
@@ -476,17 +341,343 @@
         "mask": 12
       }
     ],
-    "temperature": [
-      {
-        "offset": 2,
-        "mask": 15
-      }
-    ],
     "tubroValue": [
       {
         "offset": 10,
         "mask": 2
       }
     ]
+  },
+  "exposedKeys": [
+    "KEY_CLOSE_TIME",
+    "KEY_COMFORT_SLEEP_CURVE",
+    "KEY_CURRENT_WORK_TIME",
+    "KEY_DRY",
+    "KEY_ECO",
+    "KEY_ERROR_CODE",
+    "KEY_FANSPEED",
+    "KEY_MODE",
+    "KEY_OPEN_TIME",
+    "KEY_POWER",
+    "KEY_PTC",
+    "KEY_PURIFIER",
+    "KEY_SMART_DRY",
+    "KEY_STRONG_WIND",
+    "KEY_SWING_LR",
+    "KEY_SWING_LR_UNDER",
+    "KEY_SWING_UD",
+    "KEY_TEMPERATURE",
+    "KEY_TIME_OFF",
+    "KEY_TIME_ON",
+    "KEY_TUBRO",
+    "KEY_VERSION",
+    "auto_prevent_straight_wind",
+    "auto_temp_down",
+    "auto_temp_up",
+    "b5_8_heat",
+    "b5_anion",
+    "b5_body_check",
+    "b5_eco",
+    "b5_electricity",
+    "b5_fa_no_wind_sense",
+    "b5_fahrenheit",
+    "b5_filter_check",
+    "b5_filter_remind",
+    "b5_humidity",
+    "b5_jet_cool",
+    "b5_mode",
+    "b5_next_frame",
+    "b5_no_wind_sense",
+    "b5_nobody_energy_save",
+    "b5_prevent_straight_wind",
+    "b5_ptc",
+    "b5_screen_display",
+    "b5_self_clean",
+    "b5_strong_wind",
+    "b5_temperature_0",
+    "b5_temperature_1",
+    "b5_temperature_2",
+    "b5_temperature_3",
+    "b5_temperature_4",
+    "b5_temperature_5",
+    "b5_temperature_6",
+    "b5_wind_avoid",
+    "b5_wind_speed",
+    "b5_wind_straight",
+    "b5_wind_swing",
+    "body_check",
+    "child_prevent_cold_wind",
+    "comfort_power_save",
+    "comfort_sleep",
+    "cool_hot_sense",
+    "cool_temp_down",
+    "cool_temp_up",
+    "current_humidity",
+    "degree8_heat",
+    "even_wind",
+    "extreme_wind",
+    "extreme_wind_level",
+    "fa_no_wind_sense",
+    "face_register",
+    "filter_level",
+    "filter_value",
+    "fresh_air",
+    "fresh_air_fan_speed",
+    "fresh_air_temp",
+    "fresh_filter_time_total",
+    "fresh_filter_time_use",
+    "fresh_filter_timeout",
+    "fresh_filter_timeout_ae2",
+    "gentle_wind_sense",
+    "heat_temp_down",
+    "heat_temp_up",
+    "indoor_humidity",
+    "intelligent_control",
+    "intelligent_wind",
+    "jet_cool",
+    "kick_quilt",
+    "little_angel",
+    "natural_wind",
+    "no_wind_sense",
+    "no_wind_sense_level",
+    "nobody_energy_save",
+    "operating_time",
+    "parent_control",
+    "parent_control_temp_down",
+    "parent_control_temp_up",
+    "pm25_value",
+    "pmv",
+    "power_saving",
+    "pre_cool_hot",
+    "prevent_cold",
+    "prevent_straight_wind",
+    "prevent_straight_wind_flag",
+    "prevent_straight_wind_lr",
+    "prevent_super_cool",
+    "protocolType",
+    "real_time_power",
+    "remote_control_lock",
+    "remote_control_lock_control",
+    "screen_display_now",
+    "security",
+    "self_clean",
+    "single_tuyere",
+    "small_temperature",
+    "temperature_unit",
+    "voice_control",
+    "voice_control_new",
+    "volume_control",
+    "water_pump",
+    "water_washing",
+    "water_washing_manual",
+    "water_washing_stage",
+    "water_washing_time",
+    "wind_avoid",
+    "wind_straight",
+    "wind_swing_lr_angle",
+    "wind_swing_ud_angle",
+    "yb_wind_avoid"
+  ],
+  "acceptedValues": {
+    "auto_prevent_straight_wind": [
+      "off",
+      "on"
+    ],
+    "child_prevent_cold_wind": [
+      "off",
+      "on"
+    ],
+    "comfort_power_save": [
+      "off",
+      "on"
+    ],
+    "comfort_sleep": [
+      "off",
+      "on"
+    ],
+    "cool_hot_sense": [
+      "off",
+      "on"
+    ],
+    "even_wind": [
+      "off",
+      "on"
+    ],
+    "extreme_wind": [
+      "off",
+      "on"
+    ],
+    "fresh_air": [
+      "off",
+      "on"
+    ],
+    "gentle_wind_sense": [
+      "off",
+      "on"
+    ],
+    "intelligent_control": [
+      "off",
+      "on"
+    ],
+    "intelligent_wind": [
+      "off",
+      "on"
+    ],
+    "KEY_CLOSE_TIME": [
+      0
+    ],
+    "KEY_DRY": [
+      "off",
+      "on"
+    ],
+    "KEY_ECO": [
+      "off",
+      "on"
+    ],
+    "KEY_MODE": [
+      "auto",
+      "cool",
+      "dry",
+      "fan",
+      "heat",
+      "smart_dry"
+    ],
+    "KEY_OPEN_TIME": [
+      0
+    ],
+    "KEY_POWER": [
+      "off",
+      "on"
+    ],
+    "KEY_PTC": [
+      "off",
+      "on"
+    ],
+    "KEY_PURIFIER": [
+      "off",
+      "on"
+    ],
+    "KEY_STRONG_WIND": [
+      "off",
+      "on"
+    ],
+    "KEY_SWING_LR": [
+      "off",
+      "on"
+    ],
+    "KEY_SWING_LR_UNDER": [
+      "off",
+      "on"
+    ],
+    "KEY_SWING_UD": [
+      "off",
+      "on"
+    ],
+    "KEY_TIME_OFF": [
+      "off",
+      "on"
+    ],
+    "KEY_TIME_ON": [
+      "off",
+      "on"
+    ],
+    "KEY_TUBRO": [
+      "off",
+      "on"
+    ],
+    "KEY_VERSION": [
+      23
+    ],
+    "kick_quilt": [
+      "off",
+      "on"
+    ],
+    "little_angel": [
+      "off",
+      "on"
+    ],
+    "natural_wind": [
+      "off",
+      "on"
+    ],
+    "nobody_energy_save": [
+      "off",
+      "on"
+    ],
+    "parent_control": [
+      "off",
+      "on"
+    ],
+    "power_saving": [
+      "off",
+      "on"
+    ],
+    "pre_cool_hot": [
+      "off",
+      "on"
+    ],
+    "prevent_cold": [
+      "off",
+      "on"
+    ],
+    "prevent_super_cool": [
+      "off",
+      "on"
+    ],
+    "screen_display_now": [
+      "off",
+      "on"
+    ],
+    "security": [
+      "off",
+      "on"
+    ],
+    "self_clean": [
+      "off",
+      "on"
+    ],
+    "single_tuyere": [
+      "off",
+      "on"
+    ],
+    "small_temperature": [
+      0,
+      0.5
+    ],
+    "temperature_unit": [
+      0,
+      1
+    ],
+    "voice_control": [
+      "off",
+      "on"
+    ],
+    "water_pump": [
+      "off",
+      "on"
+    ],
+    "water_washing": [
+      "off",
+      "on"
+    ],
+    "wind_avoid": [
+      "off",
+      "on"
+    ],
+    "wind_straight": [
+      "off",
+      "on"
+    ],
+    "yb_wind_avoid": [
+      "off",
+      "on"
+    ]
+  },
+  "encodeBytes": {
+    "BYTE_CLIENT_MODE_MOBILE": 1,
+    "BYTE_CLOSE_TIMER_SWITCH_ON": 1,
+    "BYTE_START_TIMER_SWITCH_ON": 1,
+    "BYTE_TIMER_METHOD_REL": 1,
+    "BYTE_TIMER_SWITCH_ON": 1
   }
 }

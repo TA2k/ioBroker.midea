@@ -13,336 +13,339 @@
   },
   "strings": {
     "ali_manager": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "always_fell": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "appoint_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "appoint_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "appoint0": [
-      "1,",
-      "0,"
+      "0,",
+      "1,"
     ],
     "appoint1": [
-      "1,",
-      "0,"
+      "0,",
+      "1,"
     ],
     "appoint2": [
-      "1,",
-      "0,"
+      "0,",
+      "1,"
     ],
     "auto_off": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "baby_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "bath": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "bath_person": [
-      "children",
       "adult",
+      "children",
+      "off",
       "old_man",
-      "three_person",
-      "two_person",
       "one_person",
-      "off"
+      "three_person",
+      "two_person"
     ],
     "big_water": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "bottom_heat": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "bottom_temp": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "clean": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "cloud": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "cloud_appoint": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "communication_error": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "dad_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "door_status": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "efficient": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "ele_exception": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "elec_warning": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "eplus": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "fast_hot_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "fast_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "frequency_hot": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "func_select": [
-      "middle",
-      "low"
+      "low",
+      "middle"
     ],
     "get_temp": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "get_time": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "half_heat": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "heat": [
-      "whole",
       "half",
-      "none"
+      "none",
+      "whole"
     ],
     "hot_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "limit_error": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "machine": [
       "empty_machine",
       "real_machine"
     ],
     "memory": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "midea_manager": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "mode": [
-      "none",
-      "sterilization",
+      "adult",
+      "bath",
+      "children",
+      "cloud",
+      "efficient",
       "eplus",
       "fast_wash",
-      "summer",
-      "winter",
-      "efficient",
+      "memory",
       "night",
-      "children",
-      "adult",
+      "none",
       "old_man",
+      "one_person",
+      "shower",
+      "sterilization",
+      "summer",
       "three_person",
       "two_person",
-      "one_person",
-      "cloud",
       "wash",
-      "shower",
-      "bath",
-      "memory"
+      "winter"
     ],
     "mom_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "music": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "need_discharge": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "negative_ions": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "night": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "now_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "one_egg": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "people_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "protect": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "protect_show": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "safe": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "scene": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "screen_off": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "scroll_hot": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "sensor_error": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "show_h": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "shower": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "single_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "sleep": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "smart_sterilize": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "sound_dad": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "sterilization": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "sterilize_high_temp": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "summer": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "t_hot": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "tech_water": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "ti_protect": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "top_heat": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "two_egg": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "type_select": [
-      "valve",
-      "normal"
+      "normal",
+      "valve"
     ],
     "uv_sterilize": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "warm_power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "wash_with_temp": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "water_cyclic": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "water_flow": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "whole_heat": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "winter": [
-      "on",
-      "off"
+      "off",
+      "on"
     ]
   },
-  "bodyOffsets": {}
+  "bodyOffsets": {},
+  "exposedKeys": [],
+  "acceptedValues": {},
+  "encodeBytes": {}
 }

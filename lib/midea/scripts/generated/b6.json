@@ -5,10 +5,14 @@
   "fans": {},
   "keys": {},
   "values": {
+    "VALUE_OFF": "off",
+    "VALUE_ON": "on",
     "VALUE_VERSION": 1
   },
   "bytes": {},
   "locals": {
+    "VALUE_OFF": "off",
+    "VALUE_ON": "on",
     "VALUE_VERSION": 1
   },
   "strings": {
@@ -16,10 +20,10 @@
       "1"
     ],
     "error_type": [
-      "sensor_error",
       "hotclean_error",
-      "split_error",
-      "inverter_error"
+      "inverter_error",
+      "sensor_error",
+      "split_error"
     ],
     "is_error": [
       "1"
@@ -28,10 +32,15 @@
       "delay_off"
     ],
     "work_status_desc": [
+      "clean",
+      "hotclean",
       "power_off",
-      "working",
-      "power_off_delay"
+      "power_off_delay",
+      "working"
     ]
   },
-  "bodyOffsets": {}
+  "bodyOffsets": {},
+  "exposedKeys": [],
+  "acceptedValues": {},
+  "encodeBytes": {}
 }

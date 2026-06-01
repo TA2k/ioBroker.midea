@@ -3,7 +3,9 @@
   "applianceType": "0xdb",
   "modes": {},
   "fans": {},
-  "keys": {},
+  "keys": {
+    "KEY_RUNNING_WORK_STATUS": "running_status"
+  },
   "values": {
     "VALUE_VERSION": 41
   },
@@ -50,51 +52,119 @@
     "BYTE_RUNNING_WORK_STATUS_PAUSE": 3,
     "BYTE_RUNNING_WORK_STATUS_STANDBY": 1,
     "BYTE_RUNNING_WORK_STATUS_START": 2,
+    "KEY_RUNNING_WORK_STATUS": "running_status",
     "VALUE_VERSION": 41
   },
-  "strings": {
+  "strings": {},
+  "bodyOffsets": {},
+  "exposedKeys": [
+    "active_oxygen",
+    "add_rinse",
+    "ai_flag",
+    "appointment",
+    "appointment_time",
+    "beforehand_wash",
+    "dehydration_speed",
+    "dehydration_time",
+    "dehydration_time_value",
+    "detergent",
+    "dirty_degree",
+    "disinfectant",
+    "down_light",
+    "dryer",
+    "easy_ironing",
+    "error_code",
+    "expert_step",
+    "eye_wash",
+    "fast_clean_wash",
+    "favorite_memory",
+    "hy_pro",
+    "intelligent_wash",
+    "lock",
+    "memory",
+    "microbubble",
+    "mode",
+    "nightly",
+    "old_speedy",
+    "power",
+    "program",
+    "progress",
+    "project_no",
+    "remain_time",
+    "remote_control_flag",
+    "silent",
+    "soak",
+    "soak_count",
+    "softener",
+    "speedy",
+    "spray_wash",
+    "stains",
+    "steam_wash",
+    "strong_wash",
+    "super_clean_wash",
+    "temperature",
+    "ultraviolet_lamp",
+    "version",
+    "wash_time",
+    "wash_time_value",
+    "water_level",
+    "water_plus",
+    "wind_dispel"
+  ],
+  "acceptedValues": {
     "active_oxygen": [
-      "1",
-      "0"
+      "0",
+      "1"
     ],
     "add_rinse": [
-      "1",
-      "0"
+      "0",
+      "1"
     ],
     "ai_flag": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "appointment": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "beforehand_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "dehydration_speed": [
       "0",
-      "400",
-      "600",
-      "800",
       "1000",
       "1200",
+      "1300",
       "1400",
       "1600",
-      "1300"
+      "400",
+      "600",
+      "800"
+    ],
+    "dehydration_time": [
+      "<dehydrationMin>"
+    ],
+    "dehydration_time_value": [
+      "<dehydration_time_value>"
     ],
     "disinfectant": [
-      "1",
-      "0"
+      "0",
+      "1"
     ],
     "down_light": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "dryer": [
       "0",
       "1",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
       "2",
       "3",
       "4",
@@ -102,230 +172,249 @@
       "6",
       "7",
       "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13",
-      "14"
+      "9"
     ],
     "easy_ironing": [
-      "on",
-      "off"
+      "off",
+      "on"
+    ],
+    "error_code": [
+      "<errorCode>"
+    ],
+    "expert_step": [
+      "<expertStep>"
     ],
     "eye_wash": [
-      "1",
-      "0"
+      "0",
+      "1"
     ],
     "fast_clean_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
+    ],
+    "favorite_memory": [
+      "<favorite_memory>"
     ],
     "hy_pro": [
-      "1",
-      "0"
+      "0",
+      "1"
     ],
     "intelligent_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "lock": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "memory": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "microbubble": [
-      "1",
-      "0"
+      "0",
+      "1"
     ],
     "mode": [
-      "normal",
       "factory_test",
-      "service",
-      "normal_continus"
+      "normal",
+      "normal_continus",
+      "service"
     ],
     "nightly": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "old_speedy": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "power": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "program": [
-      "cotton",
-      "eco",
-      "fast_wash",
-      "mixed_wash",
-      "wool",
-      "ssp",
-      "sport_clothes",
-      "single_dehytration",
-      "rinsing_dehydration",
-      "big",
-      "baby_clothes",
-      "down_jacket",
-      "color",
-      "intelligent",
-      "quick_wash",
-      "shirt",
-      "fiber",
-      "enzyme",
-      "underwear",
-      "outdoor",
       "air_wash",
-      "single_drying",
-      "steep",
-      "kids",
-      "water_cotton",
-      "fast_wash_30",
-      "fast_wash_60",
-      "water_mixed_wash",
-      "water_fiber",
-      "water_kids",
-      "water_underwear",
-      "specialist",
-      "love",
-      "water_intelligent",
-      "water_steep",
-      "water_fast_wash_30",
-      "new_water_cotton",
-      "water_eco",
-      "wash_drying_60",
-      "self_wash_5",
-      "fast_wash_min",
-      "mixed_wash_min",
-      "dehydration_min",
-      "self_wash_min",
+      "allergy_care",
+      "aromatherapy",
+      "auto_dry",
+      "baby_clothes",
       "baby_clothes_min",
+      "bath_towel",
+      "big",
+      "bucket_dry",
+      "bulky",
+      "cold_wash",
+      "color",
+      "cook_wash",
+      "cotton",
+      "dehydration_min",
+      "delicates",
       "diy0",
       "diy1",
       "diy2",
-      "silk_wash",
-      "prevent_allergy",
-      "cold_wash",
-      "soft_wash",
-      "remove_mite_wash",
-      "water_intense_wash",
+      "down_jacket",
+      "drum_clean",
+      "eco",
+      "eco_40_60",
+      "enzyme",
       "fast_dry",
-      "water_outdoor",
-      "spring_autumn_wash",
-      "summer_wash",
-      "winter_wash",
-      "jean",
-      "new_clothes_wash",
-      "silk",
-      "insight_wash",
+      "fast_wash",
+      "fast_wash_30",
+      "fast_wash_60",
+      "fast_wash_min",
+      "fiber",
       "fitness_clothes",
-      "mink",
       "fresh_air",
-      "bucket_dry",
-      "jacket",
-      "bath_towel",
-      "night_fresh_wash",
+      "fresh_remove_wrinkle",
+      "greatwaves",
+      "green_wool",
       "heart_wash",
+      "insight_wash",
+      "intelligent",
+      "jacket",
+      "jean",
+      "kids",
+      "love",
+      "mink",
+      "mixed_wash",
+      "mixed_wash_min",
+      "new_clothes_wash",
+      "new_water_cotton",
+      "night_fresh_wash",
+      "outdoor",
+      "prevent_allergy",
+      "quick12",
+      "quick_wash",
+      "remove_mite_wash",
+      "rinsing_dehydration",
+      "self_wash_5",
+      "self_wash_min",
+      "shirt",
+      "silk",
+      "silk_wash",
+      "single_dehytration",
+      "single_drying",
+      "soft_wash",
+      "specialist",
+      "sport_clothes",
+      "spring_autumn_wash",
+      "ssp",
+      "standard",
+      "steam_care",
+      "steam_sterilize_wash",
+      "steep",
+      "sterilize_wash",
+      "summer_wash",
+      "time_dry",
+      "towels",
+      "underwear",
+      "wash45",
+      "wash_and_dry",
+      "wash_drying_60",
       "water_cold_wash",
+      "water_cotton",
+      "water_eco",
+      "water_fast_wash_30",
+      "water_fiber",
+      "water_intelligent",
+      "water_intense_wash",
+      "water_kids",
+      "water_mixed_wash",
+      "water_outdoor",
       "water_prevent_allergy",
       "water_remove_mite_wash",
       "water_ssp",
-      "standard",
-      "green_wool",
-      "cook_wash",
-      "fresh_remove_wrinkle",
-      "steam_sterilize_wash",
-      "aromatherapy",
-      "sterilize_wash",
-      "eco_40_60",
-      "steam_care",
-      "allergy_care",
-      "greatwaves",
-      "wash45",
-      "quick12",
-      "bulky",
+      "water_steep",
+      "water_underwear",
       "whites",
-      "towels",
-      "delicates",
-      "drum_clean",
-      "wash_and_dry",
-      "auto_dry",
-      "time_dry"
+      "winter_wash",
+      "wool"
+    ],
+    "progress": [
+      "<progress>"
+    ],
+    "remain_time": [
+      "<remainTime>"
     ],
     "remote_control_flag": [
-      "1",
-      "0"
+      "0",
+      "1"
     ],
     "silent": [
-      "1",
-      "0"
+      "0",
+      "1"
     ],
     "soak": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "soak_count": [
+      "0",
       "1",
       "2",
       "3",
       "4",
-      "5",
-      "0"
+      "5"
     ],
     "speedy": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "spray_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "steam_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "strong_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "super_clean_wash": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "temperature": [
       "0",
       "20",
       "30",
       "40",
+      "50",
       "60",
-      "95",
       "70",
       "90",
-      "50"
+      "95"
     ],
     "ultraviolet_lamp": [
-      "1",
-      "0"
+      "0",
+      "1"
+    ],
+    "version": [
+      "<VALUE_VERSION>"
+    ],
+    "wash_time": [
+      "<washTime>"
+    ],
+    "wash_time_value": [
+      "<wash_time_value>"
     ],
     "water_level": [
-      "low",
-      "mid",
+      "auto",
       "high",
-      "auto"
+      "low",
+      "mid"
     ],
     "water_plus": [
-      "1",
-      "0"
+      "0",
+      "1"
     ],
     "wind_dispel": [
-      "1",
-      "0"
+      "0",
+      "1"
     ]
   },
-  "bodyOffsets": {}
+  "encodeBytes": {}
 }

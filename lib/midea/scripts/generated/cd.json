@@ -3,8 +3,17 @@
   "applianceType": "0xcd",
   "modes": {},
   "fans": {},
-  "keys": {},
-  "values": {},
+  "keys": {
+    "KEY_ERROR_CODE": "error_code",
+    "KEY_MODE": "mode",
+    "KEY_POWER": "power",
+    "KEY_VERSION": "version"
+  },
+  "values": {
+    "VALUE_FUNCTION_OFF": "off",
+    "VALUE_FUNCTION_ON": "on",
+    "VALUE_VERSION": "10"
+  },
   "bytes": {
     "BYTE_AUTO_REPORT": 5,
     "BYTE_CONTROL_REQUEST": 2,
@@ -43,297 +52,947 @@
     "BYTE_QUERYL_REQUEST": 3,
     "BYTE_QUERYL_REQUEST_ONE": 1,
     "BYTE_QUERYL_REQUEST_THREE": 3,
-    "BYTE_QUERYL_REQUEST_TWO": 2
+    "BYTE_QUERYL_REQUEST_TWO": 2,
+    "KEY_ERROR_CODE": "error_code",
+    "KEY_MODE": "mode",
+    "KEY_POWER": "power",
+    "KEY_VERSION": "version",
+    "VALUE_FUNCTION_OFF": "off",
+    "VALUE_FUNCTION_ON": "on",
+    "VALUE_VERSION": "10"
   },
-  "strings": {
+  "strings": {},
+  "bodyOffsets": {},
+  "exposedKeys": [
+    "auto_sterilize_hour",
+    "auto_sterilize_minute",
+    "auto_sterilize_week",
+    "backwater_effect",
+    "bottom_elec_heat",
+    "compatibilizing_mode",
+    "compressor",
+    "compressor_top_temperature",
+    "condensator_temperature",
+    "dicaryon_heat",
+    "eco",
+    "elec_heat_support",
+    "energy_mode",
+    "fahrenheit_effect",
+    "four_way_valve",
+    "high_heat",
+    "high_wind",
+    "hotwater_level",
+    "low_wind",
+    "maintain_warn",
+    "maintain_warn_tag",
+    "middle_wind",
+    "multi_terminal",
+    "mute",
+    "open_ptc",
+    "open_ptc_temperature",
+    "order1_effect",
+    "order1_stoptimeHour",
+    "order1_stoptimeMin",
+    "order1_stoptimehour",
+    "order1_stoptimemin",
+    "order1_temp",
+    "order1_timeHour",
+    "order1_timeMin",
+    "order1_timehour",
+    "order1_timemin",
+    "order2_effect",
+    "order2_stoptimeHour",
+    "order2_stoptimeMin",
+    "order2_stoptimehour",
+    "order2_stoptimemin",
+    "order2_temp",
+    "order2_timeHour",
+    "order2_timeMin",
+    "order2_timehour",
+    "order2_timemin",
+    "outdoor_temperature",
+    "ptc_temperature",
+    "set_temperature",
+    "set_temperature_max",
+    "set_temperature_min",
+    "set_vacation_start_day",
+    "set_vacation_start_month",
+    "set_vacation_start_year",
+    "set_vacation_temperature",
+    "set_vacationdays",
+    "single_timer_off",
+    "single_timer_on",
+    "smart_grid",
+    "smart_mode",
+    "standard_mode",
+    "sterilize_effect",
+    "timer1_closeHour",
+    "timer1_closeMin",
+    "timer1_closehour",
+    "timer1_closemin",
+    "timer1_effect",
+    "timer1_modevalue",
+    "timer1_openHour",
+    "timer1_openMin",
+    "timer1_openhour",
+    "timer1_openmin",
+    "timer1_set_temperature",
+    "timer2_closeHour",
+    "timer2_closeMin",
+    "timer2_closehour",
+    "timer2_closemin",
+    "timer2_effect",
+    "timer2_modevalue",
+    "timer2_openHour",
+    "timer2_openMin",
+    "timer2_openhour",
+    "timer2_openmin",
+    "timer2_set_temperature",
+    "timer3_closehour",
+    "timer3_closemin",
+    "timer3_effect",
+    "timer3_modevalue",
+    "timer3_openhour",
+    "timer3_openmin",
+    "timer3_set_temperature",
+    "timer4_closehour",
+    "timer4_closemin",
+    "timer4_effect",
+    "timer4_modevalue",
+    "timer4_openhour",
+    "timer4_openmin",
+    "timer4_set_temperature",
+    "timer5_closehour",
+    "timer5_closemin",
+    "timer5_effect",
+    "timer5_modevalue",
+    "timer5_openhour",
+    "timer5_openmin",
+    "timer5_set_temperature",
+    "timer6_closehour",
+    "timer6_closemin",
+    "timer6_effect",
+    "timer6_modevalue",
+    "timer6_openhour",
+    "timer6_openmin",
+    "timer6_set_temperature",
+    "timer_amount",
+    "top_elec_heat",
+    "tr_temperature",
+    "type_info",
+    "vacation",
+    "water_box_bottom_temperature",
+    "water_box_temperature",
+    "water_box_top_temperature",
+    "water_pump",
+    "week0timer1_closetime",
+    "week0timer1_effect",
+    "week0timer1_modevalue",
+    "week0timer1_opentime",
+    "week0timer1_set_temperature",
+    "week0timer2_closetime",
+    "week0timer2_effect",
+    "week0timer2_modevalue",
+    "week0timer2_opentime",
+    "week0timer2_set_temperature",
+    "week0timer3_closetime",
+    "week0timer3_effect",
+    "week0timer3_modevalue",
+    "week0timer3_opentime",
+    "week0timer3_set_temperature",
+    "week0timer4_closetime",
+    "week0timer4_effect",
+    "week0timer4_modevalue",
+    "week0timer4_opentime",
+    "week0timer4_set_temperature",
+    "week0timer5_closetime",
+    "week0timer5_effect",
+    "week0timer5_modevalue",
+    "week0timer5_opentime",
+    "week0timer5_set_temperature",
+    "week0timer6_closetime",
+    "week0timer6_effect",
+    "week0timer6_modevalue",
+    "week0timer6_opentime",
+    "week0timer6_set_temperature",
+    "week1timer1_closetime",
+    "week1timer1_effect",
+    "week1timer1_modevalue",
+    "week1timer1_opentime",
+    "week1timer1_set_temperature",
+    "week1timer2_closetime",
+    "week1timer2_effect",
+    "week1timer2_modevalue",
+    "week1timer2_opentime",
+    "week1timer2_set_temperature",
+    "week1timer3_closetime",
+    "week1timer3_effect",
+    "week1timer3_modevalue",
+    "week1timer3_opentime",
+    "week1timer3_set_temperature",
+    "week1timer4_closetime",
+    "week1timer4_effect",
+    "week1timer4_modevalue",
+    "week1timer4_opentime",
+    "week1timer4_set_temperature",
+    "week1timer5_closetime",
+    "week1timer5_effect",
+    "week1timer5_modevalue",
+    "week1timer5_opentime",
+    "week1timer5_set_temperature",
+    "week1timer6_closetime",
+    "week1timer6_effect",
+    "week1timer6_modevalue",
+    "week1timer6_opentime",
+    "week1timer6_set_temperature",
+    "week2timer1_closetime",
+    "week2timer1_effect",
+    "week2timer1_modevalue",
+    "week2timer1_opentime",
+    "week2timer1_set_temperature",
+    "week2timer2_closetime",
+    "week2timer2_effect",
+    "week2timer2_modevalue",
+    "week2timer2_opentime",
+    "week2timer2_set_temperature",
+    "week2timer3_closetime",
+    "week2timer3_effect",
+    "week2timer3_modevalue",
+    "week2timer3_opentime",
+    "week2timer3_set_temperature",
+    "week2timer4_closetime",
+    "week2timer4_effect",
+    "week2timer4_modevalue",
+    "week2timer4_opentime",
+    "week2timer4_set_temperature",
+    "week2timer5_closetime",
+    "week2timer5_effect",
+    "week2timer5_modevalue",
+    "week2timer5_opentime",
+    "week2timer5_set_temperature",
+    "week2timer6_closetime",
+    "week2timer6_effect",
+    "week2timer6_modevalue",
+    "week2timer6_opentime",
+    "week2timer6_set_temperature",
+    "week3timer1_closetime",
+    "week3timer1_effect",
+    "week3timer1_modevalue",
+    "week3timer1_opentime",
+    "week3timer1_set_temperature",
+    "week3timer2_closetime",
+    "week3timer2_effect",
+    "week3timer2_modevalue",
+    "week3timer2_opentime",
+    "week3timer2_set_temperature",
+    "week3timer3_closetime",
+    "week3timer3_effect",
+    "week3timer3_modevalue",
+    "week3timer3_opentime",
+    "week3timer3_set_temperature",
+    "week3timer4_closetime",
+    "week3timer4_effect",
+    "week3timer4_modevalue",
+    "week3timer4_opentime",
+    "week3timer4_set_temperature",
+    "week3timer5_closetime",
+    "week3timer5_effect",
+    "week3timer5_modevalue",
+    "week3timer5_opentime",
+    "week3timer5_set_temperature",
+    "week3timer6_closetime",
+    "week3timer6_effect",
+    "week3timer6_modevalue",
+    "week3timer6_opentime",
+    "week3timer6_set_temperature",
+    "week4timer1_closetime",
+    "week4timer1_effect",
+    "week4timer1_modevalue",
+    "week4timer1_opentime",
+    "week4timer1_set_temperature",
+    "week4timer2_closetime",
+    "week4timer2_effect",
+    "week4timer2_modevalue",
+    "week4timer2_opentime",
+    "week4timer2_set_temperature",
+    "week4timer3_closetime",
+    "week4timer3_effect",
+    "week4timer3_modevalue",
+    "week4timer3_opentime",
+    "week4timer3_set_temperature",
+    "week4timer4_closetime",
+    "week4timer4_effect",
+    "week4timer4_modevalue",
+    "week4timer4_opentime",
+    "week4timer4_set_temperature",
+    "week4timer5_closetime",
+    "week4timer5_effect",
+    "week4timer5_modevalue",
+    "week4timer5_opentime",
+    "week4timer5_set_temperature",
+    "week4timer6_closetime",
+    "week4timer6_effect",
+    "week4timer6_modevalue",
+    "week4timer6_opentime",
+    "week4timer6_set_temperature",
+    "week5timer1_closetime",
+    "week5timer1_effect",
+    "week5timer1_modevalue",
+    "week5timer1_opentime",
+    "week5timer1_set_temperature",
+    "week5timer2_closetime",
+    "week5timer2_effect",
+    "week5timer2_modevalue",
+    "week5timer2_opentime",
+    "week5timer2_set_temperature",
+    "week5timer3_closetime",
+    "week5timer3_effect",
+    "week5timer3_modevalue",
+    "week5timer3_opentime",
+    "week5timer3_set_temperature",
+    "week5timer4_closetime",
+    "week5timer4_effect",
+    "week5timer4_modevalue",
+    "week5timer4_opentime",
+    "week5timer4_set_temperature",
+    "week5timer5_closetime",
+    "week5timer5_effect",
+    "week5timer5_modevalue",
+    "week5timer5_opentime",
+    "week5timer5_set_temperature",
+    "week5timer6_closetime",
+    "week5timer6_effect",
+    "week5timer6_modevalue",
+    "week5timer6_opentime",
+    "week5timer6_set_temperature",
+    "week6timer1_closetime",
+    "week6timer1_effect",
+    "week6timer1_modevalue",
+    "week6timer1_opentime",
+    "week6timer1_set_temperature",
+    "week6timer2_closetime",
+    "week6timer2_effect",
+    "week6timer2_modevalue",
+    "week6timer2_opentime",
+    "week6timer2_set_temperature",
+    "week6timer3_closetime",
+    "week6timer3_effect",
+    "week6timer3_modevalue",
+    "week6timer3_opentime",
+    "week6timer3_set_temperature",
+    "week6timer4_closetime",
+    "week6timer4_effect",
+    "week6timer4_modevalue",
+    "week6timer4_opentime",
+    "week6timer4_set_temperature",
+    "week6timer5_closetime",
+    "week6timer5_effect",
+    "week6timer5_modevalue",
+    "week6timer5_opentime",
+    "week6timer5_set_temperature",
+    "week6timer6_closetime",
+    "week6timer6_effect",
+    "week6timer6_modevalue",
+    "week6timer6_opentime",
+    "week6timer6_set_temperature"
+  ],
+  "acceptedValues": {
+    "backwater_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "bottom_elec_heat": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "compatibilizing_mode": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "compressor": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "dicaryon_heat": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "eco": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "energy_mode": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "fahrenheit_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "four_way_valve": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "high_heat": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "high_wind": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "low_wind": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "maintain_warn": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "maintain_warn_tag": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "middle_wind": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "multi_terminal": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "mute": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "open_ptc_temperature": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "order1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "order2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "single_timer_off": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "single_timer_on": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "smart_grid": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "smart_mode": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "standard_mode": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "sterilize_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
     "timer1_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "timer2_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "timer3_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "timer4_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "timer5_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "timer6_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "top_elec_heat": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "vacation": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "water_pump": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week0timer1_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week0timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week0timer2_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week0timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week0timer3_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week0timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week0timer4_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week0timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week0timer5_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week0timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week0timer6_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week1timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week1timer1_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week1timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week1timer2_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week1timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week1timer3_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week1timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week1timer4_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week1timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week1timer5_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week1timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week1timer6_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week2timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week2timer1_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week2timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week2timer2_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week2timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week2timer3_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week2timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week2timer4_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week2timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week2timer5_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week2timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week2timer6_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week3timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week3timer1_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week3timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week3timer2_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week3timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week3timer3_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week3timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week3timer4_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week3timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week3timer5_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week3timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week3timer6_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week4timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week4timer1_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week4timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week4timer2_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week4timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week4timer3_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week4timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week4timer4_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week4timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week4timer5_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week4timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week4timer6_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week5timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week5timer1_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week5timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week5timer2_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week5timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week5timer3_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week5timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week5timer4_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week5timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week5timer5_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week5timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week5timer6_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week6timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week6timer1_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week6timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week6timer2_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week6timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week6timer3_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week6timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week6timer4_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week6timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week6timer5_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
+    ],
+    "week6timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
     ],
     "week6timer6_modevalue": [
-      "energy",
-      "standard",
       "compatibilizing",
-      "smart"
+      "energy",
+      "smart",
+      "standard"
     ]
   },
-  "bodyOffsets": {}
+  "encodeBytes": {}
 }

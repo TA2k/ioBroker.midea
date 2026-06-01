@@ -45,6 +45,7 @@
     "KEY_STERILIZE_MINUTE": "sterilize_minute",
     "KEY_TEMPERATURE_FEEDBACK": "temperature_feedback",
     "KEY_TVOC": "tvoc",
+    "KEY_VERSION": "version",
     "KEY_VOICE_TYPE": "voice_type",
     "KEY_VOICE_VOLUME": "voice_volume",
     "KEY_WATERIONS": "waterions"
@@ -136,8 +137,12 @@
     "BYTE_WATERIONS_ON": 32
   },
   "locals": {
+    "KEY_VERSION": "version",
     "VALUE_VERSION": 20
   },
   "strings": {},
-  "bodyOffsets": {}
+  "bodyOffsets": {},
+  "exposedKeys": [],
+  "acceptedValues": {},
+  "encodeBytes": {}
 }

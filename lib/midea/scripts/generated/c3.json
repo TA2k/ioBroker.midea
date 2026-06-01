@@ -14,7 +14,8 @@
     "BIT4": 16,
     "BIT5": 32,
     "BIT6": 64,
-    "BIT7": 128
+    "BIT7": 128,
+    "JSON_VERSION": "20"
   },
   "strings": {
     "str_auto": [
@@ -78,5 +79,14 @@
       "water_temperature_type"
     ]
   },
-  "bodyOffsets": {}
+  "bodyOffsets": {},
+  "exposedKeys": [
+    "version"
+  ],
+  "acceptedValues": {
+    "version": [
+      "<JSON_VERSION>"
+    ]
+  },
+  "encodeBytes": {}
 }

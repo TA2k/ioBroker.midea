@@ -15,45 +15,179 @@
     "BYTE_QUERY_REQUEST": 3
   },
   "locals": {},
-  "strings": {
+  "strings": {},
+  "bodyOffsets": {},
+  "exposedKeys": [
+    "additional",
+    "air_left_hour",
+    "air_set_hour",
+    "air_status",
+    "airswitch",
+    "bright",
+    "bright_lack",
+    "cmd",
+    "device_version",
+    "diy_flag",
+    "diy_main_wash",
+    "diy_piao_wash",
+    "diy_times",
+    "door_auto_open",
+    "doorswitch",
+    "dry_set_min",
+    "dry_step_switch",
+    "dryswitch",
+    "error_code",
+    "humidity",
+    "ion_level",
+    "ion_status",
+    "ion_time_hour",
+    "ion_time_min",
+    "left_time",
+    "lock",
+    "mode",
+    "msg_type",
+    "operator",
+    "order_left_hour",
+    "order_left_min",
+    "order_set_hour",
+    "order_set_min",
+    "ota_version",
+    "softwater",
+    "softwater_lack",
+    "temperature",
+    "uvswitch",
+    "version",
+    "wash_region",
+    "wash_stage",
+    "water_lack",
+    "water_level",
+    "water_strong_level",
+    "waterswitch",
+    "work_status",
+    "wrong_operation"
+  ],
+  "acceptedValues": {
+    "additional": [
+      "<additional>"
+    ],
+    "air_left_hour": [
+      "<airLeftTime>"
+    ],
+    "air_set_hour": [
+      "<airSetTime>"
+    ],
+    "air_status": [
+      0,
+      1
+    ],
+    "airswitch": [
+      0,
+      1
+    ],
+    "bright_lack": [
+      0,
+      1
+    ],
+    "cmd": [
+      "<binData>"
+    ],
+    "diy_flag": [
+      0,
+      1
+    ],
+    "door_auto_open": [
+      0,
+      1
+    ],
+    "doorswitch": [
+      0,
+      1
+    ],
+    "dry_step_switch": [
+      0,
+      1
+    ],
+    "dryswitch": [
+      0,
+      1,
+      2
+    ],
+    "error_code": [
+      "<errorCode>"
+    ],
+    "left_time": [
+      "<leftTime>"
+    ],
     "lock": [
-      "on",
-      "off"
+      "off",
+      "on"
     ],
     "mode": [
-      "null",
-      "auto",
-      "intensive",
-      "normal",
-      "eco",
-      "glass",
-      "90min",
-      "rapid",
-      "soak",
       "1hour",
       "3in1",
+      "90min",
+      "auto",
+      "auto_daily",
+      "auto_glass",
       "auto_heavy",
+      "baby_care",
+      "eco",
+      "fruit",
+      "glass",
+      "hygiene",
+      "intensive",
+      "invalid",
+      "normal",
+      "null",
       "party",
       "quiet",
-      "auto_daily",
-      "hygiene",
+      "rapid",
       "self_clean",
-      "auto_glass",
-      "baby_care",
-      "fruit",
-      "invalid"
+      "soak"
+    ],
+    "msg_type": [
+      "<dataType>"
     ],
     "operator": [
-      "start",
-      "pause"
+      "",
+      "pause",
+      "start"
+    ],
+    "softwater": [
+      "<softwater>"
+    ],
+    "softwater_lack": [
+      0,
+      1
+    ],
+    "temperature": [
+      "<temperature>"
+    ],
+    "uvswitch": [
+      0,
+      1
+    ],
+    "wash_stage": [
+      "<washStage>"
+    ],
+    "water_lack": [
+      0,
+      1
+    ],
+    "waterswitch": [
+      0,
+      1
     ],
     "work_status": [
-      "power_off",
       "cancel",
-      "work",
+      "error",
       "order",
-      "error"
+      "power_off",
+      "work"
+    ],
+    "wrong_operation": [
+      "<wrongOperation>"
     ]
   },
-  "bodyOffsets": {}
+  "encodeBytes": {}
 }

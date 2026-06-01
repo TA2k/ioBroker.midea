@@ -134,5 +134,95 @@
         "mask": 127
       }
     ]
+  },
+  "exposedKeys": [
+    "KEY_ANION",
+    "KEY_CLOSE_TIME",
+    "KEY_CURRENT_HUMIDITY",
+    "KEY_FILTER_VALUE",
+    "KEY_HUMIDITY",
+    "KEY_MODE",
+    "KEY_OPEN_TIME",
+    "KEY_POWER",
+    "KEY_TANK_STATUS",
+    "KEY_TIME_OFF",
+    "KEY_TIME_ON",
+    "KEY_VERSION",
+    "KEY_WATER_FULL_LEVEL",
+    "KEY_WATER_FULL_TIME",
+    "KEY_WATER_PUMP",
+    "KEY_WATER_PUMP_ENABLE",
+    "KEY_WIND_SPEED",
+    "b5_anion",
+    "b5_auto_dry",
+    "b5_dry_clothes_mode",
+    "b5_filter_value",
+    "b5_light",
+    "b5_mode",
+    "b5_water_full_level",
+    "b5_water_pump",
+    "b5_wind_speed",
+    "light",
+    "sub_type",
+    "wind_swing_ud"
+  ],
+  "acceptedValues": {
+    "KEY_ANION": [
+      "off",
+      "on"
+    ],
+    "KEY_CLOSE_TIME": [
+      0
+    ],
+    "KEY_FILTER_VALUE": [
+      "off",
+      "on"
+    ],
+    "KEY_MODE": [
+      "auto",
+      "continuity",
+      "dry_clothes",
+      "dry_shoes",
+      "fan",
+      "set"
+    ],
+    "KEY_OPEN_TIME": [
+      0
+    ],
+    "KEY_POWER": [
+      "off",
+      "on"
+    ],
+    "KEY_TIME_OFF": [
+      "off",
+      "on"
+    ],
+    "KEY_TIME_ON": [
+      "off",
+      "on"
+    ],
+    "KEY_VERSION": [
+      9
+    ],
+    "KEY_WATER_PUMP": [
+      0,
+      1
+    ],
+    "KEY_WATER_PUMP_ENABLE": [
+      0,
+      1
+    ],
+    "sub_type": [
+      2
+    ],
+    "wind_swing_ud": [
+      "off",
+      "on"
+    ]
+  },
+  "encodeBytes": {
+    "BYTE_BUZZER_ON": 1,
+    "BYTE_CLOSE_TIMER_SWITCH_ON": 1,
+    "BYTE_START_TIMER_SWITCH_ON": 1
   }
 }

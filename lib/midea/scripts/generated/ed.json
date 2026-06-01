@@ -3,8 +3,12 @@
   "applianceType": "0xed",
   "modes": {},
   "fans": {},
-  "keys": {},
+  "keys": {
+    "KEY_VERSION": "version"
+  },
   "values": {
+    "VALUE_OFF": "off",
+    "VALUE_ON": "on",
     "VALUE_VERSION": 28
   },
   "bytes": {
@@ -24,8 +28,464 @@
     "BYTE_QUERY_REQUEST": 3,
     "BYTE_WASH_OFF": 127,
     "BYTE_WASH_ON": 128,
+    "KEY_VERSION": "version",
+    "VALUE_OFF": "off",
+    "VALUE_ON": "on",
     "VALUE_VERSION": 28
   },
   "strings": {},
-  "bodyOffsets": {}
+  "bodyOffsets": {},
+  "exposedKeys": [
+    "air_filter",
+    "basic_data",
+    "black_tea_temperature",
+    "bottle_capacity",
+    "bottle_consumption",
+    "bubble",
+    "bubble_status",
+    "coffee_temperature",
+    "communicate_error",
+    "cool",
+    "cool_status",
+    "cool_target_temperature",
+    "cool_temperature",
+    "coolwater_sensor_open_error",
+    "coolwater_sensor_short_error",
+    "countdown_filter_1",
+    "countdown_filter_2",
+    "countdown_filter_3",
+    "countdown_filter_4",
+    "countdown_filter_5",
+    "current_temperature",
+    "custom_temperature_1",
+    "custom_temperature_2",
+    "custom_temperature_3",
+    "custom_temperature_4",
+    "custom_temperature_5",
+    "custom_time_1",
+    "custom_time_2",
+    "custom_time_3",
+    "custom_time_4",
+    "custom_time_5",
+    "drainage",
+    "e_version",
+    "error",
+    "faucet_error",
+    "filter",
+    "filter_1",
+    "filter_2",
+    "filter_3",
+    "filter_4",
+    "filter_5",
+    "full",
+    "germicidal",
+    "germicidal_countdown",
+    "germicidal_left_time",
+    "green_tea_temperature",
+    "has_error",
+    "heat",
+    "heat_sensor_error",
+    "heat_start",
+    "heat_status",
+    "heat_tea",
+    "heat_temperature",
+    "heat_time",
+    "honey_temperature",
+    "hot_water_consumption",
+    "hotwater_sensor_open_error",
+    "hotwater_sensor_short_error",
+    "ice_gall_status",
+    "in_tds",
+    "in_temperature_sensor_error",
+    "instant_error",
+    "keep_warm",
+    "keep_warm_2",
+    "keep_warm_time",
+    "lack_water",
+    "leaking_error",
+    "life_1",
+    "life_2",
+    "life_3",
+    "life_4",
+    "life_5",
+    "lock",
+    "medlar_temperature",
+    "milk_temperature",
+    "out_hot_water",
+    "out_tds",
+    "out_temperature_sensor_error",
+    "out_water",
+    "overtime_error",
+    "power",
+    "quantify_1",
+    "quantify_2",
+    "quantify_3",
+    "quantify_4",
+    "quantify_5",
+    "red_tea_temperature",
+    "rfid_error",
+    "season",
+    "set_germicidal_countdown",
+    "set_germicidal_countdown_days",
+    "sleep",
+    "special_status",
+    "standby_status",
+    "tds_error",
+    "tea_temperature",
+    "uv_sterilize",
+    "vacation",
+    "warm_left_time",
+    "wash",
+    "wash_enable",
+    "wash_seconds",
+    "waste_water",
+    "water_consumption",
+    "water_consumption_ml",
+    "water_kind",
+    "water_litre",
+    "yellow_tea_temperature"
+  ],
+  "acceptedValues": {
+    "air_filter": [
+      "<byte32>",
+      "<byte40>"
+    ],
+    "basic_data": [
+      "<basicData>"
+    ],
+    "black_tea_temperature": [
+      "<byte15>"
+    ],
+    "bubble": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "bubble_status": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "coffee_temperature": [
+      "<byte12>"
+    ],
+    "communicate_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "cool": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "cool_status": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "cool_target_temperature": [
+      "<byte12>"
+    ],
+    "cool_temperature": [
+      "<byte21>"
+    ],
+    "coolwater_sensor_open_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "coolwater_sensor_short_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "countdown_filter_1": [
+      "<byte45>"
+    ],
+    "countdown_filter_2": [
+      "<byte50>"
+    ],
+    "countdown_filter_3": [
+      "<byte51>"
+    ],
+    "countdown_filter_4": [
+      "<byte52>"
+    ],
+    "countdown_filter_5": [
+      "<byte53>"
+    ],
+    "current_temperature": [
+      "<byte13>",
+      "<byte15>",
+      "<byte37>"
+    ],
+    "custom_temperature_1": [
+      "<byte20>"
+    ],
+    "custom_temperature_2": [
+      "<byte21>"
+    ],
+    "custom_temperature_3": [
+      "<byte22>"
+    ],
+    "custom_temperature_4": [
+      "<byte23>"
+    ],
+    "custom_temperature_5": [
+      "<byte24>"
+    ],
+    "custom_time_1": [
+      "<byte30>"
+    ],
+    "custom_time_2": [
+      "<byte31>"
+    ],
+    "custom_time_3": [
+      "<byte32>"
+    ],
+    "custom_time_4": [
+      "<byte33>"
+    ],
+    "custom_time_5": [
+      "<byte34>"
+    ],
+    "drainage": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "e_version": [
+      "<byte18>"
+    ],
+    "error": [
+      "<byte62>"
+    ],
+    "faucet_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "filter": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "full": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "germicidal": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "germicidal_countdown": [
+      "<byte32>",
+      "<byte33>"
+    ],
+    "germicidal_left_time": [
+      "<byte36>"
+    ],
+    "green_tea_temperature": [
+      "<byte16>"
+    ],
+    "has_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "heat": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "heat_sensor_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "heat_start": [
+      "<byte59>"
+    ],
+    "heat_status": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "heat_tea": [
+      "<byte39>"
+    ],
+    "heat_temperature": [
+      "<byte20>"
+    ],
+    "heat_time": [
+      "<byte19>"
+    ],
+    "honey_temperature": [
+      "<byte13>",
+      "<byte14>"
+    ],
+    "hotwater_sensor_open_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "hotwater_sensor_short_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "ice_gall_status": [
+      "<byte60>"
+    ],
+    "in_temperature_sensor_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "instant_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "keep_warm": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "keep_warm_2": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "keep_warm_time": [
+      "<byte43>"
+    ],
+    "lack_water": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "leaking_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "life_1": [
+      "<byte26>",
+      "<byte32>"
+    ],
+    "life_2": [
+      "<byte27>",
+      "<byte33>"
+    ],
+    "life_3": [
+      "<byte28>",
+      "<byte34>"
+    ],
+    "life_4": [
+      "<byte29>",
+      "<byte35>"
+    ],
+    "life_5": [
+      "<byte30>",
+      "<byte36>"
+    ],
+    "lock": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "medlar_temperature": [
+      "<byte13>"
+    ],
+    "milk_temperature": [
+      "<byte14>",
+      "<byte15>"
+    ],
+    "out_hot_water": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "out_temperature_sensor_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "out_water": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "overtime_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "power": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "quantify_1": [
+      "<byte25>"
+    ],
+    "quantify_2": [
+      "<byte26>"
+    ],
+    "quantify_3": [
+      "<byte27>"
+    ],
+    "quantify_4": [
+      "<byte28>"
+    ],
+    "quantify_5": [
+      "<byte29>"
+    ],
+    "red_tea_temperature": [
+      "<byte14>"
+    ],
+    "rfid_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "season": [
+      0,
+      1
+    ],
+    "set_germicidal_countdown": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "set_germicidal_countdown_days": [
+      "<byte35>"
+    ],
+    "sleep": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "special_status": [
+      "<byte34>"
+    ],
+    "standby_status": [
+      0,
+      1,
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "tds_error": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "tea_temperature": [
+      "<byte12>"
+    ],
+    "uv_sterilize": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "vacation": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "wash": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "wash_enable": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "wash_seconds": [
+      "<byte47>"
+    ],
+    "waste_water": [
+      "<VALUE_OFF>",
+      "<VALUE_ON>"
+    ],
+    "water_consumption_ml": [
+      "<byte46>"
+    ],
+    "water_kind": [
+      "<byte33>",
+      "<byte34>"
+    ],
+    "yellow_tea_temperature": [
+      "<byte17>"
+    ]
+  },
+  "encodeBytes": {}
 }
