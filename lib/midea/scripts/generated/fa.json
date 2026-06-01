@@ -1,0 +1,268 @@
+{
+  "source": "T_0000_FA_560000F3_2023011001.lua",
+  "applianceType": "0xfa",
+  "modes": {},
+  "fans": {},
+  "keys": {},
+  "values": {
+    "VALUE_VERSION": 34
+  },
+  "bytes": {},
+  "locals": {
+    "VALUE_VERSION": 34
+  },
+  "strings": {},
+  "bodyOffsets": {},
+  "exposedKeys": [
+    "air_dry_switch",
+    "anion",
+    "anophelifuge",
+    "area1_gear",
+    "area1_time",
+    "area2_gear",
+    "area2_time",
+    "auto_power_off",
+    "auto_power_off_flag",
+    "back_gear",
+    "battery_level",
+    "battery_status",
+    "body_feeling_scan",
+    "breath_light",
+    "btCount",
+    "btMacs",
+    "charge",
+    "charge_feedback",
+    "current_angle",
+    "display_on_off",
+    "dust_info",
+    "dust_life_time",
+    "dust_reset",
+    "electrolytic_water",
+    "error_code",
+    "filter_life_time",
+    "filter_replace_info",
+    "filter_reset",
+    "gear",
+    "humidify",
+    "humidify_feedback",
+    "humidity",
+    "lock",
+    "lr_diy_down_percent",
+    "lr_diy_swing",
+    "lr_diy_up_percent",
+    "mode",
+    "pm25",
+    "pm25_value",
+    "power",
+    "protocol_version",
+    "real_gear",
+    "scene",
+    "sensorBattery",
+    "sensorHumidify",
+    "sensorTemperature",
+    "sleep_sensor",
+    "spin_switch",
+    "swing",
+    "swing_angle",
+    "swing_direction",
+    "target_angle",
+    "temp_wind_switch",
+    "temperature",
+    "temperature_feedback",
+    "timer_off_hour",
+    "timer_off_minute",
+    "timer_on_hour",
+    "timer_on_minute",
+    "ud_diy_down_percent",
+    "ud_diy_swing",
+    "ud_diy_up_percent",
+    "ud_swing_angle",
+    "version",
+    "voice",
+    "water_feedback",
+    "waterions",
+    "windSpeedPercent"
+  ],
+  "acceptedValues": {
+    "air_dry_switch": [
+      "off",
+      "on"
+    ],
+    "anion": [
+      "off",
+      "on"
+    ],
+    "anophelifuge": [
+      "off",
+      "on"
+    ],
+    "auto_power_off": [
+      "off",
+      "on"
+    ],
+    "auto_power_off_flag": [
+      "<propertyTemp>"
+    ],
+    "back_gear": [
+      "<back_gear>"
+    ],
+    "battery_level": [
+      "<battery_level>"
+    ],
+    "battery_status": [
+      "charging",
+      "invalid",
+      "normal"
+    ],
+    "body_feeling_scan": [
+      "off",
+      "on"
+    ],
+    "breath_light": [
+      "off",
+      "on"
+    ],
+    "charge": [
+      "off",
+      "on"
+    ],
+    "charge_feedback": [
+      "off",
+      "run",
+      "standby"
+    ],
+    "display_on_off": [
+      "off",
+      "on",
+      "on1"
+    ],
+    "dust_info": [
+      "off",
+      "on"
+    ],
+    "dust_life_time": [
+      "<dust_life_time>"
+    ],
+    "dust_reset": [
+      "off",
+      "on"
+    ],
+    "electrolytic_water": [
+      "off",
+      "on"
+    ],
+    "filter_life_time": [
+      "<filter_life_time>"
+    ],
+    "filter_replace_info": [
+      "invalid",
+      "off",
+      "on"
+    ],
+    "filter_reset": [
+      "off",
+      "on"
+    ],
+    "gear": [
+      "<gear>"
+    ],
+    "humidify_feedback": [
+      "<humidify_feedback>"
+    ],
+    "humidity": [
+      "<humidity>"
+    ],
+    "lock": [
+      "off",
+      "on"
+    ],
+    "lr_diy_down_percent": [
+      "<lr_diy_down_percent>"
+    ],
+    "lr_diy_swing": [
+      "off",
+      "on"
+    ],
+    "lr_diy_up_percent": [
+      "<lr_diy_up_percent>"
+    ],
+    "power": [
+      "off",
+      "on"
+    ],
+    "real_gear": [
+      "<real_gear>"
+    ],
+    "scene": [
+      "ac",
+      "child",
+      "none",
+      "old",
+      "read",
+      "sleep"
+    ],
+    "sensorTemperature": [
+      "<sensorTemperature>"
+    ],
+    "sleep_sensor": [
+      "leave",
+      "none",
+      "sleep",
+      "wake"
+    ],
+    "spin_switch": [
+      "off",
+      "on"
+    ],
+    "swing": [
+      "off",
+      "on"
+    ],
+    "temp_wind_switch": [
+      "off",
+      "on"
+    ],
+    "temperature": [
+      128
+    ],
+    "timer_off_hour": [
+      "<timer_off_hour>"
+    ],
+    "timer_off_minute": [
+      "<timer_off_minute>"
+    ],
+    "timer_on_hour": [
+      "<timer_on_hour>"
+    ],
+    "timer_on_minute": [
+      "<timer_on_minute>"
+    ],
+    "ud_diy_down_percent": [
+      "<ud_diy_down_percent>"
+    ],
+    "ud_diy_swing": [
+      "off",
+      "on"
+    ],
+    "ud_diy_up_percent": [
+      "<ud_diy_up_percent>"
+    ],
+    "version": [
+      "<VALUE_VERSION>"
+    ],
+    "water_feedback": [
+      "full",
+      "invalid",
+      "shortage"
+    ],
+    "waterions": [
+      "invalid",
+      "off",
+      "on"
+    ],
+    "windSpeedPercent": [
+      255
+    ]
+  },
+  "encodeBytes": {}
+}

@@ -1,11 +1,38 @@
 {
-  "source": "T_0000_C3_171H120F_2023062601.lua",
+  "source": "T_0000_C3_171000AU_2024010201.lua",
   "applianceType": "0xc3",
   "modes": {},
   "fans": {},
-  "keys": {},
-  "values": {},
-  "bytes": {},
+  "keys": {
+    "KEY_ERROR_CODE": "error_code",
+    "KEY_MODE": "mode",
+    "KEY_POWER": "power",
+    "KEY_VERSION": "version"
+  },
+  "values": {
+    "VALUE_CEL": "celsius",
+    "VALUE_FAH": "fahrenh",
+    "VALUE_FUNCTION_OFF": "off",
+    "VALUE_FUNCTION_ON": "on",
+    "VALUE_INVALID": "invalid",
+    "VALUE_MUTE_LEV1": "lve1",
+    "VALUE_MUTE_LEV2": "lve2",
+    "VALUE_VALID": "valid",
+    "VALUE_VERSION": "12"
+  },
+  "bytes": {
+    "BYTE_AUTO_REPORT": 4,
+    "BYTE_CONTRL_SUBCMD": 1,
+    "BYTE_CONTROL_REQUEST": 2,
+    "BYTE_DEVICE_TYPE": 195,
+    "BYTE_PERIODIC_REPORT_SUBCMD": 145,
+    "BYTE_PROTOCOL_HEAD": 170,
+    "BYTE_PROTOCOL_LENGTH": 10,
+    "BYTE_QUERYL_REQUEST": 3,
+    "BYTE_RUNPARA1_SUBCMD": 2,
+    "BYTE_RUNPARA2_SUBCMD": 13,
+    "BYTE_SN_SUBCMD": 12
+  },
   "locals": {
     "BIT0": 1,
     "BIT1": 2,
@@ -15,77 +42,2333 @@
     "BIT5": 32,
     "BIT6": 64,
     "BIT7": 128,
-    "JSON_VERSION": "20"
+    "BYTE_AUTO_REPORT": 4,
+    "BYTE_CONTRL_SUBCMD": 1,
+    "BYTE_CONTROL_REQUEST": 2,
+    "BYTE_DEVICE_TYPE": 195,
+    "BYTE_PERIODIC_REPORT_SUBCMD": 145,
+    "BYTE_PROTOCOL_HEAD": 170,
+    "BYTE_PROTOCOL_LENGTH": 10,
+    "BYTE_QUERYL_REQUEST": 3,
+    "BYTE_RUNPARA1_SUBCMD": 2,
+    "BYTE_RUNPARA2_SUBCMD": 13,
+    "BYTE_SN_SUBCMD": 12,
+    "KEY_ERROR_CODE": "error_code",
+    "KEY_MODE": "mode",
+    "KEY_POWER": "power",
+    "KEY_VERSION": "version",
+    "TEMP_OFFSET": 35,
+    "VALUE_CEL": "celsius",
+    "VALUE_FAH": "fahrenh",
+    "VALUE_FUNCTION_OFF": "off",
+    "VALUE_FUNCTION_ON": "on",
+    "VALUE_INVALID": "invalid",
+    "VALUE_MUTE_LEV1": "lve1",
+    "VALUE_MUTE_LEV2": "lve2",
+    "VALUE_VALID": "valid",
+    "VALUE_VERSION": "12"
   },
-  "strings": {
-    "str_auto": [
-      "auto"
-    ],
-    "str_control": [
-      "control"
-    ],
-    "str_control_type": [
-      "control_type"
-    ],
-    "str_cool": [
-      "cool"
-    ],
-    "str_dhw": [
-      "dhw"
-    ],
-    "str_fan_coil": [
-      "fan_coil"
-    ],
-    "str_floor_heat": [
-      "floor_heat"
-    ],
-    "str_heat": [
-      "heat"
-    ],
-    "str_level_1": [
-      "level_1"
-    ],
-    "str_level_2": [
-      "level_2"
-    ],
-    "str_off": [
-      "off"
-    ],
-    "str_on": [
-      "on"
-    ],
-    "str_query": [
-      "query"
-    ],
-    "str_query_type": [
-      "query_type"
-    ],
-    "str_radiatior": [
-      "radiatior"
-    ],
-    "str_room_temperature_type": [
-      "room_temperature_type"
-    ],
-    "str_s8_invalid": [
-      "0x7f"
-    ],
-    "str_status": [
-      "status"
-    ],
-    "str_u8_invalid": [
-      "0xff"
-    ],
-    "str_water_temperature_type": [
-      "water_temperature_type"
-    ]
-  },
+  "strings": {},
   "bodyOffsets": {},
   "exposedKeys": [
-    "version"
+    "ahs_total_run_tim",
+    "box_bottom_temp",
+    "capacity_hp",
+    "comp_24h_kwh",
+    "comp_frq",
+    "comp_run_tim",
+    "comp_sta",
+    "comp_total_kwh",
+    "comp_total_run_tim",
+    "data_sub_type",
+    "data_type",
+    "dc_current",
+    "dc_voltage",
+    "eheat_24h_kwh",
+    "eheat_current",
+    "eheat_total_kwh",
+    "error_code",
+    "exv_drg",
+    "fan_total_run_tim",
+    "fg_IBHEnable",
+    "force_heat",
+    "force_heat_timer1_effect",
+    "force_heat_timer1_en",
+    "force_heat_timer1_start_time_hour",
+    "force_heat_timer1_start_time_min",
+    "force_heat_timer1_valid",
+    "force_heat_timer2_effect",
+    "force_heat_timer2_en",
+    "force_heat_timer2_start_time_hour",
+    "force_heat_timer2_start_time_min",
+    "force_heat_timer2_valid",
+    "force_heat_timer3_effect",
+    "force_heat_timer3_en",
+    "force_heat_timer3_start_time_hour",
+    "force_heat_timer3_start_time_min",
+    "force_heat_timer3_valid",
+    "force_heat_timer4_effect",
+    "force_heat_timer4_en",
+    "force_heat_timer4_start_time_hour",
+    "force_heat_timer4_start_time_min",
+    "force_heat_timer4_valid",
+    "force_heat_timer5_effect",
+    "force_heat_timer5_en",
+    "force_heat_timer5_start_time_hour",
+    "force_heat_timer5_start_time_min",
+    "force_heat_timer5_valid",
+    "force_heat_timer6_effect",
+    "force_heat_timer6_en",
+    "force_heat_timer6_start_time_hour",
+    "force_heat_timer6_start_time_min",
+    "force_heat_timer6_valid",
+    "force_heat_valid",
+    "force_sterilize_en",
+    "heat_pump_work_temp_limit",
+    "hmi_version",
+    "hmi_version_day",
+    "hmi_version_month",
+    "hmi_version_year",
+    "hpc_value",
+    "hybrid_en",
+    "hybrid_sta",
+    "hybrid_valid",
+    "ibh1_sta",
+    "ibh1_total_run_tim",
+    "ibh2_sta",
+    "ibh2_total_run_tim",
+    "idu_version",
+    "idu_version_day",
+    "idu_version_month",
+    "idu_version_year",
+    "limit_frq_code",
+    "muteTimer1_effect",
+    "muteTimer1_en",
+    "muteTimer1_start_time_hour",
+    "muteTimer1_start_time_min",
+    "muteTimer1_valid",
+    "muteTimer2_effect",
+    "muteTimer2_en",
+    "muteTimer2_start_time_hour",
+    "muteTimer2_start_time_min",
+    "muteTimer2_valid",
+    "muteTimer3_effect",
+    "muteTimer3_en",
+    "muteTimer3_start_time_hour",
+    "muteTimer3_start_time_min",
+    "muteTimer3_valid",
+    "muteTimer4_effect",
+    "muteTimer4_en",
+    "muteTimer4_start_time_hour",
+    "muteTimer4_start_time_min",
+    "muteTimer4_valid",
+    "muteTimer5_effect",
+    "muteTimer5_en",
+    "muteTimer5_start_time_hour",
+    "muteTimer5_start_time_min",
+    "muteTimer5_valid",
+    "muteTimer6_effect",
+    "muteTimer6_en",
+    "muteTimer6_start_time_hour",
+    "muteTimer6_start_time_min",
+    "muteTimer6_valid",
+    "mute_en",
+    "mute_lev",
+    "mute_timer1_lev",
+    "mute_timer2_lev",
+    "mute_timer3_lev",
+    "mute_timer4_lev",
+    "mute_timer5_lev",
+    "mute_timer6_lev",
+    "mute_valid",
+    "odu_current",
+    "odu_fan_spd",
+    "odu_mac_type",
+    "odu_run_cmd",
+    "odu_sn_code",
+    "odu_version",
+    "odu_version_day",
+    "odu_version_month",
+    "odu_version_year",
+    "odu_voltage",
+    "online_num",
+    "open_ptc",
+    "opt_backup_en",
+    "opt_backup_sta",
+    "opt_backup_valid",
+    "power_total",
+    "pressure_h",
+    "pressure_l",
+    "ptc_temperature",
+    "pumpi_total_run_tim",
+    "pumpo_Sta",
+    "pumps_sta",
+    "run_mode",
+    "set_temperature",
+    "set_vacation_end_day",
+    "set_vacation_end_month",
+    "set_vacation_end_year",
+    "set_vacation_mode",
+    "set_vacation_start_day",
+    "set_vacation_start_month",
+    "set_vacation_start_year",
+    "smart_grid",
+    "smart_grid_lev",
+    "smart_grid_sta",
+    "smart_grid_valid",
+    "solar_energy_en",
+    "solar_energy_sta",
+    "solar_energy_valid",
+    "solar_use_way",
+    "sterilize_cycle",
+    "sterilize_en",
+    "sterilize_hour",
+    "sterilize_min",
+    "sterilize_sta",
+    "sterilize_temperature",
+    "sterilize_valid",
+    "t1_temp",
+    "t2_temp",
+    "t2b_temp",
+    "t3_temp",
+    "t4_temp",
+    "t5s_def",
+    "t5s_max",
+    "t5s_min",
+    "t5u_temp",
+    "tbh_total_run_tim",
+    "td_def",
+    "td_max",
+    "td_min",
+    "temp_unit",
+    "tf_temp",
+    "th_temp",
+    "timer1_close_time_hour",
+    "timer1_close_time_min",
+    "timer1_effect",
+    "timer1_open_time_hour",
+    "timer1_open_time_min",
+    "timer1_set_mode",
+    "timer1_set_temp",
+    "timer1_valid",
+    "timer2_close_time_hour",
+    "timer2_close_time_min",
+    "timer2_effect",
+    "timer2_open_time_hour",
+    "timer2_open_time_min",
+    "timer2_set_mode",
+    "timer2_set_temp",
+    "timer2_valid",
+    "timer3_close_time_hour",
+    "timer3_close_time_min",
+    "timer3_effect",
+    "timer3_open_time_hour",
+    "timer3_open_time_min",
+    "timer3_set_mode",
+    "timer3_set_temp",
+    "timer3_valid",
+    "timer4_close_time_hour",
+    "timer4_close_time_min",
+    "timer4_effect",
+    "timer4_open_time_hour",
+    "timer4_open_time_min",
+    "timer4_set_mode",
+    "timer4_set_temp",
+    "timer4_valid",
+    "timer5_close_time_hour",
+    "timer5_close_time_min",
+    "timer5_effect",
+    "timer5_open_time_hour",
+    "timer5_open_time_min",
+    "timer5_set_mode",
+    "timer5_set_temp",
+    "timer5_valid",
+    "timer6_close_time_hour",
+    "timer6_close_time_min",
+    "timer6_effect",
+    "timer6_open_time_hour",
+    "timer6_open_time_min",
+    "timer6_set_mode",
+    "timer6_set_temp",
+    "timer6_valid",
+    "timer_type",
+    "total_kwh",
+    "tp_temp",
+    "tr_temperature",
+    "trdh_def",
+    "trdh_max",
+    "trdh_min",
+    "treh_temp",
+    "tseh_temp",
+    "twin_temp",
+    "twout_temp",
+    "type_info",
+    "vacation_en",
+    "vacation_sta",
+    "vacation_valid",
+    "water_flow",
+    "water_pres",
+    "week0_timer1_close_time_hour",
+    "week0_timer1_close_time_min",
+    "week0_timer1_effect",
+    "week0_timer1_frc_he_set",
+    "week0_timer1_mut_lev",
+    "week0_timer1_mut_set",
+    "week0_timer1_open_time_hour",
+    "week0_timer1_open_time_min",
+    "week0_timer1_set_mode",
+    "week0_timer1_set_temp",
+    "week0_timer1_valid",
+    "week0_timer2_close_time_hour",
+    "week0_timer2_close_time_min",
+    "week0_timer2_effect",
+    "week0_timer2_frc_he_set",
+    "week0_timer2_mut_lev",
+    "week0_timer2_mut_set",
+    "week0_timer2_open_time_hour",
+    "week0_timer2_open_time_min",
+    "week0_timer2_set_mode",
+    "week0_timer2_set_temp",
+    "week0_timer2_valid",
+    "week0_timer3_close_time_hour",
+    "week0_timer3_close_time_min",
+    "week0_timer3_effect",
+    "week0_timer3_frc_he_set",
+    "week0_timer3_mut_lev",
+    "week0_timer3_mut_set",
+    "week0_timer3_open_time_hour",
+    "week0_timer3_open_time_min",
+    "week0_timer3_set_mode",
+    "week0_timer3_set_temp",
+    "week0_timer3_valid",
+    "week0_timer4_close_time_hour",
+    "week0_timer4_close_time_min",
+    "week0_timer4_effect",
+    "week0_timer4_frc_he_set",
+    "week0_timer4_mut_lev",
+    "week0_timer4_mut_set",
+    "week0_timer4_open_time_hour",
+    "week0_timer4_open_time_min",
+    "week0_timer4_set_mode",
+    "week0_timer4_set_temp",
+    "week0_timer4_valid",
+    "week0_timer5_close_time_hour",
+    "week0_timer5_close_time_min",
+    "week0_timer5_effect",
+    "week0_timer5_frc_he_set",
+    "week0_timer5_mut_lev",
+    "week0_timer5_mut_set",
+    "week0_timer5_open_time_hour",
+    "week0_timer5_open_time_min",
+    "week0_timer5_set_mode",
+    "week0_timer5_set_temp",
+    "week0_timer5_valid",
+    "week0_timer6_close_time_hour",
+    "week0_timer6_close_time_min",
+    "week0_timer6_effect",
+    "week0_timer6_frc_he_set",
+    "week0_timer6_mut_lev",
+    "week0_timer6_mut_set",
+    "week0_timer6_open_time_hour",
+    "week0_timer6_open_time_min",
+    "week0_timer6_set_mode",
+    "week0_timer6_set_temp",
+    "week0_timer6_valid",
+    "week1_timer1_close_time_hour",
+    "week1_timer1_close_time_min",
+    "week1_timer1_effect",
+    "week1_timer1_frc_he_set",
+    "week1_timer1_mut_lev",
+    "week1_timer1_mut_set",
+    "week1_timer1_open_time_hour",
+    "week1_timer1_open_time_min",
+    "week1_timer1_set_mode",
+    "week1_timer1_set_temp",
+    "week1_timer1_valid",
+    "week1_timer2_close_time_hour",
+    "week1_timer2_close_time_min",
+    "week1_timer2_effect",
+    "week1_timer2_frc_he_set",
+    "week1_timer2_mut_lev",
+    "week1_timer2_mut_set",
+    "week1_timer2_open_time_hour",
+    "week1_timer2_open_time_min",
+    "week1_timer2_set_mode",
+    "week1_timer2_set_temp",
+    "week1_timer2_valid",
+    "week1_timer3_close_time_hour",
+    "week1_timer3_close_time_min",
+    "week1_timer3_effect",
+    "week1_timer3_frc_he_set",
+    "week1_timer3_mut_lev",
+    "week1_timer3_mut_set",
+    "week1_timer3_open_time_hour",
+    "week1_timer3_open_time_min",
+    "week1_timer3_set_mode",
+    "week1_timer3_set_temp",
+    "week1_timer3_valid",
+    "week1_timer4_close_time_hour",
+    "week1_timer4_close_time_min",
+    "week1_timer4_effect",
+    "week1_timer4_frc_he_set",
+    "week1_timer4_mut_lev",
+    "week1_timer4_mut_set",
+    "week1_timer4_open_time_hour",
+    "week1_timer4_open_time_min",
+    "week1_timer4_set_mode",
+    "week1_timer4_set_temp",
+    "week1_timer4_valid",
+    "week1_timer5_close_time_hour",
+    "week1_timer5_close_time_min",
+    "week1_timer5_effect",
+    "week1_timer5_frc_he_set",
+    "week1_timer5_mut_lev",
+    "week1_timer5_mut_set",
+    "week1_timer5_open_time_hour",
+    "week1_timer5_open_time_min",
+    "week1_timer5_set_mode",
+    "week1_timer5_set_temp",
+    "week1_timer5_valid",
+    "week1_timer6_close_time_hour",
+    "week1_timer6_close_time_min",
+    "week1_timer6_effect",
+    "week1_timer6_frc_he_set",
+    "week1_timer6_mut_lev",
+    "week1_timer6_mut_set",
+    "week1_timer6_open_time_hour",
+    "week1_timer6_open_time_min",
+    "week1_timer6_set_mode",
+    "week1_timer6_set_temp",
+    "week1_timer6_valid",
+    "week2_timer1_close_time_hour",
+    "week2_timer1_close_time_min",
+    "week2_timer1_effect",
+    "week2_timer1_frc_he_set",
+    "week2_timer1_mut_lev",
+    "week2_timer1_mut_set",
+    "week2_timer1_open_time_hour",
+    "week2_timer1_open_time_min",
+    "week2_timer1_set_mode",
+    "week2_timer1_set_temp",
+    "week2_timer1_valid",
+    "week2_timer2_close_time_hour",
+    "week2_timer2_close_time_min",
+    "week2_timer2_effect",
+    "week2_timer2_frc_he_set",
+    "week2_timer2_mut_lev",
+    "week2_timer2_mut_set",
+    "week2_timer2_open_time_hour",
+    "week2_timer2_open_time_min",
+    "week2_timer2_set_mode",
+    "week2_timer2_set_temp",
+    "week2_timer2_valid",
+    "week2_timer3_close_time_hour",
+    "week2_timer3_close_time_min",
+    "week2_timer3_effect",
+    "week2_timer3_frc_he_set",
+    "week2_timer3_mut_lev",
+    "week2_timer3_mut_set",
+    "week2_timer3_open_time_hour",
+    "week2_timer3_open_time_min",
+    "week2_timer3_set_mode",
+    "week2_timer3_set_temp",
+    "week2_timer3_valid",
+    "week2_timer4_close_time_hour",
+    "week2_timer4_close_time_min",
+    "week2_timer4_effect",
+    "week2_timer4_frc_he_set",
+    "week2_timer4_mut_lev",
+    "week2_timer4_mut_set",
+    "week2_timer4_open_time_hour",
+    "week2_timer4_open_time_min",
+    "week2_timer4_set_mode",
+    "week2_timer4_set_temp",
+    "week2_timer4_valid",
+    "week2_timer5_close_time_hour",
+    "week2_timer5_close_time_min",
+    "week2_timer5_effect",
+    "week2_timer5_frc_he_set",
+    "week2_timer5_mut_lev",
+    "week2_timer5_mut_set",
+    "week2_timer5_open_time_hour",
+    "week2_timer5_open_time_min",
+    "week2_timer5_set_mode",
+    "week2_timer5_set_temp",
+    "week2_timer5_valid",
+    "week2_timer6_close_time_hour",
+    "week2_timer6_close_time_min",
+    "week2_timer6_effect",
+    "week2_timer6_frc_he_set",
+    "week2_timer6_mut_lev",
+    "week2_timer6_mut_set",
+    "week2_timer6_open_time_hour",
+    "week2_timer6_open_time_min",
+    "week2_timer6_set_mode",
+    "week2_timer6_set_temp",
+    "week2_timer6_valid",
+    "week3_timer1_close_time_hour",
+    "week3_timer1_close_time_min",
+    "week3_timer1_effect",
+    "week3_timer1_frc_he_set",
+    "week3_timer1_mut_lev",
+    "week3_timer1_mut_set",
+    "week3_timer1_open_time_hour",
+    "week3_timer1_open_time_min",
+    "week3_timer1_set_mode",
+    "week3_timer1_set_temp",
+    "week3_timer1_valid",
+    "week3_timer2_close_time_hour",
+    "week3_timer2_close_time_min",
+    "week3_timer2_effect",
+    "week3_timer2_frc_he_set",
+    "week3_timer2_mut_lev",
+    "week3_timer2_mut_set",
+    "week3_timer2_open_time_hour",
+    "week3_timer2_open_time_min",
+    "week3_timer2_set_mode",
+    "week3_timer2_set_temp",
+    "week3_timer2_valid",
+    "week3_timer3_close_time_hour",
+    "week3_timer3_close_time_min",
+    "week3_timer3_effect",
+    "week3_timer3_frc_he_set",
+    "week3_timer3_mut_lev",
+    "week3_timer3_mut_set",
+    "week3_timer3_open_time_hour",
+    "week3_timer3_open_time_min",
+    "week3_timer3_set_mode",
+    "week3_timer3_set_temp",
+    "week3_timer3_valid",
+    "week3_timer4_close_time_hour",
+    "week3_timer4_close_time_min",
+    "week3_timer4_effect",
+    "week3_timer4_frc_he_set",
+    "week3_timer4_mut_lev",
+    "week3_timer4_mut_set",
+    "week3_timer4_open_time_hour",
+    "week3_timer4_open_time_min",
+    "week3_timer4_set_mode",
+    "week3_timer4_set_temp",
+    "week3_timer4_valid",
+    "week3_timer5_close_time_hour",
+    "week3_timer5_close_time_min",
+    "week3_timer5_effect",
+    "week3_timer5_frc_he_set",
+    "week3_timer5_mut_lev",
+    "week3_timer5_mut_set",
+    "week3_timer5_open_time_hour",
+    "week3_timer5_open_time_min",
+    "week3_timer5_set_mode",
+    "week3_timer5_set_temp",
+    "week3_timer5_valid",
+    "week3_timer6_close_time_hour",
+    "week3_timer6_close_time_min",
+    "week3_timer6_effect",
+    "week3_timer6_frc_he_set",
+    "week3_timer6_mut_lev",
+    "week3_timer6_mut_set",
+    "week3_timer6_open_time_hour",
+    "week3_timer6_open_time_min",
+    "week3_timer6_set_mode",
+    "week3_timer6_set_temp",
+    "week3_timer6_valid",
+    "week4_timer1_close_time_hour",
+    "week4_timer1_close_time_min",
+    "week4_timer1_effect",
+    "week4_timer1_frc_he_set",
+    "week4_timer1_mut_lev",
+    "week4_timer1_mut_set",
+    "week4_timer1_open_time_hour",
+    "week4_timer1_open_time_min",
+    "week4_timer1_set_mode",
+    "week4_timer1_set_temp",
+    "week4_timer1_valid",
+    "week4_timer2_close_time_hour",
+    "week4_timer2_close_time_min",
+    "week4_timer2_effect",
+    "week4_timer2_frc_he_set",
+    "week4_timer2_mut_lev",
+    "week4_timer2_mut_set",
+    "week4_timer2_open_time_hour",
+    "week4_timer2_open_time_min",
+    "week4_timer2_set_mode",
+    "week4_timer2_set_temp",
+    "week4_timer2_valid",
+    "week4_timer3_close_time_hour",
+    "week4_timer3_close_time_min",
+    "week4_timer3_effect",
+    "week4_timer3_frc_he_set",
+    "week4_timer3_mut_lev",
+    "week4_timer3_mut_set",
+    "week4_timer3_open_time_hour",
+    "week4_timer3_open_time_min",
+    "week4_timer3_set_mode",
+    "week4_timer3_set_temp",
+    "week4_timer3_valid",
+    "week4_timer4_close_time_hour",
+    "week4_timer4_close_time_min",
+    "week4_timer4_effect",
+    "week4_timer4_frc_he_set",
+    "week4_timer4_mut_lev",
+    "week4_timer4_mut_set",
+    "week4_timer4_open_time_hour",
+    "week4_timer4_open_time_min",
+    "week4_timer4_set_mode",
+    "week4_timer4_set_temp",
+    "week4_timer4_valid",
+    "week4_timer5_close_time_hour",
+    "week4_timer5_close_time_min",
+    "week4_timer5_effect",
+    "week4_timer5_frc_he_set",
+    "week4_timer5_mut_lev",
+    "week4_timer5_mut_set",
+    "week4_timer5_open_time_hour",
+    "week4_timer5_open_time_min",
+    "week4_timer5_set_mode",
+    "week4_timer5_set_temp",
+    "week4_timer5_valid",
+    "week4_timer6_close_time_hour",
+    "week4_timer6_close_time_min",
+    "week4_timer6_effect",
+    "week4_timer6_frc_he_set",
+    "week4_timer6_mut_lev",
+    "week4_timer6_mut_set",
+    "week4_timer6_open_time_hour",
+    "week4_timer6_open_time_min",
+    "week4_timer6_set_mode",
+    "week4_timer6_set_temp",
+    "week4_timer6_valid",
+    "week5_timer1_close_time_hour",
+    "week5_timer1_close_time_min",
+    "week5_timer1_effect",
+    "week5_timer1_frc_he_set",
+    "week5_timer1_mut_lev",
+    "week5_timer1_mut_set",
+    "week5_timer1_open_time_hour",
+    "week5_timer1_open_time_min",
+    "week5_timer1_set_mode",
+    "week5_timer1_set_temp",
+    "week5_timer1_valid",
+    "week5_timer2_close_time_hour",
+    "week5_timer2_close_time_min",
+    "week5_timer2_effect",
+    "week5_timer2_frc_he_set",
+    "week5_timer2_mut_lev",
+    "week5_timer2_mut_set",
+    "week5_timer2_open_time_hour",
+    "week5_timer2_open_time_min",
+    "week5_timer2_set_mode",
+    "week5_timer2_set_temp",
+    "week5_timer2_valid",
+    "week5_timer3_close_time_hour",
+    "week5_timer3_close_time_min",
+    "week5_timer3_effect",
+    "week5_timer3_frc_he_set",
+    "week5_timer3_mut_lev",
+    "week5_timer3_mut_set",
+    "week5_timer3_open_time_hour",
+    "week5_timer3_open_time_min",
+    "week5_timer3_set_mode",
+    "week5_timer3_set_temp",
+    "week5_timer3_valid",
+    "week5_timer4_close_time_hour",
+    "week5_timer4_close_time_min",
+    "week5_timer4_effect",
+    "week5_timer4_frc_he_set",
+    "week5_timer4_mut_lev",
+    "week5_timer4_mut_set",
+    "week5_timer4_open_time_hour",
+    "week5_timer4_open_time_min",
+    "week5_timer4_set_mode",
+    "week5_timer4_set_temp",
+    "week5_timer4_valid",
+    "week5_timer5_close_time_hour",
+    "week5_timer5_close_time_min",
+    "week5_timer5_effect",
+    "week5_timer5_frc_he_set",
+    "week5_timer5_mut_lev",
+    "week5_timer5_mut_set",
+    "week5_timer5_open_time_hour",
+    "week5_timer5_open_time_min",
+    "week5_timer5_set_mode",
+    "week5_timer5_set_temp",
+    "week5_timer5_valid",
+    "week5_timer6_close_time_hour",
+    "week5_timer6_close_time_min",
+    "week5_timer6_effect",
+    "week5_timer6_frc_he_set",
+    "week5_timer6_mut_lev",
+    "week5_timer6_mut_set",
+    "week5_timer6_open_time_hour",
+    "week5_timer6_open_time_min",
+    "week5_timer6_set_mode",
+    "week5_timer6_valid",
+    "week6_timer1_close_time_hour",
+    "week6_timer1_close_time_min",
+    "week6_timer1_effect",
+    "week6_timer1_frc_he_set",
+    "week6_timer1_mut_lev",
+    "week6_timer1_mut_set",
+    "week6_timer1_open_time_hour",
+    "week6_timer1_open_time_min",
+    "week6_timer1_set_mode",
+    "week6_timer1_set_temp",
+    "week6_timer1_valid",
+    "week6_timer2_close_time_hour",
+    "week6_timer2_close_time_min",
+    "week6_timer2_effect",
+    "week6_timer2_frc_he_set",
+    "week6_timer2_mut_lev",
+    "week6_timer2_mut_set",
+    "week6_timer2_open_time_hour",
+    "week6_timer2_open_time_min",
+    "week6_timer2_set_mode",
+    "week6_timer2_set_temp",
+    "week6_timer2_valid",
+    "week6_timer3_close_time_hour",
+    "week6_timer3_close_time_min",
+    "week6_timer3_effect",
+    "week6_timer3_frc_he_set",
+    "week6_timer3_mut_lev",
+    "week6_timer3_mut_set",
+    "week6_timer3_open_time_hour",
+    "week6_timer3_open_time_min",
+    "week6_timer3_set_mode",
+    "week6_timer3_set_temp",
+    "week6_timer3_valid",
+    "week6_timer4_close_time_hour",
+    "week6_timer4_close_time_min",
+    "week6_timer4_effect",
+    "week6_timer4_frc_he_set",
+    "week6_timer4_mut_lev",
+    "week6_timer4_mut_set",
+    "week6_timer4_open_time_hour",
+    "week6_timer4_open_time_min",
+    "week6_timer4_set_mode",
+    "week6_timer4_set_temp",
+    "week6_timer4_valid",
+    "week6_timer5_close_time_hour",
+    "week6_timer5_close_time_min",
+    "week6_timer5_effect",
+    "week6_timer5_frc_he_set",
+    "week6_timer5_mut_lev",
+    "week6_timer5_mut_set",
+    "week6_timer5_open_time_hour",
+    "week6_timer5_open_time_min",
+    "week6_timer5_set_mode",
+    "week6_timer5_set_temp",
+    "week6_timer5_valid",
+    "week6_timer6_close_time_hour",
+    "week6_timer6_close_time_min",
+    "week6_timer6_effect",
+    "week6_timer6_frc_he_set",
+    "week6_timer6_mut_lev",
+    "week6_timer6_mut_set",
+    "week6_timer6_open_time_hour",
+    "week6_timer6_open_time_min",
+    "week6_timer6_set_mode",
+    "week6_timer6_set_temp",
+    "week6_timer6_valid"
   ],
   "acceptedValues": {
-    "version": [
-      "<JSON_VERSION>"
+    "comp_sta": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "data_sub_type": [
+      "<msgSubType>"
+    ],
+    "fg_IBHEnable": [
+      "invalid",
+      "valid"
+    ],
+    "force_heat": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "force_heat_timer1_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_timer1_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "force_heat_timer1_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_timer2_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_timer2_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "force_heat_timer2_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_timer3_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_timer3_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "force_heat_timer3_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_timer4_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_timer4_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "force_heat_timer4_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_timer5_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_timer5_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "force_heat_timer5_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_timer6_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_timer6_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "force_heat_timer6_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_heat_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "force_sterilize_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "hybrid_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "hybrid_sta": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "hybrid_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "ibh1_sta": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "ibh2_sta": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "mute_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "mute_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "mute_timer1_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "mute_timer2_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "mute_timer3_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "mute_timer4_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "mute_timer5_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "mute_timer6_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "mute_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer1_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer1_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "muteTimer1_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer2_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer2_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "muteTimer2_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer3_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer3_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "muteTimer3_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer4_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer4_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "muteTimer4_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer5_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer5_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "muteTimer5_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer6_effect": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "muteTimer6_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "muteTimer6_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "odu_run_cmd": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "open_ptc": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "opt_backup_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "opt_backup_sta": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "opt_backup_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "pumpo_Sta": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "pumps_sta": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "run_mode": [
+      "antifreezing",
+      "defrost",
+      "off",
+      "run",
+      "standby"
+    ],
+    "set_vacation_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "smart_grid": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "smart_grid_sta": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "smart_grid_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "solar_energy_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "solar_energy_sta": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "solar_energy_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "solar_use_way": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "sterilize_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "sterilize_sta": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "sterilize_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "temp_unit": [
+      "<VALUE_CEL>",
+      "<VALUE_FAH>"
+    ],
+    "timer_type": [
+      "order",
+      "point",
+      "section"
+    ],
+    "timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "timer1_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "timer1_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "timer2_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "timer2_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "timer3_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "timer3_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "timer4_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "timer4_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "timer5_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "timer5_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "timer6_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "timer6_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "vacation_en": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "vacation_sta": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "vacation_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week0_timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer1_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer1_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week0_timer1_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer1_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week0_timer1_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week0_timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer2_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer2_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week0_timer2_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer2_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week0_timer2_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week0_timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer3_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer3_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week0_timer3_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer3_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week0_timer3_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week0_timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer4_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer4_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week0_timer4_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer4_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week0_timer4_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week0_timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer5_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer5_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week0_timer5_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer5_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week0_timer5_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week0_timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer6_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer6_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week0_timer6_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week0_timer6_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week0_timer6_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week1_timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer1_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer1_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week1_timer1_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer1_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week1_timer1_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week1_timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer2_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer2_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week1_timer2_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer2_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week1_timer2_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week1_timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer3_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer3_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week1_timer3_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer3_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week1_timer3_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week1_timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer4_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer4_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week1_timer4_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer4_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week1_timer4_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week1_timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer5_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer5_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week1_timer5_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer5_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week1_timer5_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week1_timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer6_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer6_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week1_timer6_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week1_timer6_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week1_timer6_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week2_timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer1_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer1_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week2_timer1_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer1_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week2_timer1_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week2_timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer2_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer2_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week2_timer2_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer2_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week2_timer2_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week2_timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer3_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer3_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week2_timer3_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer3_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week2_timer3_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week2_timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer4_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer4_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week2_timer4_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer4_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week2_timer4_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week2_timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer5_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer5_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week2_timer5_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer5_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week2_timer5_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week2_timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer6_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer6_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week2_timer6_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week2_timer6_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week2_timer6_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week3_timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer1_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer1_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week3_timer1_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer1_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week3_timer1_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week3_timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer2_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer2_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week3_timer2_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer2_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week3_timer2_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week3_timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer3_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer3_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week3_timer3_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer3_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week3_timer3_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week3_timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer4_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer4_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week3_timer4_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer4_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week3_timer4_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week3_timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer5_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer5_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week3_timer5_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer5_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week3_timer5_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week3_timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer6_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer6_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week3_timer6_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week3_timer6_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week3_timer6_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week4_timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer1_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer1_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week4_timer1_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer1_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week4_timer1_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week4_timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer2_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer2_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week4_timer2_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer2_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week4_timer2_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week4_timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer3_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer3_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week4_timer3_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer3_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week4_timer3_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week4_timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer4_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer4_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week4_timer4_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer4_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week4_timer4_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week4_timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer5_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer5_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week4_timer5_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer5_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week4_timer5_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week4_timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer6_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer6_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week4_timer6_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week4_timer6_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week4_timer6_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week5_timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer1_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer1_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week5_timer1_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer1_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week5_timer1_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week5_timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer2_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer2_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week5_timer2_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer2_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week5_timer2_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week5_timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer3_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer3_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week5_timer3_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer3_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week5_timer3_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week5_timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer4_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer4_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week5_timer4_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer4_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week5_timer4_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week5_timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer5_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer5_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week5_timer5_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer5_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week5_timer5_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week5_timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer6_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer6_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week5_timer6_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week5_timer6_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week5_timer6_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week6_timer1_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer1_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer1_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week6_timer1_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer1_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week6_timer1_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week6_timer2_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer2_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer2_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week6_timer2_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer2_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week6_timer2_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week6_timer3_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer3_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer3_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week6_timer3_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer3_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week6_timer3_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week6_timer4_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer4_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer4_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week6_timer4_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer4_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week6_timer4_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week6_timer5_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer5_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer5_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week6_timer5_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer5_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week6_timer5_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
+    ],
+    "week6_timer6_effect": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer6_frc_he_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer6_mut_lev": [
+      "<VALUE_MUTE_LEV1>",
+      "<VALUE_MUTE_LEV2>"
+    ],
+    "week6_timer6_mut_set": [
+      "<VALUE_FUNCTION_OFF>",
+      "<VALUE_FUNCTION_ON>"
+    ],
+    "week6_timer6_set_mode": [
+      "auto",
+      "cool",
+      "dhw",
+      "heat",
+      "off",
+      "waterpump"
+    ],
+    "week6_timer6_valid": [
+      "<VALUE_INVALID>",
+      "<VALUE_VALID>"
     ]
   },
   "encodeBytes": {}

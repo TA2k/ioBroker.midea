@@ -1,5 +1,5 @@
 {
-  "source": "T_0000_AC_24.lua",
+  "source": "T_0000_AC_00000Q1B_2024013001.lua",
   "applianceType": "0xac",
   "modes": {
     "1": "auto",
@@ -26,6 +26,7 @@
     "KEY_COMFORT_POWER_SAVE": "comfort_power_save",
     "KEY_COMFORT_SLEEP": "comfort_sleep",
     "KEY_COMFORT_SLEEP_CURVE": "comfort_sleep_curve",
+    "KEY_COMMON_FILTER_RESET": "common_filter_reset",
     "KEY_COOL_HOT_SENSE": "cool_hot_sense",
     "KEY_COOL_TEMP_DOWN": "cool_temp_down",
     "KEY_COOL_TEMP_UP": "cool_temp_up",
@@ -114,7 +115,7 @@
     "VALUE_RUN_STATE": "runstate",
     "VALUE_RUNNING": "running",
     "VALUE_STOP": "stopped",
-    "VALUE_VERSION": 23
+    "VALUE_VERSION": 51
   },
   "bytes": {
     "BYTE_BUZZER_OFF": 0,
@@ -243,6 +244,12 @@
         "mask": 127
       }
     ],
+    "machine_type": [
+      {
+        "offset": 3,
+        "mask": null
+      }
+    ],
     "modeValue": [
       {
         "offset": 2,
@@ -273,7 +280,17 @@
         "mask": 1
       }
     ],
+    "product_type": [
+      {
+        "offset": 2,
+        "mask": null
+      }
+    ],
     "propertyNumber": [
+      {
+        "offset": 1,
+        "mask": null
+      },
       {
         "offset": 1,
         "mask": null
@@ -295,6 +312,12 @@
         "mask": 32
       }
     ],
+    "sleep_status": [
+      {
+        "offset": 10,
+        "mask": 1
+      }
+    ],
     "smallIndoorTemperatureValue": [
       {
         "offset": 15,
@@ -306,6 +329,10 @@
       }
     ],
     "smartDryValue": [
+      {
+        "offset": 13,
+        "mask": 127
+      },
       {
         "offset": 19,
         "mask": 127
@@ -371,29 +398,53 @@
     "KEY_TIME_ON",
     "KEY_TUBRO",
     "KEY_VERSION",
+    "anion",
     "auto_prevent_straight_wind",
     "auto_temp_down",
     "auto_temp_up",
     "b5_8_heat",
+    "b5_air_ieco",
     "b5_anion",
     "b5_body_check",
+    "b5_comfort",
+    "b5_cvp",
     "b5_eco",
     "b5_electricity",
+    "b5_emergent_heat_wind",
+    "b5_end_ieco",
     "b5_fa_no_wind_sense",
     "b5_fahrenheit",
     "b5_filter_check",
     "b5_filter_remind",
+    "b5_fresh_air",
+    "b5_guide_strip_type",
+    "b5_has_icheck",
+    "b5_heat_ptc_wind",
     "b5_humidity",
+    "b5_ieco_switch",
     "b5_jet_cool",
+    "b5_main_horizontal_guide_strip_1",
+    "b5_main_horizontal_guide_strip_2",
+    "b5_main_horizontal_guide_strip_3",
+    "b5_main_horizontal_guide_strip_4",
     "b5_mode",
+    "b5_new_wind_sense",
     "b5_next_frame",
     "b5_no_wind_sense",
     "b5_nobody_energy_save",
+    "b5_parent_control",
     "b5_prevent_straight_wind",
+    "b5_prevent_straight_wind_select",
     "b5_ptc",
+    "b5_rate_select",
     "b5_screen_display",
     "b5_self_clean",
+    "b5_sound",
     "b5_strong_wind",
+    "b5_sup_horizontal_guide_strip_1",
+    "b5_sup_horizontal_guide_strip_2",
+    "b5_sup_horizontal_guide_strip_3",
+    "b5_sup_horizontal_guide_strip_4",
     "b5_temperature_0",
     "b5_temperature_1",
     "b5_temperature_2",
@@ -401,19 +452,30 @@
     "b5_temperature_4",
     "b5_temperature_5",
     "b5_temperature_6",
+    "b5_twins_machine",
+    "b5_wind_around",
     "b5_wind_avoid",
     "b5_wind_speed",
     "b5_wind_straight",
     "b5_wind_swing",
+    "b5_wind_swing_lr_angle",
+    "b5_wind_swing_ud_angle",
     "body_check",
     "child_prevent_cold_wind",
+    "comfort",
     "comfort_power_save",
     "comfort_sleep",
     "cool_hot_sense",
+    "cool_strong_wind_amount",
+    "cool_strong_wind_speed",
     "cool_temp_down",
     "cool_temp_up",
     "current_humidity",
+    "cvp",
     "degree8_heat",
+    "dr_time",
+    "dr_time_hour",
+    "dr_time_min",
     "even_wind",
     "extreme_wind",
     "extreme_wind_level",
@@ -429,19 +491,46 @@
     "fresh_filter_timeout",
     "fresh_filter_timeout_ae2",
     "gentle_wind_sense",
+    "guide_strip_type",
+    "has_cool_heat_amount",
+    "has_icheck",
     "heat_temp_down",
     "heat_temp_up",
+    "ieco_expansion_valve",
+    "ieco_frame",
+    "ieco_indoor_wind_speed",
+    "ieco_number",
+    "ieco_outdoor_wind_speed",
+    "ieco_switch",
+    "ieco_target_rate",
+    "in_code",
+    "in_version",
+    "independent_ptc",
     "indoor_humidity",
     "intelligent_control",
     "intelligent_wind",
     "jet_cool",
+    "k1_value",
+    "k2_value",
+    "k3_value",
+    "k4_value",
     "kick_quilt",
     "little_angel",
+    "machine_type",
+    "main_horizontal_guide_strip_1",
+    "main_horizontal_guide_strip_2",
+    "main_horizontal_guide_strip_3",
+    "main_horizontal_guide_strip_4",
+    "mito_cool",
+    "mito_heat",
     "natural_wind",
+    "new_wind_sense",
     "no_wind_sense",
     "no_wind_sense_level",
     "nobody_energy_save",
     "operating_time",
+    "out_code",
+    "out_version",
     "parent_control",
     "parent_control_temp_down",
     "parent_control_temp_up",
@@ -453,17 +542,30 @@
     "prevent_straight_wind",
     "prevent_straight_wind_flag",
     "prevent_straight_wind_lr",
+    "prevent_straight_wind_select",
     "prevent_super_cool",
+    "product_type",
     "protocolType",
+    "rate_select",
     "real_time_power",
+    "real_time_power_10",
     "remote_control_lock",
     "remote_control_lock_control",
     "screen_display_now",
     "security",
     "self_clean",
     "single_tuyere",
+    "sleep_status",
     "small_temperature",
+    "sound",
+    "sup_horizontal_guide_strip_1",
+    "sup_horizontal_guide_strip_2",
+    "sup_horizontal_guide_strip_3",
+    "sup_horizontal_guide_strip_4",
+    "t2_heat",
     "temperature_unit",
+    "tp_heat",
+    "twins_machine",
     "voice_control",
     "voice_control_new",
     "volume_control",
@@ -472,6 +574,8 @@
     "water_washing_manual",
     "water_washing_stage",
     "water_washing_time",
+    "wind_around",
+    "wind_around_ud",
     "wind_avoid",
     "wind_straight",
     "wind_swing_lr_angle",
@@ -512,6 +616,10 @@
       "on"
     ],
     "gentle_wind_sense": [
+      "off",
+      "on"
+    ],
+    "independent_ptc": [
       "off",
       "on"
     ],
@@ -586,7 +694,7 @@
       "on"
     ],
     "KEY_VERSION": [
-      23
+      51
     ],
     "kick_quilt": [
       "off",
@@ -675,8 +783,8 @@
   },
   "encodeBytes": {
     "BYTE_CLIENT_MODE_MOBILE": 1,
-    "BYTE_CLOSE_TIMER_SWITCH_ON": 1,
-    "BYTE_START_TIMER_SWITCH_ON": 1,
+    "BYTE_CLOSE_TIMER_SWITCH_ON": 2,
+    "BYTE_START_TIMER_SWITCH_ON": 2,
     "BYTE_TIMER_METHOD_REL": 1,
     "BYTE_TIMER_SWITCH_ON": 1
   }
