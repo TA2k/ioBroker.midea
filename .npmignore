@@ -1,0 +1,23 @@
+# npm-only ignores. The package's `files` whitelist in package.json
+# already enumerates what to ship — this file removes nested
+# node_modules and dev-only artefacts that would otherwise sneak in.
+
+# Nested package's installed deps. They are devDependencies of the
+# offline scripts under lib/midea/scripts/ — when a user actually
+# wants to run those scripts they `npm install` inside lib/midea/.
+lib/midea/node_modules/
+
+# Tests, fixtures, references — never published.
+test/
+.references/
+.dev-server/
+.commitinfo
+.idea/
+.vscode/
+*.code-workspace
+nbproject/
+Thumbs.db
+.DS_Store
+*.log
+admin/i18n/flat.txt
+admin/i18n/*/flat.txt

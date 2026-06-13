@@ -47,7 +47,11 @@
   "files": [
     "admin{,/!(src)/**}/!(tsconfig|tsconfig.*|.eslintrc).{json,json5}",
     "admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
-    "lib/",
+    "lib/*.js",
+    "lib/midea/*.js",
+    "lib/midea/devices/*.js",
+    "lib/midea/scripts/**/*",
+    "lib/midea/README.md",
     "www/",
     "io-package.json",
     "LICENSE",
