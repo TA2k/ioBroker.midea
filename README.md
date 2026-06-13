@@ -202,6 +202,9 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+### 1.8.5 (2026-06-13)
+- Improve Device detection
+
 ### 1.8.4 (2026-06-01)
 - Minor Bugfixes
 
