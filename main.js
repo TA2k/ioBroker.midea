@@ -799,6 +799,8 @@ class MideaAdapter extends utils.Adapter {
                 }
             } catch (err) {
                 this.log.warn(`Cloud listAppliances failed: ${errMessage(err)}`);
+                this.log.info(`Please check if you have a correct MSmartHome App account or register a new account`)
+
                 await this.setStateAsync("info.connection", false, true);
             }
         }
