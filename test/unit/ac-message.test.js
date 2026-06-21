@@ -261,17 +261,19 @@ describe("AC C1 power/runtime/humidity parsing", function () {
         assert.equal(parsed.realtimePower.toFixed(1), "11223.3");
     });
 
-    it("method=3 (MIXED, default) — bytes treated as raw base-100 digits", function () {
+    it("default method=1 (BCD) — nibble-decoded digits", function () {
         const body = Buffer.alloc(20);
         body[0] = 0xC1;
         body[3] = 0x44;
-        // Total energy: 0x12*1e6 + 0x34*1e4 + 0x56*1e2 + 0x78 = 18*1e6 + 52*1e4 + 86*100 + 120 = 18,528,720 / 100 = 185287.20
+        // Total energy: each byte decoded as two BCD digits, four bytes
+        // chain via *100. 0x12,0x34,0x56,0x78 → 12, 34, 56, 78
+        //  = 12*1e6 + 34*1e4 + 56*100 + 78 = 12,345,678 / 100 = 123456.78
         body[4] = 0x12; body[5] = 0x34; body[6] = 0x56; body[7] = 0x78;
         body[16] = 0x11; body[17] = 0x22; body[18] = 0x33;
-        // Realtime: 0x11*1e4 + 0x22*1e2 + 0x33 = 17*10000 + 34*100 + 51 = 173,451 / 10 = 17345.1
+        // Realtime: 11, 22, 33 → 11*1e4 + 22*100 + 33 = 112,233 / 10 = 11223.3
         const parsed = parseFrame(buildC1Reply(body));
-        assert.equal(parsed.totalEnergyConsumption.toFixed(2), "185287.20");
-        assert.equal(parsed.realtimePower.toFixed(1), "17345.1");
+        assert.equal(parsed.totalEnergyConsumption.toFixed(2), "123456.78");
+        assert.equal(parsed.realtimePower.toFixed(1), "11223.3");
     });
 
     it("method=2 (BINARY) — total/current as uint32_be / 10", function () {
@@ -353,15 +355,15 @@ describe("AC HumidityQuery body (0x41 0x21 0x01 0x45 0x00 0x01)", function () {
     });
 });
 
-describe("AC NewProtocolQuery body (0xB1 + 10 tags)", function () {
-    it("emits all 10 NewProtocolTags in the documented order", async function () {
+describe("AC NewProtocolQuery body (0xB1 + 11 tags)", function () {
+    it("emits all 11 NewProtocolTags in the documented order", async function () {
         const dev = makeDevice();
         const getCmd = captureSetCommand(dev, fakeC0Reply());
         try { await dev.refreshNewProtocol(); } catch (_e) { /* swallow */ }
         const body = unwrapBody(getCmd());
-        // [0xB1, 0x0A, lo, hi, lo, hi, ... ×10, msgId]
+        // [0xB1, 0x0B, lo, hi, lo, hi, ... ×11, msgId]
         assert.equal(body[0], 0xB1);
-        assert.equal(body[1], 0x0A);
+        assert.equal(body[1], 0x0B);
         const expected = [
             NEW_PROTOCOL_TAGS.indirect_wind,
             NEW_PROTOCOL_TAGS.breezeless,
@@ -373,6 +375,7 @@ describe("AC NewProtocolQuery body (0xB1 + 10 tags)", function () {
             NEW_PROTOCOL_TAGS.wind_ud_angle,
             NEW_PROTOCOL_TAGS.out_silent,
             NEW_PROTOCOL_TAGS.error_code_query,
+            NEW_PROTOCOL_TAGS.self_clean_active,
         ];
         for (let i = 0; i < expected.length; i++) {
             assert.equal(body[2 + i * 2], expected[i] & 0xFF, `tag ${i} low byte`);
