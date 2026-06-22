@@ -256,9 +256,9 @@ describe("AC C1 power/runtime/humidity parsing", function () {
         body[16] = 0x11; body[17] = 0x22; body[18] = 0x33;
         const parsed = parseFrame(buildC1Reply(body), 1);
         assert.equal(parsed.type, 0xC1);
-        assert.equal(parsed.totalEnergyConsumption.toFixed(2), "123456.78");
-        assert.equal(parsed.currentEnergyConsumption.toFixed(2), "876543.21");
-        assert.equal(parsed.realtimePower.toFixed(1), "11223.3");
+        assert.equal(parsed.status.totalEnergyConsumption.toFixed(2), "123456.78");
+        assert.equal(parsed.status.currentEnergyConsumption.toFixed(2), "876543.21");
+        assert.equal(parsed.status.realtimePower.toFixed(1), "11223.3");
     });
 
     it("default method=1 (BCD) — nibble-decoded digits", function () {
@@ -272,8 +272,8 @@ describe("AC C1 power/runtime/humidity parsing", function () {
         body[16] = 0x11; body[17] = 0x22; body[18] = 0x33;
         // Realtime: 11, 22, 33 → 11*1e4 + 22*100 + 33 = 112,233 / 10 = 11223.3
         const parsed = parseFrame(buildC1Reply(body));
-        assert.equal(parsed.totalEnergyConsumption.toFixed(2), "123456.78");
-        assert.equal(parsed.realtimePower.toFixed(1), "11223.3");
+        assert.equal(parsed.status.totalEnergyConsumption.toFixed(2), "123456.78");
+        assert.equal(parsed.status.realtimePower.toFixed(1), "11223.3");
     });
 
     it("method=2 (BINARY) — total/current as uint32_be / 10", function () {
@@ -283,8 +283,8 @@ describe("AC C1 power/runtime/humidity parsing", function () {
         body[4] = 0x01; body[5] = 0x23; body[6] = 0x45; body[7] = 0x67;
         body[16] = 0x12; body[17] = 0x34; body[18] = 0x56;
         const parsed = parseFrame(buildC1Reply(body), 2);
-        assert.equal(parsed.totalEnergyConsumption, 0x01234567 / 10);
-        assert.equal(parsed.realtimePower, 0x123456 / 10);
+        assert.equal(parsed.status.totalEnergyConsumption, 0x01234567 / 10);
+        assert.equal(parsed.status.realtimePower, 0x123456 / 10);
     });
 
     it("method=2 (BINARY) — high-bit-set values must not sign-extend (Gemini finding)", function () {
@@ -296,8 +296,8 @@ describe("AC C1 power/runtime/humidity parsing", function () {
         body[3] = 0x44;
         body[4] = 0xFF; body[5] = 0xEE; body[6] = 0xDD; body[7] = 0xCC;
         const parsed = parseFrame(buildC1Reply(body), 2);
-        assert.equal(parsed.totalEnergyConsumption, 0xFFEEDDCC / 10);
-        assert.ok(parsed.totalEnergyConsumption > 0, "must be positive — sign-extended values would yield a negative number");
+        assert.equal(parsed.status.totalEnergyConsumption, 0xFFEEDDCC / 10);
+        assert.ok(parsed.status.totalEnergyConsumption > 0, "must be positive — sign-extended values would yield a negative number");
     });
 
     it("sub-body 0x40 → operating-time fields (in minutes)", function () {
@@ -308,7 +308,7 @@ describe("AC C1 power/runtime/humidity parsing", function () {
         body[4] = 0; body[5] = 1; body[6] = 2; body[7] = 30; body[8] = 0;
         const parsed = parseFrame(buildC1Reply(body));
         assert.equal(parsed.type, 0xC1);
-        assert.equal(parsed.electrifyTime, 1590);
+        assert.equal(parsed.status.electrifyTime, 1590);
     });
 
     it("sub-body 0x45 → indoor humidity from byte 4", function () {
@@ -317,7 +317,7 @@ describe("AC C1 power/runtime/humidity parsing", function () {
         body[3] = 0x45;
         body[4] = 55;
         const parsed = parseFrame(buildC1Reply(body));
-        assert.equal(parsed.indoorHumidity, 55);
+        assert.equal(parsed.status.indoorHumidity, 55);
     });
 
     it("sub-body 0x45 with humidity=0 reports no value (sensor absent)", function () {
@@ -326,7 +326,7 @@ describe("AC C1 power/runtime/humidity parsing", function () {
         body[3] = 0x45;
         body[4] = 0;
         const parsed = parseFrame(buildC1Reply(body));
-        assert.equal(parsed.indoorHumidity, undefined);
+        assert.equal(parsed.status.indoorHumidity, undefined);
     });
 });
 
