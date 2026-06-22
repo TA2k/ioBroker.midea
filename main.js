@@ -68,6 +68,17 @@ const STATUS_DESCRIPTIONS = {
     currentEnergyConsumption: "Current energy consumption",
     realtimePower: "Realtime power draw",
     totalOperatingConsumption: "Total operating consumption",
+    // Alternate decodings of the same C1/0x44 reply. Different Midea
+    // firmware emits the energy bytes in different formats; expose all
+    // three so the user can pick whichever one matches the SmartHome app
+    // without changing the codec.
+    totalEnergyConsumption: "Total energy consumption (BCD)",
+    totalEnergyConsumptionBinary: "Total energy consumption (Binary u32 / 10)",
+    totalEnergyConsumptionMsmartBCD: "Total energy consumption (msmart BCD)",
+    currentEnergyConsumptionBinary: "Current energy consumption (Binary u32 / 10)",
+    currentEnergyConsumptionMsmartBCD: "Current energy consumption (msmart BCD)",
+    realtimePowerBinary: "Realtime power (Binary u24 / 10)",
+    realtimePowerMsmartBCD: "Realtime power (msmart BCD)",
     electrifyTime: "Electrified runtime",
     totalOperatingTime: "Total operating time",
     currentOperatingTime: "Current operating time",
@@ -132,6 +143,13 @@ const STATUS_UNITS = {
     currentEnergyConsumption: "kWh",
     totalOperatingConsumption: "kWh",
     realtimePower: "W",
+    totalEnergyConsumption: "kWh",
+    totalEnergyConsumptionBinary: "kWh",
+    totalEnergyConsumptionMsmartBCD: "kWh",
+    currentEnergyConsumptionBinary: "kWh",
+    currentEnergyConsumptionMsmartBCD: "kWh",
+    realtimePowerBinary: "W",
+    realtimePowerMsmartBCD: "W",
     electrifyTime: "min",
     totalOperatingTime: "min",
     currentOperatingTime: "min",
