@@ -79,6 +79,21 @@ const STATUS_DESCRIPTIONS = {
     currentEnergyConsumptionMsmartBCD: "Current energy consumption (msmart BCD)",
     realtimePowerBinary: "Realtime power (Binary u24 / 10)",
     realtimePowerMsmartBCD: "Realtime power (msmart BCD)",
+    // Extended telemetry from C1 group queries (midea-local#424,
+    // msmart-ng TurboLed/group1and2Data fork). Group 1: indoor/outdoor
+    // sensor block. Group 2: indoor fan RPM. Group 7: outdoor unit
+    // instantaneous power.
+    compressorFrequency: "Compressor frequency",
+    outdoorUnitCurrent: "Outdoor unit total current",
+    outdoorUnitVoltage: "Outdoor unit voltage",
+    indoorAmbientTemperature: "Indoor ambient temperature (T1)",
+    indoorCoilTemperature: "Indoor coil temperature (T2)",
+    outdoorCoilTemperature: "Outdoor coil temperature (T3)",
+    outdoorAmbientTemperature: "Outdoor ambient temperature (T4)",
+    compressorDischargeRaw: "Compressor discharge raw (TP)",
+    indoorFanSpeedRpm: "Indoor fan speed",
+    outdoorUnitPower: "Outdoor unit power",
+    heatingActive: "Heating active (C1/0x45 byte 8 non-zero)",
     electrifyTime: "Electrified runtime",
     totalOperatingTime: "Total operating time",
     currentOperatingTime: "Current operating time",
@@ -150,6 +165,15 @@ const STATUS_UNITS = {
     currentEnergyConsumptionMsmartBCD: "kWh",
     realtimePowerBinary: "W",
     realtimePowerMsmartBCD: "W",
+    compressorFrequency: "Hz",
+    outdoorUnitCurrent: "A",
+    outdoorUnitVoltage: "V",
+    indoorAmbientTemperature: "°C",
+    indoorCoilTemperature: "°C",
+    outdoorCoilTemperature: "°C",
+    outdoorAmbientTemperature: "°C",
+    indoorFanSpeedRpm: "rpm",
+    outdoorUnitPower: "W",
     electrifyTime: "min",
     totalOperatingTime: "min",
     currentOperatingTime: "min",
@@ -1045,6 +1069,16 @@ class MideaAdapter extends utils.Adapter {
             } catch (err) {
                 this.log.debug(`refreshNewProtocol for ${descriptor.id} failed: ${errMessage(err)}`);
             }
+            try {
+                // Extended telemetry (compressor / outdoor sensors / fan RPM /
+                // outdoor unit power) via group queries 1/2/7. Unsupported
+                // groups are blacklisted after the first time-out so older
+                // firmware doesn't burn a slot every poll. Issue
+                // midea-local#424 + msmart-ng TurboLed fork.
+                await device.refreshExtendedTelemetry();
+            } catch (err) {
+                this.log.debug(`refreshExtendedTelemetry for ${descriptor.id} failed: ${errMessage(err)}`);
+            }
         }
         await this.setStateAsync(`${descriptor.id}.info.online`, device.online, true);
 
@@ -1365,6 +1399,11 @@ class MideaAdapter extends utils.Adapter {
                     await device.refreshNewProtocol();
                 } catch (err) {
                     this.log.silly(`refreshNewProtocol(${id}) failed: ${errMessage(err)}`);
+                }
+                try {
+                    await device.refreshExtendedTelemetry();
+                } catch (err) {
+                    this.log.silly(`refreshExtendedTelemetry(${id}) failed: ${errMessage(err)}`);
                 }
             }
             await this.setStateAsync(`${id}.info.online`, device.online, true);
