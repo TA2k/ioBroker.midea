@@ -94,6 +94,14 @@ const STATUS_DESCRIPTIONS = {
     indoorFanSpeedRpm: "Indoor fan speed",
     outdoorUnitPower: "Outdoor unit power",
     heatingActive: "Heating active (C1/0x45 byte 8 non-zero)",
+    // Additional NewProtocol property toggles surfaced via msmart-ng
+    // PropertyId enum (devices/AC/command.py).
+    rateSelect: "Fan-speed precision level",
+    freshAir: "Fresh-air mode",
+    cascade: "Wind around (cascade) oscillation",
+    jetCool: "Jet/flash cool one-shot",
+    presetIeco: "iECO preset",
+    selfCleanActive: "Self-clean cycle currently running",
     electrifyTime: "Electrified runtime",
     totalOperatingTime: "Total operating time",
     currentOperatingTime: "Current operating time",
