@@ -292,6 +292,8 @@ device ids so the implementation can be diagnosed from logs alone.
 
 -   Last release of the legacy implementation.
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 
 MIT License
