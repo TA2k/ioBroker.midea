@@ -93,6 +93,8 @@ const STATUS_DESCRIPTIONS = {
     compressorDischargeRaw: "Compressor discharge raw (TP)",
     indoorFanSpeedRpm: "Indoor fan speed",
     outdoorUnitPower: "Outdoor unit power",
+    outdoorFanSpeedRpm: "Outdoor fan speed",
+    defrostActive: "Defrost cycle active",
     heatingActive: "Heating active (C1/0x45 byte 8 non-zero)",
     // Additional NewProtocol property toggles surfaced via msmart-ng
     // PropertyId enum (devices/AC/command.py).
@@ -181,6 +183,7 @@ const STATUS_UNITS = {
     outdoorCoilTemperature: "°C",
     outdoorAmbientTemperature: "°C",
     indoorFanSpeedRpm: "rpm",
+    outdoorFanSpeedRpm: "rpm",
     outdoorUnitPower: "W",
     electrifyTime: "min",
     totalOperatingTime: "min",
