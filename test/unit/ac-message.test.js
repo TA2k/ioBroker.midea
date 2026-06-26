@@ -355,15 +355,15 @@ describe("AC HumidityQuery body (0x41 0x21 0x01 0x45 0x00 0x01)", function () {
     });
 });
 
-describe("AC NewProtocolQuery body (0xB1 + 16 tags)", function () {
-    it("emits all 16 NewProtocolTags in the documented order", async function () {
+describe("AC NewProtocolQuery body (0xB1 + 15 tags)", function () {
+    it("emits all 15 NewProtocolTags in the documented order", async function () {
         const dev = makeDevice();
         const getCmd = captureSetCommand(dev, fakeC0Reply());
         try { await dev.refreshNewProtocol(); } catch (_e) { /* swallow */ }
         const body = unwrapBody(getCmd());
-        // [0xB1, 0x10, lo, hi, lo, hi, ... ×16, msgId]
+        // [0xB1, 0x0F, lo, hi, lo, hi, ... ×15, msgId]
         assert.equal(body[0], 0xB1);
-        assert.equal(body[1], 0x10);
+        assert.equal(body[1], 0x0F);
         const expected = [
             NEW_PROTOCOL_TAGS.indirect_wind,
             NEW_PROTOCOL_TAGS.breezeless,
@@ -377,7 +377,6 @@ describe("AC NewProtocolQuery body (0xB1 + 16 tags)", function () {
             NEW_PROTOCOL_TAGS.error_code_query,
             NEW_PROTOCOL_TAGS.self_clean_active,
             NEW_PROTOCOL_TAGS.rate_select,
-            NEW_PROTOCOL_TAGS.fresh_air,
             NEW_PROTOCOL_TAGS.cascade,
             NEW_PROTOCOL_TAGS.jet_cool,
             NEW_PROTOCOL_TAGS.preset_ieco,

@@ -99,7 +99,6 @@ const STATUS_DESCRIPTIONS = {
     // Additional NewProtocol property toggles surfaced via msmart-ng
     // PropertyId enum (devices/AC/command.py).
     rateSelect: "Fan-speed precision level",
-    freshAir: "Fresh-air mode",
     cascade: "Wind around (cascade) oscillation",
     jetCool: "Jet/flash cool one-shot",
     presetIeco: "iECO preset",
