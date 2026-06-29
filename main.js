@@ -450,6 +450,7 @@ const ELECTRIC_WATER_HEATER_CONTROLS = [
     { id: "wholeTankHeating", common: onOff("Whole tank heating") },
     { id: "variableHeating", common: onOff("Variable heating") },
     { id: "protection", common: onOff("Protection") },
+    { id: "memory", common: onOff("Memory boost (Memo U)") },
 ];
 
 /** @type {Array<{id: string, common: ioBroker.StateCommon}>} */
