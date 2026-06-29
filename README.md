@@ -202,6 +202,9 @@ device ids so the implementation can be diagnosed from logs alone.
 <!-- 
   Placeholder for next versions. Do NOT remove. 
 -->
+### 1.8.6 (2026-06-29)
+- Improved State parsing
+
 ### 1.8.5 (2026-06-13)
 - Improve Device detection
 

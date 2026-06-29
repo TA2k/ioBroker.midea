@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "midea",
-    "version": "1.8.5",
+    "version": "1.8.6",
     "news": {
+      "1.8.6": {
+        "en": "Improved State parsing",
+        "de": "Verbessertes State Verarbeitung",
+        "ru": "Улучшенный государственный парсинг",
+        "pt": "Melhoria da análise estatal",
+        "nl": "Verbeterde staatsplanning",
+        "fr": "Amélioration de l'analyse par l'État",
+        "it": "Parsing migliorato dello Stato",
+        "es": "Mejoramiento de la parálisis del Estado",
+        "pl": "Ulepszone parsowanie państwa",
+        "uk": "Покращений державний парк",
+        "zh-cn": "改进状态分析"
+      },
       "1.8.5": {
         "en": "Improve Device detection",
         "de": "Verbesserte Geräteerkennung",
@@ -80,19 +93,6 @@
         "pl": "- Dodaje zestaw testowy napędzany mocowaniem dla ujednoliconej '_ procesFrame'\nhak wprowadzony w pozycji 1.7.0. Obejmuje wszystkie 26 klas urządzeń i powtórzeń\ndwa prawdziwe uchwyty (Osuszacz A1) więc przyszłe parser zmienia przerwę\ngłośno. Brak zmian zachowania w czasie biegu.",
         "uk": "- Додає фіксаторно-привідний люкс для єдиного ` processFrame`\nгачок введений в 1.7.0. Обкладинки всіх 26 класів пристроїв та релей\nдва реальні захоплення (A1 осушувач) так майбутні зміни парсера\nголосно. Не змінюйте часової поведінки.",
         "zh-cn": "- 为统一的`进程Frame ' 添加固定驱动测试套件\n钩子介绍于1.7.0. 覆盖全部26个设备类和重播\n两个真正的捕捉器(A1除湿器),所以未来的剖析器更改中断\n大声点 运行时间行为没有变化."
-      },
-      "1.7.0": {
-        "en": "Mirrors midea-local's single recv-loop architecture: every appliance frame — query reply, set reply, or unsolicited push — now flows through the same per-device parser via a unified `_processFrame` hook. Spontaneous push notifications the appliance emits about a second after a setStatus (and any state changes initiated outside the adapter, e.g. via the phone app or remote) are decoded and merged into the status instead of being logged as 'unsolicited frame' warnings. Devices benefit transparently — no per-class override needed except where the parser is source-dependent.",
-        "de": "Spiegelt midea-locals Einzel-Recv-Loop-Architektur: jeder Geräte-Frame — Query-Antwort, Set-Antwort oder spontane Push-Meldung — läuft jetzt über denselben geräteklassen-eigenen Parser via einheitlichem `_processFrame`-Hook. Push-Frames, die das Gerät rund eine Sekunde nach einem setStatus selbst sendet (und Zustandsänderungen, die ausserhalb des Adapters ausgelöst wurden, z. B. per Handy-App oder Fernbedienung), werden jetzt entschlüsselt und in den Status gemerged, statt als 'unsolicited frame'-Warnung zu landen. Alle Geräteklassen profitieren transparent — kein Override pro Klasse nötig, ausser dort wo der Parser quellenabhängig ist.",
-        "ru": "Воспроизводит однопроцессную архитектуру midea-local: каждый кадр устройства — ответ на запрос, ответ на установку или спонтанное уведомление — теперь проходит через один и тот же парсер класса устройства через единый хук `_processFrame`. Спонтанные push-уведомления, которые устройство отправляет примерно через секунду после setStatus (а также изменения состояния, инициированные извне, например через мобильное приложение или пульт), теперь расшифровываются и применяются к статусу, а не выпадают в предупреждение 'unsolicited frame'. Все классы устройств выигрывают прозрачно — переопределение для каждого класса не требуется, кроме случаев, когда парсер зависит от источника.",
-        "pt": "Espelha a arquitetura de recv-loop único do midea-local: cada frame do aparelho — resposta a query, resposta a set, ou push espontâneo — passa agora pelo mesmo parser por classe de dispositivo através de um hook `_processFrame` unificado. As notificações push espontâneas que o aparelho envia cerca de um segundo depois de um setStatus (e quaisquer alterações de estado iniciadas fora do adaptador, p.ex. via app do telemóvel ou comando) são descodificadas e fundidas no estado, em vez de serem registadas como avisos 'unsolicited frame'. Todas as classes de dispositivos beneficiam de forma transparente — não é necessário override por classe, exceto onde o parser depende da origem.",
-        "nl": "Spiegelt midea-local's single recv-loop-architectuur: elke apparaatframe — query-antwoord, set-antwoord of spontane push — gaat nu via dezelfde parser per apparaatklasse door een uniforme `_processFrame`-hook. Spontane pushmeldingen die het apparaat ongeveer een seconde na een setStatus uitstuurt (en statuswijzigingen die buiten de adapter zijn aangezet, bv. via de telefoon-app of een afstandsbediening) worden nu gedecodeerd en in de status gemerged, in plaats van als 'unsolicited frame'-waarschuwing te belanden. Alle apparaatklassen profiteren transparant — geen override per klasse nodig, behalve waar de parser bronafhankelijk is.",
-        "fr": "Reproduit l'architecture à boucle de réception unique de midea-local : chaque trame de l'appareil — réponse à une requête, réponse à un set, ou push spontané — passe désormais par le même parseur propre à la classe via un hook `_processFrame` unifié. Les notifications push spontanées que l'appareil émet environ une seconde après un setStatus (et toute modification d'état déclenchée hors de l'adaptateur, p.ex. via l'app mobile ou la télécommande) sont décodées et fusionnées dans l'état, au lieu d'être journalisées en avertissement 'unsolicited frame'. Toutes les classes profitent de façon transparente — pas d'override par classe nécessaire, sauf là où le parseur dépend de la source.",
-        "it": "Rispecchia l'architettura a loop di ricezione unico di midea-local: ogni frame dell'apparecchio — risposta a query, risposta a set o push spontaneo — ora passa per lo stesso parser per classe di dispositivo tramite un hook `_processFrame` unificato. Le notifiche push spontanee che l'apparecchio invia circa un secondo dopo un setStatus (e ogni cambio di stato innescato fuori dall'adapter, ad es. dall'app mobile o dal telecomando) vengono decodificate e fuse nello stato, invece di essere registrate come avvisi 'unsolicited frame'. Tutte le classi di dispositivo beneficiano in modo trasparente — non serve override per classe, tranne dove il parser dipende dalla sorgente.",
-        "es": "Refleja la arquitectura de recv-loop único de midea-local: cada trama del aparato — respuesta a query, respuesta a set o push espontáneo — pasa ahora por el mismo parser por clase de dispositivo a través de un hook `_processFrame` unificado. Las notificaciones push espontáneas que el aparato emite aproximadamente un segundo después de un setStatus (y cualquier cambio de estado iniciado fuera del adaptador, p.ej. desde la app del móvil o el mando) se decodifican y fusionan en el estado, en lugar de registrarse como avisos 'unsolicited frame'. Todas las clases de dispositivos se benefician de forma transparente — no hace falta override por clase, salvo donde el parser depende de la fuente.",
-        "pl": "Powtarza architekturę pojedynczej pętli recv z midea-local: każda ramka urządzenia — odpowiedź na zapytanie, odpowiedź na set lub spontaniczny push — przechodzi teraz przez ten sam parser klasy urządzenia za pomocą ujednoliconego haka `_processFrame`. Spontaniczne powiadomienia push, które urządzenie wysyła około sekundy po setStatus (oraz zmiany stanu wyzwalane spoza adaptera, np. przez aplikację mobilną lub pilot), są dekodowane i scalane w stanie zamiast trafiać do ostrzeżenia 'unsolicited frame'. Wszystkie klasy urządzeń korzystają z tego przezroczyście — override per klasa nie jest potrzebny, oprócz przypadków gdzie parser zależy od źródła.",
-        "uk": "Відтворює архітектуру одного recv-циклу midea-local: кожен кадр пристрою — відповідь на запит, відповідь на set або спонтанний push — тепер проходить через той самий парсер класу пристрою через уніфікований хук `_processFrame`. Спонтанні push-сповіщення, які пристрій надсилає приблизно через секунду після setStatus (а також зміни стану, ініційовані поза адаптером, напр. через мобільний застосунок або пульт), тепер розшифровуються та зливаються в стан замість того, щоб потрапляти у попередження 'unsolicited frame'. Усі класи пристроїв виграють прозоро — override для класу не потрібен, окрім випадків, коли парсер залежить від джерела.",
-        "zh-cn": "对齐 midea-local 的单 recv 循环架构：设备的每一帧 — 查询响应、设置响应或自发推送 — 现在都通过统一的 `_processFrame` 钩子进入同一个按设备类的解析器。设备在 setStatus 之后约一秒主动推送的状态通知（以及在适配器之外触发的状态变更，比如手机 App 或遥控器引起的），现在会被解密并合入状态，而不再以 'unsolicited frame' 警告记录。所有设备类透明受益 — 除非解析器依赖来源，否则无需为各设备类单独 override。"
       }
     },
     "titleLang": {
