@@ -1060,6 +1060,11 @@ class MideaAdapter extends utils.Adapter {
                 this.log.warn(`Capability write for ${descriptor.id} failed: ${errMessage(err)}`),
             );
         });
+        device.on("online", (online) => {
+            this.setStateAsync(`${descriptor.id}.info.online`, !!online, true).catch((err) =>
+                this.log.warn(`Online-state write for ${descriptor.id} failed: ${errMessage(err)}`),
+            );
+        });
 
         /** @type {string|null} */
         let authedToken = null;
