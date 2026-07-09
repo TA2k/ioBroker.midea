@@ -16,6 +16,10 @@ function errMessage(err) {
     return String(err);
 }
 
+const LAN_AUTH_RETRY_DELAY_MS = 8000;
+const POLL_FAILURE_BACKOFF_MS = 120 * 1000;
+const POLL_FAILURE_BACKOFF_MAX_MS = 5 * 60 * 1000;
+
 const STATUS_DESCRIPTIONS = {
     powerOn: "Power state",
     mode: "Operating mode",
@@ -607,6 +611,10 @@ class MideaAdapter extends utils.Adapter {
         /** @type {midea.CloudClient|midea.CloudClientV1|null} */
         this.cloud = null;
         this.pollTimer = null;
+        /** @type {Map<string, number>} */
+        this.pollFailures = new Map();
+        /** @type {Map<string, number>} */
+        this.pollBackoffUntil = new Map();
         this.shuttingDown = false;
         /**
          * Buffer of pending deviceList row updates keyed by device id.
@@ -1014,6 +1022,13 @@ class MideaAdapter extends utils.Adapter {
                 token = override.token;
                 key = override.key;
                 this.log.info(`Device ${descriptor.id}: using token/key from device list (admin override, token=${token.slice(0, 8)}…)`);
+                // Keep the first LAN probe cloudless when the user provided
+                // credentials explicitly. Some MSmartHome AC firmware accepts
+                // the local V3 handshake but stops replying to encrypted LAN
+                // commands right after a cloud getToken lookup. The admin
+                // override is the stable path in that setup; cloud candidates
+                // are only needed when no override exists.
+                candidates = [{ method: "admin-override", token, key }];
             } else {
                 try {
                     if (!this.cloud) throw new Error("cloud client not initialised");
@@ -1060,38 +1075,51 @@ class MideaAdapter extends utils.Adapter {
                 this.log.warn(`Capability write for ${descriptor.id} failed: ${errMessage(err)}`),
             );
         });
+        device.on("online", (online) => {
+            this.setStateAsync(`${descriptor.id}.info.online`, !!online, true).catch((err) =>
+                this.log.warn(`Online-state write for ${descriptor.id} failed: ${errMessage(err)}`),
+            );
+        });
 
         /** @type {string|null} */
         let authedToken = null;
         /** @type {string|null} */
         let authedKey = null;
-        try {
-            const ok = await this._refreshCapabilitiesWithAuthRetry(device, descriptor, candidates);
-            if (ok) {
-                authedToken = ok.token;
-                authedKey = ok.key;
+        const deferInitialLanProbe = descriptor.protocol === 3
+            && candidates
+            && candidates.length === 1
+            && candidates[0].method === "admin-override";
+        if (deferInitialLanProbe) {
+            this.log.info(`Device ${descriptor.id}: deferring initial LAN status probe to scheduled poll (admin override credentials)`);
+        } else {
+            try {
+                const ok = await this._refreshCapabilitiesWithAuthRetry(device, descriptor, candidates);
+                if (ok) {
+                    authedToken = ok.token;
+                    authedKey = ok.key;
+                }
+            } catch (err) {
+                this.log.warn(`refreshCapabilities/refreshStatus for ${descriptor.id} failed: ${errMessage(err)}`);
             }
-        } catch (err) {
-            this.log.warn(`refreshCapabilities/refreshStatus for ${descriptor.id} failed: ${errMessage(err)}`);
         }
         if (device instanceof ACDevice) {
             try {
-                await device.refreshPowerUsage();
+                this.log.debug(`refreshPowerUsage for ${descriptor.id} skipped in stable LAN mode`);
             } catch (err) {
                 this.log.debug(`refreshPowerUsage for ${descriptor.id} failed (not all units support it): ${errMessage(err)}`);
             }
             try {
-                await device.refreshOperatingTime();
+                this.log.debug(`refreshOperatingTime for ${descriptor.id} skipped in stable LAN mode`);
             } catch (err) {
                 this.log.debug(`refreshOperatingTime for ${descriptor.id} failed: ${errMessage(err)}`);
             }
             try {
-                await device.refreshHumidity();
+                this.log.debug(`refreshHumidity for ${descriptor.id} skipped in stable LAN mode`);
             } catch (err) {
                 this.log.debug(`refreshHumidity for ${descriptor.id} failed: ${errMessage(err)}`);
             }
             try {
-                await device.refreshNewProtocol();
+                this.log.debug(`refreshNewProtocol for ${descriptor.id} skipped in stable LAN mode`);
             } catch (err) {
                 this.log.debug(`refreshNewProtocol for ${descriptor.id} failed: ${errMessage(err)}`);
             }
@@ -1101,7 +1129,7 @@ class MideaAdapter extends utils.Adapter {
                 // groups are blacklisted after the first time-out so older
                 // firmware doesn't burn a slot every poll. Issue
                 // midea-local#424 + msmart-ng TurboLed fork.
-                await device.refreshExtendedTelemetry();
+                this.log.debug(`refreshExtendedTelemetry for ${descriptor.id} skipped in stable LAN mode`);
             } catch (err) {
                 this.log.debug(`refreshExtendedTelemetry for ${descriptor.id} failed: ${errMessage(err)}`);
             }
@@ -1145,8 +1173,9 @@ class MideaAdapter extends utils.Adapter {
             if (i > 0 && candidates) {
                 const next = candidates[i];
                 this.log.info(
-                    `Device ${descriptor.id}: LAN auth failed with udpId method ${candidates[i - 1].method}, retrying with ${next.method}`,
+                    `Device ${descriptor.id}: LAN auth failed with udpId method ${candidates[i - 1].method}, retrying with ${next.method} after ${LAN_AUTH_RETRY_DELAY_MS}ms`,
                 );
+                await new Promise((resolve) => setTimeout(resolve, LAN_AUTH_RETRY_DELAY_MS));
                 device.setLanCredentials(descriptor.host, next.token, next.key, descriptor.port);
             }
             try {
@@ -1164,7 +1193,7 @@ class MideaAdapter extends utils.Adapter {
             } catch (err) {
                 lastErr = err;
                 const msg = errMessage(err);
-                const authFailed = /authenticate ERROR|authenticate failed|authenticate error/i.test(msg);
+                const authFailed = /authenticate ERROR|authenticate failed|authenticate error|timeout waiting for getStatus|timeout waiting for getCapabilities/i.test(msg);
                 if (!authFailed || !candidates || i + 1 >= tries) {
                     throw err;
                 }
@@ -1400,34 +1429,54 @@ class MideaAdapter extends utils.Adapter {
 
     async pollAllDevices() {
         for (const [id, device] of this.devices) {
+            const now = Date.now();
+            const backoffUntil = this.pollBackoffUntil.get(id) || 0;
+            if (backoffUntil > now) {
+                const remaining = Math.ceil((backoffUntil - now) / 1000);
+                this.log.silly(`refreshStatus(${id}) skipped for LAN backoff (${remaining}s remaining)`);
+                await this.setStateAsync(`${id}.info.online`, device.online, true);
+                continue;
+            }
             try {
-                await device.refreshStatus();
+                await device.refreshStatus({ noRetry: true });
+                this.pollFailures.delete(id);
+                this.pollBackoffUntil.delete(id);
             } catch (err) {
-                this.log.debug(`refreshStatus(${id}) failed: ${errMessage(err)}`);
+                const msg = errMessage(err);
+                const transient = /connection closed by appliance|timeout waiting for|not connected|decrypt failed/i.test(msg);
+                if (transient) {
+                    const failures = (this.pollFailures.get(id) || 0) + 1;
+                    const backoffMs = Math.min(POLL_FAILURE_BACKOFF_MAX_MS, POLL_FAILURE_BACKOFF_MS * failures);
+                    this.pollFailures.set(id, failures);
+                    this.pollBackoffUntil.set(id, Date.now() + backoffMs);
+                    this.log.debug(`refreshStatus(${id}) failed: ${msg} — next LAN poll in ${Math.round(backoffMs / 1000)}s (${failures} consecutive failure(s))`);
+                } else {
+                    this.log.debug(`refreshStatus(${id}) failed: ${msg}`);
+                }
             }
             if (device instanceof ACDevice) {
                 try {
-                    await device.refreshPowerUsage();
+                    this.log.silly(`refreshPowerUsage(${id}) skipped in stable LAN mode`);
                 } catch (err) {
                     this.log.silly(`refreshPowerUsage(${id}) failed: ${errMessage(err)}`);
                 }
                 try {
-                    await device.refreshOperatingTime();
+                    this.log.silly(`refreshOperatingTime(${id}) skipped in stable LAN mode`);
                 } catch (err) {
                     this.log.silly(`refreshOperatingTime(${id}) failed: ${errMessage(err)}`);
                 }
                 try {
-                    await device.refreshHumidity();
+                    this.log.silly(`refreshHumidity(${id}) skipped in stable LAN mode`);
                 } catch (err) {
                     this.log.silly(`refreshHumidity(${id}) failed: ${errMessage(err)}`);
                 }
                 try {
-                    await device.refreshNewProtocol();
+                    this.log.silly(`refreshNewProtocol(${id}) skipped in stable LAN mode`);
                 } catch (err) {
                     this.log.silly(`refreshNewProtocol(${id}) failed: ${errMessage(err)}`);
                 }
                 try {
-                    await device.refreshExtendedTelemetry();
+                    this.log.silly(`refreshExtendedTelemetry(${id}) skipped in stable LAN mode`);
                 } catch (err) {
                     this.log.silly(`refreshExtendedTelemetry(${id}) failed: ${errMessage(err)}`);
                 }

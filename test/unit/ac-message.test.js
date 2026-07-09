@@ -345,6 +345,27 @@ describe("AC PowerQuery body (0x41 0x21 0x01 0x44 0x00 0x01)", function () {
     });
 });
 
+describe("AC MessageQuery body (0x41 + midea-local minimal status query)", function () {
+    it("matches midea-local MessageQuery payload", async function () {
+        const dev = makeDevice();
+        const getCmd = captureSetCommand(dev, fakeC0Reply());
+        try { await dev.refreshStatus(); } catch (_e) { /* swallow */ }
+        const body = unwrapBody(getCmd());
+        assert.equal(body.length, 21, "body type + 19-byte query payload + message id");
+        assert.equal(body[0], 0x41, "body type");
+        assert.equal(body[1], 0x81, "query marker");
+        assert.equal(body[3], 0xff, "query all fields marker");
+        const stable = Array.from(body.subarray(0, body.length - 1));
+        assert.deepEqual(stable, [
+            0x41, 0x81, 0x00, 0xff,
+            0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00,
+        ]);
+    });
+});
+
 describe("AC HumidityQuery body (0x41 0x21 0x01 0x45 0x00 0x01)", function () {
     it("matches the midea-local MessageHumidityQuery payload", async function () {
         const dev = makeDevice();
