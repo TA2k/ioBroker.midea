@@ -56,7 +56,7 @@ describe("AC MessageGeneralSet (0x40 body)", function () {
     it("default body matches midea-local layout (power/mode/temp/swing defaults)", async function () {
         const dev = makeDevice();
         const getCmd = captureSetCommand(dev, fakeC0Reply());
-        await dev.setStatus({ powerOn: false, mode: "auto", temperatureSetpoint: 20, fanSpeed: "auto" });
+        await dev.setStatus({ powerOn: false, mode: "AUTO", temperatureSetpoint: 20, fanSpeed: "auto" });
         const cmd = getCmd();
         assert.ok(cmd, "expected captured cmd");
         const body = unwrapBody(cmd);

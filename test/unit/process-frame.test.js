@@ -58,7 +58,7 @@ describe("device _processFrame fixtures", () => {
             const frame = buildFrame({ applianceType: APPLIANCE_TYPE_AC, msgType: 0x03, body: b });
             process(dev, frame);
             assert.equal(dev.status.powerOn, true);
-            assert.equal(dev.status.mode, "cool");
+            assert.equal(dev.status.mode, "COOL");
             assert.equal(dev.status.modeIndex, 2);
             assert.equal(dev.status.temperatureSetpoint, 24);
             assert.equal(dev.status.indoorTemperature, 25);
