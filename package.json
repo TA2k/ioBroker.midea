@@ -26,22 +26,22 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.4.3",
-    "axios": "^1.17.0",
+    "axios": "^1.19.0",
     "json2iob": "^2.6.25"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^5.2.1",
     "@alcalzone/release-script-plugin-iobroker": "^5.2.0",
-    "@alcalzone/release-script-plugin-license": "^5.2.0",
+    "@alcalzone/release-script-plugin-license": "^5.2.2",
     "@alcalzone/release-script-plugin-manual-review": "^5.2.0",
     "@eslint/js": "^10.0.1",
     "@iobroker/testing": "^5.3.0",
-    "@tsconfig/node22": "^22.0.5",
-    "@types/node": "^25.9.3",
-    "eslint": "^10.8.0",
-    "globals": "^17.9.0",
+    "@tsconfig/node22": "^22.0.6",
+    "@types/node": "^25.9.5",
+    "eslint": "^10.8.1",
+    "globals": "^17.11.0",
     "prettier": "^3.9.6",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "main": "main.js",
   "files": [
