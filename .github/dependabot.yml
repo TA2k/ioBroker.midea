@@ -1,11 +1,11 @@
 version: 2
 updates:
   - package-ecosystem: npm
-    directory: "/"
+    directory: '/'
     schedule:
       interval: weekly
       day: monday
-      time: "04:00"
+      time: '04:00'
       timezone: Europe/Berlin
     cooldown:
       default-days: 7
@@ -13,12 +13,16 @@ updates:
     assignees:
       - TA2k
     versioning-strategy: increase
+    ignore:
+      - dependency-name: '@types/node'
+        update-types:
+          - 'version-update:semver-major'
   - package-ecosystem: github-actions
-    directory: "/"
+    directory: '/'
     schedule:
       interval: weekly
       day: monday
-      time: "04:00"
+      time: '04:00'
       timezone: Europe/Berlin
     cooldown:
       default-days: 7
