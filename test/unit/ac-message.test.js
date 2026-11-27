@@ -105,6 +105,24 @@ describe("AC MessageGeneralSet (0x40 body)", function () {
         assert.equal(body[17], 0x40);
     });
 
+    it("followMe flips byte 8 bit 0x80 and round-trips from a 0xC0 reply", async function () {
+        const dev = makeDevice();
+        const getCmd = captureSetCommand(dev, fakeC0Reply());
+        await dev.setStatus({ followMe: true });
+        const body = unwrapBody(getCmd());
+        assert.equal(body[8] & 0x80, 0x80, "followMe=true must set byte 8 bit 0x80");
+
+        // Read-side: a 0xC0 status with byte 8 bit 0x80 set must surface followMe.
+        const header = Buffer.from([0xAA, 0x00, 0xAC, 0, 0, 0, 0, 0, 0x03, 0x05]);
+        const c0 = Buffer.alloc(24);
+        c0[0] = 0xC0; c0[8] = 0x80;
+        const c0WithCrc = Buffer.concat([c0, Buffer.from([calculateCrc(c0)])]);
+        const full = Buffer.concat([header, c0WithCrc]);
+        full[1] = full.length;
+        const frame = Buffer.concat([full, Buffer.from([calculateChecksum(full)])]);
+        assert.equal(parseFrame(frame).status.followMe, true);
+    });
+
     it("smartEye, dryClean, auxHeating, ecoMode set the correct bits on byte 9", async function () {
         const dev = makeDevice();
         const getCmd = captureSetCommand(dev, fakeC0Reply());
@@ -267,6 +285,14 @@ describe("AC NewProtocol parse (parseBX via parseFrame)", function () {
         assert.equal(parsed.status.indoorHumidity, 42);
     });
 
+    it("drops indoor_humidity when the sensor reports 0xFF (unavailable)", function () {
+        const reply = buildB0Reply([
+            fivePack(NEW_PROTOCOL_TAGS.indoor_humidity, Buffer.from([0xFF])),
+        ]);
+        const parsed = parseFrame(reply);
+        assert.equal(parsed.status.indoorHumidity, undefined, "0xFF must not be published as 255");
+    });
+
     it("decodes indirect_wind=true (value 0x02 → true) and false (0x01 → false)", function () {
         const replyTrue = buildB0Reply([fivePack(NEW_PROTOCOL_TAGS.indirect_wind, Buffer.from([0x02]))]);
         const replyFalse = buildB0Reply([fivePack(NEW_PROTOCOL_TAGS.indirect_wind, Buffer.from([0x01]))]);
@@ -376,6 +402,33 @@ describe("AC C1 power/runtime/humidity parsing", function () {
         body[4] = 0;
         const parsed = parseFrame(buildC1Reply(body));
         assert.equal(parsed.status.indoorHumidity, undefined);
+    });
+
+    it("sub-body 0x45 with humidity=0xFF reports no value (sensor faulted)", function () {
+        const body = Buffer.alloc(20);
+        body[0] = 0xC1;
+        body[3] = 0x45;
+        body[4] = 0xFF;
+        const parsed = parseFrame(buildC1Reply(body));
+        assert.equal(parsed.status.indoorHumidity, undefined, "0xFF must not be published as 255");
+    });
+
+    it("sub-body 0x43 (group 3) → current outdoor fan speed (byte 10 * 8)", function () {
+        const body = Buffer.alloc(20);
+        body[0] = 0xC1;
+        body[3] = 0x43;
+        body[10] = 50; // 50 * 8 = 400 rpm
+        const parsed = parseFrame(buildC1Reply(body));
+        assert.equal(parsed.status.outdoorFanSpeed, 400);
+    });
+
+    it("sub-body 0x03 (group 3 alternate discriminator) also decodes outdoor fan speed", function () {
+        const body = Buffer.alloc(20);
+        body[0] = 0xC1;
+        body[3] = 0x03;
+        body[10] = 75; // 75 * 8 = 600 rpm
+        const parsed = parseFrame(buildC1Reply(body));
+        assert.equal(parsed.status.outdoorFanSpeed, 600);
     });
 });
 

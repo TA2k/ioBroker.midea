@@ -96,6 +96,7 @@ const STATUS_DESCRIPTIONS = {
     indoorFanSpeedRpm: "Indoor fan speed",
     outdoorUnitPower: "Outdoor unit power",
     outdoorFanSpeedRpm: "Outdoor fan speed",
+    outdoorFanSpeed: "Outdoor fan speed (current)",
     defrostActive: "Defrost cycle active",
     heatingActive: "Heating active (C1/0x45 byte 8 non-zero)",
     horizontalLouverAngle: "Horizontal louver angle (deg, Group 11)",
@@ -115,6 +116,7 @@ const STATUS_DESCRIPTIONS = {
     catchCold: "Catch cold",
     peakValleyElectricitySaving: "Peak/valley electricity saving",
     feelOwn: "Feel own",
+    followMe: "Follow me (sensor at remote)",
     save: "Save energy mode",
     lowFrequencyFan: "Low-frequency fan",
     light: "Display brightness level",
@@ -189,6 +191,7 @@ const STATUS_UNITS = {
     outdoorAmbientTemperature: "°C",
     indoorFanSpeedRpm: "rpm",
     outdoorFanSpeedRpm: "rpm",
+    outdoorFanSpeed: "rpm",
     outdoorUnitPower: "W",
     electrifyTime: "min",
     totalOperatingTime: "min",
@@ -247,6 +250,7 @@ const STATUS_ROLES = {
     // Fan RPM
     indoorFanSpeedRpm: "value",
     outdoorFanSpeedRpm: "value",
+    outdoorFanSpeed: "value",
 };
 
 const STATUS_STATE_ENUMS = {
@@ -349,6 +353,7 @@ const AC_CONTROLS = [
     { id: "smartEye", common: { name: "Smart eye / motion sensor", type: "boolean", role: "switch", read: true, write: true, def: false } },
     { id: "auxHeating", common: { name: "Auxiliary heater (PTC)", type: "boolean", role: "switch", read: true, write: true, def: false } },
     { id: "naturalWind", common: { name: "Natural wind", type: "boolean", role: "switch", read: true, write: true, def: false } },
+    { id: "followMe", common: { name: "Follow me (use remote sensor)", type: "boolean", role: "switch", read: true, write: true, def: false } },
     { id: "comfortMode", common: { name: "Comfort mode", type: "boolean", role: "switch", read: true, write: true, def: false } },
     { id: "indirectWind", common: { name: "Indirect wind (no wind on me)", type: "boolean", role: "switch", read: true, write: true, def: false } },
     { id: "breezeless", common: { name: "Breezeless", type: "boolean", role: "switch", read: true, write: true, def: false } },
